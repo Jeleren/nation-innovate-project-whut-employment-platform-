@@ -37,7 +37,7 @@
     <div class="comment" v-if="isShowComment">
       <div class="top-comment clear">
         <div class="user-image" :style="{'background-image': `url(${$store.state.user.userInfo.user_image})`}"></div>
-        <textarea ref="textarea" class="textarea" rows="1"></textarea>
+        <textarea ref="text" class="textarea" rows="1"></textarea>
         <div class="button">评论</div>
       </div>
       <div class="comment-list-wrap">
@@ -202,7 +202,17 @@ export default {
     },
     showComment () {
       this.isShowComment = true
-      autoTextarea(this.$refs.textarea)
+      let addEvent = new Promise((resolve, reject) => {
+        let a = setInterval(() => {
+          if (this.$refs.text) {
+            resolve()
+            clearInterval(a)
+          }
+        }, 500)
+      })
+      addEvent.then(() => {
+        autoTextarea(this.$refs.text)
+      })
     },
     doCollect () {},
     cancelCollect () {}
@@ -335,6 +345,7 @@ export default {
       -webkit-background-size: cover;
       background-size: cover;
       margin-right: .1rem;
+      vertical-align: top;
     }
     .top-comment {
       margin-bottom: .4rem;

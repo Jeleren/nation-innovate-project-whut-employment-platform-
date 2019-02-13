@@ -166,10 +166,11 @@ i {
     max-height: 75%;
     overflow: auto;
     .pop-top {
-      display: flex;
-      justify-content: space-between;
+      //display: flex;
+      //justify-content: space-between;
       i {
         font-size: 1rem;
+        float: right;
       }
     }
     .pop-bottom {
@@ -179,14 +180,30 @@ i {
       margin: .5rem 0;
       .button {
         padding: .2rem .5rem;
+        margin: 0 .5rem;
       }
     }
     .pop-big-title {
+      display: inline-block;
       font: .8rem bold;
     }
     .pop-item {
+      margin: .2rem 0;
       input {
         border-bottom: 1px solid #696969;
+      }
+      textarea {
+        resize: none;
+        border: 1px solid #ececec;
+        border-radius: 3px;
+        width: 90%;
+        overflow: hidden;
+        //padding: .3rem;
+      }
+      span {
+        display: inline-block;
+        vertical-align: top;
+        margin-right: .2rem;
       }
     }
   }

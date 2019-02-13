@@ -34,12 +34,19 @@
         </div>
       </div>
     </div>
-    <div class="resume-item" v-for="(item, index) in resume.resume" :key="index">
-      <div class="item-title"><span class="title">{{item.title}}</span><span class="edit pointer">点击编辑</span></div>
-      <div class="item-content">{{item.content}}</div>
+    <div class="resume-item" v-for="(item, index) in resume" :key="index" >
+      <div class="item-title"><span class="title">{{item.title}}</span><span class="edit pointer" @click="showEdit('showEditItem', index)">点击编辑</span></div>
+      <div class="item-content" ref="content"></div>
     </div>
-    <div></div>
-    <div class="button-wrap"><span class="button">添加简历信息</span></div>
+    <div class="pop-wrap" v-if="showEditItem">
+      <div class="pop-content">
+        <div class="pop-top clear mar-tb"><i class="el-icon-close" @click="closePop('showEditItem')"></i></div>
+        <div class="pop-item"><span>标题 : </span><input v-model="editItem.title"/></div>
+        <div class="pop-item"><span>内容 : </span><textarea v-model="editItem.content" ref="text"></textarea></div>
+        <div class="pop-bottom"><div class="button" @click="deleteItem('showEditItem')">删除信息</div><div class="button" @click="saveContent('showEditItem')">保存信息</div></div>
+      </div>
+    </div>
+    <div class="button-wrap"><span class="button" @click="showEdit('showEditItem')">添加简历信息</span></div>
   </div>
 </template>
 
@@ -47,6 +54,9 @@
 import { fetchResume } from '@/api/personal'
 import editInput from './edit_input'
 import editArea from './edit_area'
+import {autoTextarea} from '@/utils/textAutoHeight'
+import {handleText} from '@/utils/handleText'
+
 export default {
   name: 'resume',
   components: {
@@ -55,27 +65,86 @@ export default {
   },
   data () {
     return {
-      resume: {},
+      resume: [],
       baseInfo: {},
-      showEditBase: false
+      showEditBase: false,
+      editItem: {},
+      showEditItem: false,
+      editIndex: -1
     }
   },
   created () {
     fetchResume(this.$store.state.user.userInfo.id).then(res => {
       this.baseInfo = res.data.resume[0]
       res.data.resume.splice(0, 1)
-      this.resume = res.data
-      // console.log(this.resume)
+      this.resume = res.data.resume
+      let a = setInterval(() => {
+        if (this.$refs.content) {
+          clearInterval(a)
+          this.handleContent()
+        }
+      }, 500)
     })
   },
   methods: {
-    showEdit (param) {
+    handleContent (index) {
+      if (index === undefined) {
+        for (let [index, item] of this.resume.entries()) {
+          this.$refs.content[index].innerHTML = handleText(item.content)
+        }
+      } else {
+        this.$refs.content[index].innerHTML = handleText(this.resume[index].content)
+      }
+    },
+    showEdit (param, index) {
       this[param] = !this[param]
       document.documentElement.style.overflow = 'hidden'
+      if (index !== undefined) {
+        this.editIndex = index
+        this.editItem = this.resume[index]
+        let addEvent = new Promise((resolve, reject) => {
+          let a = setInterval(() => {
+            if (this.$refs.text) {
+              resolve()
+              clearInterval(a)
+            }
+          }, 500)
+        })
+        addEvent.then(() => {
+          autoTextarea(this.$refs.text, 5)
+        })
+      }
     },
     closePop (param) {
       this[param] = !this[param]
       document.documentElement.style.overflow = 'auto'
+    },
+    saveContent (param) {
+      //  api
+      if (this.editIndex === -1) {
+        // api
+        this.resume.push(this.editItem)
+        let len = this.resume.length - 1
+        let a = setInterval(() => {
+          if (this.$refs.content[len]) {
+            this.handleContent(len)
+            clearInterval(a)
+          }
+        }, 500)
+      } else {
+        this.handleContent(this.editIndex)
+      }
+      this.closePop(param)
+      this.cleanData()
+    },
+    deleteItem (param) {
+      //  api
+      this.resume.splice(this.editIndex, 1)
+      this.closePop(param)
+      this.cleanData()
+    },
+    cleanData () {
+      this.editItem = -1
     }
   }
 }
@@ -86,13 +155,17 @@ export default {
     height: auto;
     background: #fff;
     padding: .75rem;
-    .button {
-
+    .button-wrap {
+      font-size: .6rem;
+      text-align: center;
+      .button {
+        padding: .2rem .5rem;
+      }
     }
   }
 .resume-item {
   font-size: .6rem;
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
   .item-title {
     color: #fff;
     border-bottom: 1px solid #45C8F3;
@@ -141,6 +214,12 @@ export default {
   }
   .item-content {
     padding: .5rem;
+    width: 100%;
+    textarea {
+      width: 100%;
+      resize: none;
+      overflow: hidden;
+    }
   }
 }
 </style>

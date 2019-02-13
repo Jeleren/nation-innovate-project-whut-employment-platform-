@@ -3,7 +3,7 @@
     <div class="unlog" v-if="!$store.state.user.isLogin">
       <span>登录 / 注册</span>
     </div>
-    <div class="log" v-if="$store.state.user.isLogin" @click="toPersonal" @mouseover="showSelect" @mouseleave="hideSelect">
+    <div class="log" v-if="$store.state.user.isLogin" @mouseover="showSelect" @mouseleave="hideSelect">
       <img :src="$store.state.user.userInfo.user_image">
       <i class="el-icon-caret-bottom"></i>
       <div class="select-list" ref="select">
@@ -16,17 +16,19 @@
 </template>
 
 <script>
+// import cookie from 'js-cookie'
 export default {
   name: 'log_state',
   methods: {
     toPersonal () {
-      // console.log(this.$router.currentRoute)
+      // console.log('to person')
       if (!/person/.test(this.$router.currentRoute.path)) {
         this.$router.push(`/personal/${this.$store.state.user.userInfo.id}`)
       }
     },
     logOut () {
-      this.router.push('/login')
+      // console.log('log out')
+      this.$router.push({name: 'login'})
     },
     showSelect () {
       this.$refs.select.style.display = 'block'
