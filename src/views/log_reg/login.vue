@@ -44,7 +44,7 @@ export default {
       })
     },
     toUserRegister () {
-      this.$router.push('user_register')
+      this.$router.push('register')
     }
   }
 }

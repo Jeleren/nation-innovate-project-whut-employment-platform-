@@ -2,20 +2,27 @@
   <div class="form-wrap">
     <!--<headerBg></headerBg>-->
     <div class="form">
-      <div class="form-title">企业注册</div>
-      <inputItem placeholder="请输入单位名称" @getContent="setEntName"/>
-      <div class="form-input-item" >
-        <i class="tra-ani" ref="arrow"></i>
-        <input placeholder="请选择省份及城市" readonly v-model="region" @click="showRegionPick" />
-        <regionPick @setRegion = setRegion v-if="show_region_pick" />
-      </div>
-      <inputItem placeholder="请输入电子邮箱" type="email" @getContent="setEmail" />
-      <invalidCheck mode="获取邮箱验证码" :target="email" @getContent="setVerificationCode"/>
+      <div class="form-title">注册</div>
+      <inputItem placeholder="请输入名称" @getContent="setEntName"/>
       <inputItem placeholder="请设置密码，由8-20位数字、字母、符号组成" type="password" @getContent="setPassword" />
+      <inputItem placeholder="请输入相同的密码" type="password" @getContent="setPassword" />
+      <inputItem placeholder="请输入电子邮箱" type="email" @getContent="setEmail" />
+      <div class="set-type"><span>请选择注册类型：</span>
+        <el-radio-group v-model="type">
+          <el-radio :label="1">个人</el-radio>
+          <el-radio :label="2">企业</el-radio>
+          <el-radio :label="3">教师（实验室）</el-radio>
+        </el-radio-group>
+      </div>
+      <!--<div class="form-input-item" >-->
+        <!--<i class="tra-ani" ref="arrow"></i>-->
+        <!--<input placeholder="请选择省份及城市" readonly v-model="region" @click="showRegionPick" />-->
+        <!--<regionPick @setRegion = setRegion v-if="show_region_pick" />-->
+      <!--</div>-->
+      <invalidCheck mode="获取邮箱验证码" :target="email" @getContent="setVerificationCode"/>
       <div class="form-bottom">
         <div>
           <div class="form-button zc-button">注册</div>
-          <a class="underline beside-a pointer" @click="toUserRegister">用户注册</a>
         </div>
       </div>
     </div>
@@ -27,6 +34,7 @@ import headerBg from '../../components/header_bg'
 import inputItem from '../../components/input_item'
 import regionPick from './region_pick'
 import invalidCheck from './invalid_check'
+// import el-radio from 'element-ui/el-radio'
 export default {
   name: 'ent_reg',
   components: {
@@ -42,7 +50,8 @@ export default {
       email: '',
       password: '',
       region: '',
-      v_code: ''
+      v_code: '',
+      type: 1
     }
   },
   methods: {
@@ -106,4 +115,8 @@ export default {
   display: flex;
   justify-content: center;
 }
+  .set-type {
+    font-size: .6rem;
+    margin-top: 1.5rem;
+  }
 </style>

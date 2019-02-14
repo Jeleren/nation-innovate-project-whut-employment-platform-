@@ -6,11 +6,12 @@
 .form{
   position: absolute;
   top: 5rem;
-  width: 33.75rem;
+  width: 25rem;
   //height: 20.5rem;
-  padding: 1rem 4.5rem;
+  padding: 1rem 2rem;
   box-sizing: border-box;
   background-color: #fff;
+  text-align: center;
   .form-title {
     text-align: left;
     font-size: 1.125rem;
@@ -53,7 +54,8 @@
     }
   }
   .form-button{
-    width: 22rem;
+    display: inline-block;
+    width: 10rem;
     height: 1.625rem;
     color: #fff;
     text-align: center;

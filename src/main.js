@@ -4,12 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import 'element-ui/lib/theme-chalk/index.css'
-import Message from 'element-ui'
+import {Message, Radio, RadioGroup} from 'element-ui'
 import './style/common.scss'
 import store from './store'
 import './mock'
 
 Vue.use(Message)
+Vue.use(Radio)
+Vue.use(RadioGroup)
 
 Vue.config.productionTip = false
 

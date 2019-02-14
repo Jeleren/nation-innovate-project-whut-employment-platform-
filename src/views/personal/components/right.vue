@@ -18,9 +18,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.right-wrap {
-  display: inline-block;
-  vertical-align: top;
-  width: 28.5%;
-}
 </style>

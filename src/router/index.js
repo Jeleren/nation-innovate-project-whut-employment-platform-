@@ -20,15 +20,15 @@ const router = new Router({
       component: () => import('@/views/log_reg/user_reg')
     },
     {
-      path: '/ent_register',
-      name: 'ent_register',
-      component: () => import('@/views/log_reg/ent_reg')
+      path: '/register',
+      name: 'register',
+      component: () => import('@/views/log_reg/reg')
     },
     {
       path: '/directory_user',
       name: 'directory_user',
       component: () => import('@/views/first_page/user/index'),
-      redirect: 'main',
+      redirect: '/main',
       children: [
         {
           path: '/main',
@@ -59,17 +59,39 @@ const router = new Router({
           path: '/personal/:user_id',
           name: 'personal',
           component: () => import('@/views/personal/index'),
-          redirect: '/personal/:user_id/active',
+          redirect: '/gallery',
           children: [
             {
-              path: '/personal/:user_id/active',
-              name: 'active',
-              component: () => import('@/views/personal/components/active')
+              path: '/gallery',
+              name: 'gallery',
+              component: () => import('@/views/personal/components/left'),
+              redirect: '/active',
+              children: [
+                {
+                  path: '/active',
+                  name: 'active',
+                  component: () => import('@/views/personal/components/active')
+                },
+                {
+                  path: '/resume',
+                  name: 'resume',
+                  component: () => import('@/views/personal/components/resume')
+                }
+              ]
             },
             {
-              path: '/personal/:user_id/resume',
-              name: 'resume',
-              component: () => import('@/views/personal/components/resume')
+              path: '/fan',
+              name: 'fan',
+              component: () => import('@/views/personal/fan')
+            },
+            {
+              path: '/follow',
+              name: 'follow',
+              component: () => import('@/views/personal/follow')
+
+            },
+            {
+              path: 'collect'
             }
           ]
         }

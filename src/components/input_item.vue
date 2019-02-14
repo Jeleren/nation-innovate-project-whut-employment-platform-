@@ -1,6 +1,6 @@
 <template>
   <div class="form-input-item">
-    <i ref="i"></i><input :type="type" v-model="content" :placeholder="placeholder" @focus="inputFocus" @blur="inputBlur"/>
+    <i ref="i"></i><input :type="type" v-model="content" :placeholder="placeholder" @focus="inputFocus" @blur="inputBlur" autocomplete="off"/>
   </div>
 </template>
 

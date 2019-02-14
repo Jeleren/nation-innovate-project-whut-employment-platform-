@@ -14,6 +14,10 @@ textarea {
 i {
   cursor: pointer;
 }
+a {
+  text-decoration: none;
+  color: #303133;
+}
 //清除浮动
 //.clear {
 //  clear: both;
@@ -51,6 +55,9 @@ i {
   background-color: #22b9eb;
   cursor: pointer;
   color: #fff;
+  padding: .2rem .3rem;
+  font-size: .6rem;
+  //font-weight: bold;
 }
 
 .hint-word {
@@ -61,18 +68,18 @@ i {
 //内容区域的大体样式
 .left-wrap {
   display: inline-block;
-  width: 68.7%;
+  width: 23.29rem;
   min-height: 13.5rem;
   margin-right: .6rem;
 }
 .content{
-  width: 56.25%;
+  width: 57%;
   margin: 0 auto;
 }
 .right-wrap {
   display: inline-block;
   vertical-align: top;
-  width: 28.5%;
+  width: 10rem;
 }
 
   // header 和 screenTop 的 margin

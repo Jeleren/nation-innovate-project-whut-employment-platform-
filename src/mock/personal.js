@@ -27,7 +27,7 @@ function getActiveList (count) {
       })
     )
   }
-  console.log(list)
+  // console.log(list)
   return list
 }
 
@@ -79,9 +79,23 @@ function getRecPros () {
     ]
   })
 }
+
+function getFollow () {
+  return Mock.mock({
+    'followList|1-20': [{
+      id: '@increment',
+      userInfo: {
+        username: '@cname',
+        user_image: '@image',
+        intro: '@Csentence'
+      }
+    }]
+  })
+}
 export default {
   getUserInfoById,
   getActiveList,
   getResume,
-  getRecPros
+  getRecPros,
+  getFollow
 }

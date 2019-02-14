@@ -4,7 +4,7 @@
       <img :src="$store.state.user.userInfo.user_image"/>
       <span>{{$store.state.user.userInfo.username}}</span>
       <div class="button">
-        <span v-if="isSelf" class="edit">=编辑</span>
+        <!--<span v-if="isSelf" class="edit">=编辑</span>-->
         <span v-if="!isSelf">
           <span v-if="isFollow"><i class="el-icon-check"></i>已关注</span>
           <span v-if="!isFollow">+ 关注</span>

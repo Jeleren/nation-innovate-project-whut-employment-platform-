@@ -14,5 +14,6 @@ Mock.mock(/\/userInfo/, 'get', personal.getUserInfoById())
 Mock.mock(/\/active_list/, 'get', personal.getActiveList(5))
 Mock.mock(/\/resume/, 'get', personal.getResume())
 Mock.mock(/\/recPros/, 'get', personal.getRecPros())
+Mock.mock(/\/follow/, 'get', personal.getFollow())
 
 export default Mock

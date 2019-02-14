@@ -9,3 +9,6 @@ export function fetchResume (id) {
 export function fetchRecPros (id) {
   return axios.get(`/recPros/?id=${id}`)
 }
+export function fetchFollowList (id) {
+  return axios.get(`/follow/?id=${id}`)
+}

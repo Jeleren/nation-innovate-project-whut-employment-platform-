@@ -1,8 +1,8 @@
 <template>
   <div class="ff-wrap">
-    <div class="ff-item right-line"><div class="ff-data">{{ff.follow}}</div><div>关注</div></div>
-    <div class="ff-item right-line"><div class="ff-data">{{ff.fan}}</div><div>粉丝</div></div>
-    <div class="ff-item"><div class="ff-data">{{ff.active}}</div><div>动态</div></div>
+    <div class="ff-item right-line"><div class="ff-data">{{ff.follow}}</div><router-link to="/follow">关注</router-link></div>
+    <div class="ff-item right-line"><div class="ff-data">{{ff.fan}}</div><router-link to="/fan">粉丝</router-link></div>
+    <div class="ff-item"><div class="ff-data">{{ff.active}}</div><router-link to="/collect">收藏</router-link></div>
   </div>
 </template>
 
