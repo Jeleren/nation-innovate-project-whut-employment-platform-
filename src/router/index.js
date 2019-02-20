@@ -15,11 +15,6 @@ const router = new Router({
       component: login
     },
     {
-      path: '/user_register',
-      name: 'user_register',
-      component: () => import('@/views/log_reg/user_reg')
-    },
-    {
       path: '/register',
       name: 'register',
       component: () => import('@/views/log_reg/reg')
@@ -94,6 +89,64 @@ const router = new Router({
               path: 'collect'
             }
           ]
+        }
+      ]
+    },
+    {
+      path: '/ent',
+      name: 'ent',
+      component: () => import('@/views/ent/index'),
+      redirect: '/ent/active',
+      children: [
+        {
+          path: '/ent/active',
+          name: 'active',
+          component: () => import('@/views/ent/active/active')
+        },
+        {
+          path: '/ent/employment',
+          name: 'ent-employment',
+          component: () => import('@/views/ent/employment/index'),
+          redirect: '/ent/employment/edit',
+          children: [
+            {
+              path: '/ent/employment/edit',
+              name: '',
+              component: () => import('@/views/ent/employment/emp_edit')
+            },
+            {
+              path: '/ent/employment/manage',
+              name: '',
+              component: () => import('@/views/ent/employment/emp_manage')
+            },
+            {
+              path: '/ent/employment/resume',
+              name: '',
+              component: () => import('@/views/ent/employment/emp_resume')
+            }
+          ]
+        },
+        {
+          path: '/ent/competition',
+          name: '',
+          component: () => import('@/views/ent/competition/competition'),
+          children: [
+            {
+              path: '/ent/competition/edit',
+              name: '',
+              component: () => import('@/views/ent/competition/comp_edit')
+            },
+            {
+              path: '/ent/competition/manage',
+              name: '',
+              component: () => import('@/views/ent/competition/comp_manage')
+            }
+          ]
+        },
+        {
+          path: '/ent/info',
+          name: '',
+          component: () => import('@/views/ent/info/info')
         }
       ]
     }

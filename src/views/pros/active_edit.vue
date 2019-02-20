@@ -206,7 +206,7 @@ export default {
           let reader = new FileReader()
           reader.readAsDataURL(item)
           let _this = this
-          reader.onload = function (e) {
+          reader.onload = function () {
             try {
               _this.imgList.push(reader.result)
             } catch (e) {
@@ -237,6 +237,7 @@ export default {
   .active-edit-wrap {
     background: #fff;
     padding: .625rem .7rem;
+    margin-bottom: .5rem;
     .text-wrap {
       border: 1px solid rgba(187,187,187,1);
       padding: .2rem .2rem;

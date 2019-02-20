@@ -1,11 +1,10 @@
 <template>
-  <div class="per-header">
+  <div class="per-header boxShadow">
     <div class="content-wrap">
       <img :src="$store.state.user.userInfo.user_image"/>
       <span>{{$store.state.user.userInfo.username}}</span>
-      <div class="button">
-        <!--<span v-if="isSelf" class="edit">=编辑</span>-->
-        <span v-if="!isSelf">
+      <div class="button" v-if="!isSelf">
+        <span>
           <span v-if="isFollow"><i class="el-icon-check"></i>已关注</span>
           <span v-if="!isFollow">+ 关注</span>
         </span>
@@ -38,14 +37,12 @@ export default {
   position: relative;
   height: 3rem;
   background: #0074E1;
-  box-shadow:0 1px 3px 0 rgba(214,214,214,1);
   color: #fff;
   margin-bottom: .93rem;
   .content-wrap {
     position: absolute;
     display: flex;
     align-items: center;
-    bottom: -0.1875rem;
     height: 3.125rem;
     //line-height: 3.125rem;
     img {

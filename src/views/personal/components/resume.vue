@@ -13,20 +13,34 @@
           <span class="left-item-wrap"><span>毕业院校 : </span>{{baseInfo.school}}</span>
         </div>
         <div class="right">
-          <img :src="baseInfo.image"/>
+          <img :src="baseInfo.image" @click="showImagePicker" title="更改图片"/>
         </div>
         <div class="pop-wrap" v-if="showEditBase">
           <div class="pop-content">
             <div class="pop-top mar-tb">
               <div class="pop-big-title">{{baseInfo.title}}</div><i class="el-icon-close" @click="closePop('showEditBase')"></i>
             </div>
-            <div class="pop-item mar-tb"><span>姓&emsp;&emsp;名 : </span><input v-model="baseInfo.name"/></div>
-            <div class="pop-item mar-tb"><span>出生年月 : </span><input v-model="baseInfo.birth"/></div>
-            <div class="pop-item mar-tb"><span>民&emsp;&emsp;族 : </span><input v-model="baseInfo.nation"/></div>
-            <div class="pop-item mar-tb"><span>性&emsp;&emsp;别 : </span><input v-model="baseInfo.gender"/></div>
-            <div class="pop-item mar-tb"><span>政治面貌 : </span><input v-model="baseInfo.political"/></div>
-            <div class="pop-item mar-tb"><span>学&emsp;&emsp;历 : </span><input v-model="baseInfo.edu"/></div>
-            <div class="pop-item mar-tb"><span>毕业院校 : </span><input v-model="baseInfo.school"/></div>
+            <div class="pop-item mar-tb"><span>姓&emsp;&emsp;名 : </span><label>
+              <input v-model="baseInfo.name"/>
+            </label></div>
+            <div class="pop-item mar-tb"><span>出生年月 : </span><label>
+              <input v-model="baseInfo.birth"/>
+            </label></div>
+            <div class="pop-item mar-tb"><span>民&emsp;&emsp;族 : </span><label>
+              <input v-model="baseInfo.nation"/>
+            </label></div>
+            <div class="pop-item mar-tb"><span>性&emsp;&emsp;别 : </span><label>
+              <input v-model="baseInfo.gender"/>
+            </label></div>
+            <div class="pop-item mar-tb"><span>政治面貌 : </span><label>
+              <input v-model="baseInfo.political"/>
+            </label></div>
+            <div class="pop-item mar-tb"><span>学&emsp;&emsp;历 : </span><label>
+              <input v-model="baseInfo.edu"/>
+            </label></div>
+            <div class="pop-item mar-tb"><span>毕业院校 : </span><label>
+              <input v-model="baseInfo.school"/>
+            </label></div>
             <div class="pop-bottom">
               <div class="button">保存信息</div>
             </div>
@@ -41,12 +55,17 @@
     <div class="pop-wrap" v-if="showEditItem">
       <div class="pop-content">
         <div class="pop-top clear mar-tb"><i class="el-icon-close" @click="closePop('showEditItem')"></i></div>
-        <div class="pop-item"><span>标题 : </span><input v-model="editItem.title"/></div>
-        <div class="pop-item"><span>内容 : </span><textarea v-model="editItem.content" ref="text"></textarea></div>
+        <div class="pop-item"><span>标题 : </span><label>
+          <input v-model="editItem.title"/>
+        </label></div>
+        <div class="pop-item"><span>内容 : </span><label>
+          <textarea v-model="editItem.content" ref="text"></textarea>
+        </label></div>
         <div class="pop-bottom"><div class="button" @click="deleteItem('showEditItem')">删除信息</div><div class="button" @click="saveContent('showEditItem')">保存信息</div></div>
       </div>
     </div>
     <div class="button-wrap"><span class="button" @click="showEdit('showEditItem')">添加简历信息</span></div>
+    <imagePicker @setImage="setImage" @closeImagePicker="closeImagePicker" v-if="imagePickerState"/>
   </div>
 </template>
 
@@ -56,12 +75,14 @@ import editInput from './edit_input'
 import editArea from './edit_area'
 import {autoTextarea} from '@/utils/textAutoHeight'
 import {handleText} from '@/utils/handleText'
+import imagePicker from '../../../components/imagePicker'
 
 export default {
   name: 'resume',
   components: {
     editInput,
-    editArea
+    editArea,
+    imagePicker
   },
   data () {
     return {
@@ -70,7 +91,8 @@ export default {
       showEditBase: false,
       editItem: {},
       showEditItem: false,
-      editIndex: -1
+      editIndex: -1,
+      imagePickerState: false
     }
   },
   created () {
@@ -145,6 +167,18 @@ export default {
     },
     cleanData () {
       this.editItem = -1
+    },
+    setImage (img) {
+      this.baseInfo.image = img.src
+    },
+    showImagePicker () {
+      // this.$refs.imagePicker.methods.setShow()
+      this.imagePickerState = true
+      document.documentElement.style.overflow = 'hidden'
+    },
+    closeImagePicker () {
+      this.imagePickerState = false
+      document.documentElement.style.overflow = 'auto'
     }
   }
 }
@@ -207,6 +241,7 @@ export default {
     .right {
       display: inline-block;
       img {
+        cursor: pointer;
         max-width: 6rem;
         max-height: 8rem;
       }

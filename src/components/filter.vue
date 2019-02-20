@@ -1,12 +1,12 @@
 <template>
   <div class="pros-list-wrap" v-if="prosList.length">
     <span>分类：</span>
-    <div class="title pointer" @mouseover="showList('first')" @mouseleave="hideList('first')">{{prosList[firstIndex].pro}}<i class="el-icon-arrow-down"></i>
+    <div class="title pointer" @click="showList('first')" @mouseleave="hideList('first')">{{prosList[firstIndex].pro}}<i class="el-icon-arrow-down"></i>
       <ul class="list" ref="first">
         <li v-for="(item, index) in prosList" :key="index" @click="handleFirst(index)">{{item.pro}}</li>
       </ul>
     </div>
-    <div class="title pointer" v-if="prosList[firstIndex].child" @mouseover="showList('second')" @mouseleave="hideList('second')">{{prosList[firstIndex].child[secondIndex].pro}}<i class="el-icon-arrow-down"></i>
+    <div class="title pointer" v-if="prosList[firstIndex].child" @click="showList('second')" @mouseleave="hideList('second')">{{prosList[firstIndex].child[secondIndex].pro}}<i class="el-icon-arrow-down"></i>
       <ul class="list" ref="second">
         <li v-for="(item, index) in prosList[firstIndex].child" :key="index" @click="handleSecond(index)">{{item.pro}}</li>
       </ul>
@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     prosList () {
-      console.log(this.$store.state.pros.prosList)
+      // console.log(this.$store.state.pros.prosList)
       return this.$store.state.pros.prosList
     }
   },

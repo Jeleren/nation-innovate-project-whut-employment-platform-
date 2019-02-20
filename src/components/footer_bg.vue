@@ -16,5 +16,6 @@ export default {
   height: 3.8rem;
   margin-top: 2.5rem;
   background-color: #3EAAE9;
+  min-width: 34.3rem;
 }
 </style>
