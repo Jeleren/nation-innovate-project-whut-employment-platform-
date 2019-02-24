@@ -33,6 +33,7 @@ const user = {
             commit('SET_LOG_STATE', true)
             commit('SET_USER_INFO', decodeRes)
             Cookies.set('user_id', decodeRes.user_id)
+            Cookies.set('token', res.data.token)
             resolve()
           } else {
             reject(res.error)

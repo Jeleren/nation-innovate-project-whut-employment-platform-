@@ -27,7 +27,7 @@ export default {
       }
     },
     toInfoSet () {
-      this.$router.push('/userInfo')
+      this.$router.push('/personal/userInfo')
     },
     logOut () {
       // console.log('log out')

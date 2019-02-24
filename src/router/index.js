@@ -23,30 +23,30 @@ const router = new Router({
       path: '/directory_user',
       name: 'directory_user',
       component: () => import('@/views/first_page/user/index'),
-      redirect: '/main',
+      redirect: '/directory_user/main',
       children: [
         {
-          path: '/main',
+          path: '/directory_user/main',
           name: 'main',
           component: () => import('@/views/first_page/user/first_page')
         },
         {
-          path: '/employment',
+          path: '/directory_user/employment',
           name: 'employment',
           component: () => import('@/views/employment/index')
         },
         {
-          path: '/competition',
+          path: '/directory_user/competition',
           name: 'competition',
           component: () => import('@/views/competition/index')
         },
         {
-          path: '/lab',
+          path: '/directory_user/lab',
           name: 'lab',
           component: () => import('@/views/lab/index')
         },
         {
-          path: '/pros',
+          path: '/directory_user/pros',
           name: 'pros',
           component: () => import('@/views/pros/index')
         },
@@ -54,42 +54,42 @@ const router = new Router({
           path: '/personal/:user_id',
           name: 'personal',
           component: () => import('@/views/personal/index'),
-          redirect: '/gallery',
+          redirect: '/personal/gallery',
           children: [
             {
-              path: '/gallery',
+              path: '/personal/gallery',
               name: 'gallery',
               component: () => import('@/views/personal/components/left'),
-              redirect: '/active',
+              redirect: '/personal/active',
               children: [
                 {
-                  path: '/active',
+                  path: '/personal/active',
                   name: 'active',
                   component: () => import('@/views/personal/components/active')
                 },
                 {
-                  path: '/resume',
+                  path: '/personal/resume',
                   name: 'resume',
                   component: () => import('@/views/personal/components/resume')
                 }
               ]
             },
             {
-              path: '/fan',
+              path: '/personal/fan',
               name: 'fan',
               component: () => import('@/views/personal/fan')
             },
             {
-              path: '/follow',
+              path: '/personal/follow',
               name: 'follow',
               component: () => import('@/views/personal/follow')
 
             },
             {
-              path: '/collect'
+              path: '/personal/collect'
             },
             {
-              path: '/userInfo',
+              path: '/personal/userInfo',
               name: '',
               component: () => import('@/views/personal/info')
             }
@@ -158,7 +158,7 @@ const router = new Router({
   ]
 })
 router.beforeEach((to, from, next) => {
-  if (!store.state.user.userInfo.id && cookie.get('user_id')) {
+  if (!store.state.user.userInfo.user_id && cookie.get('user_id')) {
     store.dispatch('getSelfInfo')
   }
   next()

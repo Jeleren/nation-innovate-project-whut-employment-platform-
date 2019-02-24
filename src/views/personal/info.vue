@@ -21,6 +21,7 @@
 <script>
 import {autoTextarea} from '@/utils/textAutoHeight'
 import imagePicker from '../../components/imagePicker'
+import {apiChangeUserInfo} from '@/api/user'
 
 export default {
   name: 'info',
@@ -38,7 +39,9 @@ export default {
     this.form = this.$store.state.user.userInfo
   },
   methods: {
-    onSubmit () {},
+    onSubmit () {
+      apiChangeUserInfo(this.$store.state.user.userInfo.user_id, this.form)
+    },
     setImage (img) {
       this.form.head = img.src
     },
