@@ -110,21 +110,13 @@ export default {
     changeWindow (e) {
       // console.log(e, e.clientX)
       let dragDiv = this.$refs.window
-      // console.log(dragDiv.offsetLeft)
       let distanceX = e.clientX - dragDiv.offsetLeft
       let distanceY = e.clientY - dragDiv.offsetTop
       let clienX = e.clientX
       this.divHeight = parseFloat(dragDiv.style.height)
       this.divWidth = parseFloat(dragDiv.style.width)
-      // e.preventDefault()
-      // 防止冒泡
-      // e.stopPropagation()
-      // dragDiv.addEventListener('mousedown', mouseDown, false)
-      // dragDiv.addEventListener('mouseup', endDrag, false)
-      // dragDiv.addEventListener('mousemove', drag, false)
       let _this = this
       document.onmousedown = function mouseDown (e) {
-        // console.log('down')
         if (e.target.className !== 'resize') {
           document.onmousemove = drag
         } else {
@@ -136,7 +128,6 @@ export default {
         e.preventDefault()
       }
       function drag (e) {
-        // console.log('moving')
         let left = e.clientX - distanceX
         let top = e.clientY - distanceY
         if (left < 0) {
@@ -157,7 +148,6 @@ export default {
         _this.clipImage()
       }
       function endDrag (e) {
-        // console.log('mouseup')
         document.onclick = null
         document.onmousemove = null
         document.onmouseup = null

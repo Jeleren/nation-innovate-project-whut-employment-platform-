@@ -8,7 +8,7 @@
         <el-input type="textarea" ref="text" v-model="form.desc"></el-input>
       </el-form-item>
       <el-form-item label="头像">
-        <img :src="$store.state.user.userInfo.user_image" title="点击修改头像" @click="changeImage"/>
+        <img :src="$store.state.user.userInfo.head" title="点击修改头像" @click="changeImage"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">保存</el-button>

@@ -4,11 +4,11 @@
       <span>登录 / 注册</span>
     </div>
     <div class="log" v-if="$store.state.user.isLogin" @mouseover="showSelect" @mouseleave="hideSelect">
-      <img :src="$store.state.user.userInfo.user_image">
+      <img :src="$store.state.user.userInfo.head">
       <i class="el-icon-caret-bottom"></i>
       <div class="select-list" ref="select">
         <div class="list-item" @click="toPersonal">个人中心</div>
-        <div class="list-item">个人设置</div>
+        <div class="list-item" @click="toInfoSet" >个人设置</div>
         <div class="list-item" @click="logOut">退出</div>
       </div>
     </div>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-// import cookie from 'js-cookie'
+import cookie from 'js-cookie'
 export default {
   name: 'log_state',
   methods: {
@@ -26,8 +26,12 @@ export default {
         this.$router.push(`/personal/${this.$store.state.user.userInfo.id}`)
       }
     },
+    toInfoSet () {
+      this.$router.push('/userInfo')
+    },
     logOut () {
       // console.log('log out')
+      cookie.remove('user_id')
       this.$router.push({name: 'login'})
     },
     showSelect () {

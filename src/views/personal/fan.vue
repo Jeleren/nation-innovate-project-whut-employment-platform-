@@ -3,7 +3,7 @@
     <div class="title">全部粉丝</div>
     <div class="follow-wrap">
       <div class="follow-item" v-for="(item, index) in fanList" :key="index">
-        <img :src="item.userInfo.user_image"/>
+        <img :src="item.userInfo.head"/>
         <div class="item-right-wrap">
           <div class="name">{{item.userInfo.username}}</div>
           <div class="intro">{{item.userInfo.intro}}</div>

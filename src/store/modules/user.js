@@ -1,5 +1,6 @@
 import { login, getUserInfoById } from '@/api/log_reg'
 import Cookies from 'js-cookie'
+import jwt from 'jsonwebtoken'
 
 const user = {
   state: {
@@ -27,10 +28,11 @@ const user = {
       return new Promise((resolve, reject) => {
         login(params).then(res => {
           if (res.status === 200) {
-            console.log(res.data)
+            let decodeRes = jwt.decode(res.data.token)
+            console.log(decodeRes)
             commit('SET_LOG_STATE', true)
-            commit('SET_USER_INFO', res.data)
-            Cookies.set('user_id', res.data.id)
+            commit('SET_USER_INFO', decodeRes)
+            Cookies.set('user_id', decodeRes.user_id)
             resolve()
           } else {
             reject(res.error)

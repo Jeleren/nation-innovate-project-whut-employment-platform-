@@ -3,11 +3,12 @@ import Mock from 'mockjs'
 function getUserInfoById () {
   return Mock.mock({
     id: Mock.Random.integer(1, 10),
-    user_image: '@image',
+    head: '@image',
     user_type: 'user' || 'ent',
     username: '@cname',
     isFollow: '@boolean',
-    gender: ''
+    gender: '',
+    desc: '@csentence'
   })
 }
 function getActiveList (count) {
@@ -18,7 +19,7 @@ function getActiveList (count) {
         id: '@increment',
         userInfo: Mock.mock({
           id: '@increment',
-          user_image: '@image',
+          head: '@image',
           username: '@cname'
         }),
         content: '@cparagraph(100, 200)',
@@ -45,7 +46,7 @@ function getResume () {
         marry: '未婚' || '已婚',
         nation: '汉',
         contact_way: '@phone',
-        user_image: '@image',
+        head: '@image',
         political: '群众',
         gender: '男',
         image: '@image'
@@ -86,7 +87,7 @@ function getFollow () {
       id: '@increment',
       userInfo: {
         username: '@cname',
-        user_image: '@image',
+        head: '@image',
         intro: '@Csentence'
       }
     }]

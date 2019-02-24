@@ -7,7 +7,7 @@
         <i></i><input id="user" type="text" placeholder="请输入用户名 / 手机号码 / 邮箱" v-model="username">
       </div>
       <div class="form-input-item">
-        <i></i><input type="text" placeholder="请输入密码" v-model="password">
+        <i></i><input type="password" placeholder="请输入密码" v-model="password">
       </div>
       <div class="form-bottom">
         <div class="form-button" @click="doLogin">登&nbsp;&nbsp;&nbsp;录</div>
@@ -30,8 +30,8 @@ export default {
   },
   data () {
     return {
-      username: '',
-      password: ''
+      username: 'jeleren',
+      password: '123456'
     }
   },
   methods: {

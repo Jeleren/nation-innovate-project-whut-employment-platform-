@@ -1,7 +1,7 @@
 <template>
   <div class="small-head">
     <div class="head-img">
-      <img :src="$store.state.user.userInfo.user_image"/>
+      <img :src="$store.state.user.userInfo.head"/>
     </div>
   </div>
 </template>

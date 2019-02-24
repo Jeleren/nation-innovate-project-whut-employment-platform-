@@ -1,7 +1,7 @@
 <template>
   <div class="per-header boxShadow">
     <div class="content-wrap">
-      <img :src="$store.state.user.userInfo.user_image"/>
+      <img :src="$store.state.user.userInfo.head"/>
       <span>{{$store.state.user.userInfo.username}}</span>
       <div class="button" v-if="!isSelf">
         <span>

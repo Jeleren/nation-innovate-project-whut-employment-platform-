@@ -225,7 +225,7 @@ export default {
       this.imgList.splice(index, 1)
     },
     submitActive () {
-      let item = {id: 2, userInfo: {username: 'aa', user_image: ''}, time: 'ad', content: `${this.content}`}
+      let item = {id: 2, userInfo: {username: 'aa', head: ''}, time: 'ad', content: `${this.content}`}
       this.$store.commit('ADD_ACTIVE_ITEM', item)
       console.log(item)
     }

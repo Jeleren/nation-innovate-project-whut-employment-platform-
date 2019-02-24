@@ -8,7 +8,7 @@ Mock.mock(/\/first_page\/fetchCompetition/, 'get', firstPage.getComList(3))
 Mock.mock(/\/first_page\/fetchLaboratory/, 'get', firstPage.getLab())
 Mock.mock(/\/first_page\/fetchProsList/, 'get', firstPage.getProsList())
 
-Mock.mock(/\/login/, 'post', personal.getUserInfoById())
+// Mock.mock(/\/login/, 'post', personal.getUserInfoById())
 Mock.mock(/\/userInfo/, 'get', personal.getUserInfoById())
 
 Mock.mock(/\/active_list/, 'get', personal.getActiveList(5))

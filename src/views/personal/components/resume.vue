@@ -105,7 +105,7 @@ export default {
           clearInterval(a)
           this.handleContent()
         }
-      }, 500)
+      }, 100)
     })
   },
   methods: {
@@ -130,7 +130,7 @@ export default {
               resolve()
               clearInterval(a)
             }
-          }, 500)
+          }, 100)
         })
         addEvent.then(() => {
           autoTextarea(this.$refs.text, 5)
@@ -152,7 +152,7 @@ export default {
             this.handleContent(len)
             clearInterval(a)
           }
-        }, 500)
+        }, 100)
       } else {
         this.handleContent(this.editIndex)
       }

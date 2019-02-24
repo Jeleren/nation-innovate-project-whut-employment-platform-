@@ -86,7 +86,12 @@ const router = new Router({
 
             },
             {
-              path: 'collect'
+              path: '/collect'
+            },
+            {
+              path: '/userInfo',
+              name: '',
+              component: () => import('@/views/personal/info')
             }
           ]
         }

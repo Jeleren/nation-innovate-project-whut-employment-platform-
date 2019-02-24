@@ -2,7 +2,7 @@
   <div class="item-wrap" ref="item">
     <div class="top">
       <div class="left-wrap">
-        <span class="user-image" :style="{'background-image':`url(${item.userInfo.user_image}`}"></span>
+        <span class="user-image" :style="{'background-image':`url(${item.userInfo.head}`}"></span>
         <div class="name-wrap">
           <div class="user-name">{{item.userInfo.username}}</div>
           <div class="act-time">{{item.time}}</div>
@@ -36,13 +36,13 @@
     </div>
     <div class="comment" v-if="isShowComment">
       <div class="top-comment clear">
-        <div class="user-image" :style="{'background-image': `url(${$store.state.user.userInfo.user_image})`}"></div>
+        <div class="user-image" :style="{'background-image': `url(${$store.state.user.userInfo.head})`}"></div>
         <textarea ref="text" class="textarea" rows="1"></textarea>
         <div class="button">评论</div>
       </div>
       <div class="comment-list-wrap">
         <div class="comment-item" v-for="(item, index) in commentList" :key="index">
-          <div class="user-image" :style="{'background-image': `url(${item.user_image})`}"></div>
+          <div class="user-image" :style="{'background-image': `url(${item.head})`}"></div>
           <div class="comment-content">
             <div class="user-name">{{item.username}}</div>
             <span>{{item.content}}</span>
@@ -75,7 +75,7 @@ export default {
       },
       commentList: [{
         id: 1,
-        user_image: 'https://misc.aotu.io/712/2018-03-22-nerv/nerv_cover_logo.jpg',
+        head: 'https://misc.aotu.io/712/2018-03-22-nerv/nerv_cover_logo.jpg',
         content: 'goodajsdhfkafjasdhfkajhfa卡机话费卡数据借否卡都是废话哈看收到话费卡就是放空间啊哈数据库hkakajhsfjkashkfhasjdfhkajsdadsfhk',
         username: 'ssd啊看见的话'
       }],
