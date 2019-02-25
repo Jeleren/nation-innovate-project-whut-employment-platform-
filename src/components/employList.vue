@@ -10,7 +10,7 @@
         <div>
           <div class="title blue-width">公司：{{empItem.emp}}</div>
           <div class="title blue-width">职位详情</div>
-          <div class="emp-content">{{empItem.content}}</div>
+          <div class="emp-content">{{empItem.text}}</div>
         </div>
         <div class="button-wrap"><span class="button">投递简历</span></div>
       </div>

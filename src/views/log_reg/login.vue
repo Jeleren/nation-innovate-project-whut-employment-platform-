@@ -40,7 +40,7 @@ export default {
       if (!this.username || !this.password) {
         this.$message({
           type: 'warning',
-          content: '请输入完整信息'
+          message: '请输入完整信息'
         })
       }
       let user = new FormData()

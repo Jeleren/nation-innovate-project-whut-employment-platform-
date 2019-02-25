@@ -27,7 +27,5 @@ export default {
 </script>
 
 <style scoped>
-.first-page-wrap {
-  /*width: ;*/
-}
+
 </style>

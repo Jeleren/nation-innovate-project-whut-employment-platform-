@@ -23,8 +23,8 @@ export default {
   },
   created () {
     fetchEmployment().then(res => {
-      console.log('emp_list', res.data)
-      this.emp_list = res.data
+      // console.log('emp_list', res.data)
+      this.emp_list = res.data.empList
     })
   }
 }
@@ -32,6 +32,7 @@ export default {
 
 <style lang="scss" scoped>
   .employment {
+    overflow: hidden;
     .content-wrap {
       height: 7.625rem;
       background-color: #fff;

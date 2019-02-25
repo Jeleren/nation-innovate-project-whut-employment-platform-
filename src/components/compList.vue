@@ -3,7 +3,7 @@
     <div v-for="(item, index) in comList" :key="index" class="com-wrap" @click="showDetail(index)">
       <img :src="item.image_url"/>
       <div class="title">{{item.title}}</div>
-      <div class="com-content">{{item.content}}</div>
+      <div class="com-content">{{item.text}}</div>
       <div class="state" :class="{'on-state': item.state, 'off-state': !item.state}">
         <div v-if="item.state"><i></i><span>进行中</span></div>
         <div v-if="!item.state"><i></i><span>已结束</span></div>
@@ -26,21 +26,18 @@
 </template>
 
 <script>
-import { fetchCompetition } from '@/api/first_page'
 
 export default {
   name: 'compList',
+  props: {
+    comList: []
+  },
   data () {
     return {
-      comList: [],
+      // comList: [],
       isShowDetail: false,
       compItem: {}
     }
-  },
-  created () {
-    fetchCompetition().then(res => {
-      this.comList = res.data
-    })
   },
   methods: {
     showDetail (index) {

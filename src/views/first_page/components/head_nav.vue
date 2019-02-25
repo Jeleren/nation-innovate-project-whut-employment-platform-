@@ -1,11 +1,11 @@
 <template>
   <div class="head-nav">
     <div class="nav-wrap clear">
-      <router-link to="main" active>&nbsp;&nbsp;首页&nbsp;&nbsp;</router-link>
-      <router-link to="employment">招聘信息</router-link>
-      <router-link to="competition">大赛活动</router-link>
-      <router-link to="lab">实验室展示</router-link>
-      <router-link to="pros">职业圈</router-link>
+      <router-link to="/directory_user/main" active>&nbsp;&nbsp;首页&nbsp;&nbsp;</router-link>
+      <router-link to="/directory_user/employment">招聘信息</router-link>
+      <router-link to="/directory_user/competition">大赛活动</router-link>
+      <router-link to="/directory_user/lab">实验室展示</router-link>
+      <router-link to="/directory_user/pros">职业圈</router-link>
     </div>
     <logState/>
   </div>

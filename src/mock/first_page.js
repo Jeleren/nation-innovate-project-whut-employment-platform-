@@ -1,50 +1,41 @@
 import Mock from 'mockjs'
 
-const employment = []
-// const emp_count = 5
-
-function getSlideShow (count) {
-  let slideshow = []
-  for (let i = 0; i < count; i++) {
-    slideshow.push(Mock.mock({
+function getSlideShow () {
+  return Mock.mock({
+    'slideshow|1-5': [{
       id: '@increment',
       image_url: '@image'
-    }))
-  }
-  return slideshow
+    }]
+  })
 }
-function getEmp (count) {
-  for (let i = 0; i < count; i++) {
-    employment.push(
-      Mock.mock({
-        id: '@increment',
-        title: '@ctitle',
-        date: Mock.Random.date('yyyy-MM-dd'),
-        url: Mock.Random.url('http')
-      })
-    )
-  }
-}
-
-function getComList (count) {
-  const comList = []
-  for (let i = 0; i < count; i++) {
-    comList.push(
-      Mock.mock({
-        id: '@increment',
-        image_url: '@image',
-        url: Mock.Random.url('http'),
-        title: '@ctitle',
-        content: '@csentence',
-        state: Mock.Random.boolean,
-        start_time: Mock.Random.date('yyyy-MM-dd'),
-        end_time: Mock.Random.date('yyyy-MM-dd')
-      })
-    )
-  }
-  return comList
+function getEmp () {
+  return Mock.mock({
+    'empList|4': [{
+      id: '@increment',
+      title: '@ctitle',
+      // 招聘截止日期
+      date: Mock.Random.date('yyyy-MM-dd'),
+      //  发布招聘信息的企业信息
+      user: {}
+    }]
+  })
 }
 
+function getComList () {
+  return Mock.mock({
+    'comList|3': [{
+      id: '@increment',
+      image_url: '@image',
+      title: '@ctitle',
+      text: '@csentence',
+      state: Mock.Random.boolean,
+      start_time: Mock.Random.date('yyyy-MM-dd'),
+      end_time: Mock.Random.date('yyyy-MM-dd'),
+      user: {}
+    }]
+  })
+}
+//  职业圈列表
 function getProsList () {
   return Mock.mock({
     'prosList|4-9': [{
@@ -56,17 +47,6 @@ function getProsList () {
       }]
     }]
   })
-  // [
-  //   {id: Mock.mock(),pro: '互联网IT', child: ['前端开发']},
-  //   {pro: '金融', child: ['后端开发', '移动开发', '软件开发', '测试', '技术支持']},
-  //   {pro: '互联网IT', child: ['前端开发', '后端开发', '移动开发', '软件开发', '测试', '技术支持']},
-  //   {pro: '互联网IT', child: ['前端开发', '移动开发', '软件开发', '测试', '技术支持']},
-  //   {pro: '互联网IT', child: ['前端开发', '后端开发', '移动开发', '软件开发', '测试', '技术支持']},
-  //   {pro: '互联网IT', child: ['前端开发', '后端开发', '移动开发', '软件开发', '测试', '技术支持']},
-  //   {pro: '互联网IT', child: ['前端开发', '后端开发', '移动开发', '软件开发', '测试', '技术支持']},
-  //   {pro: '互联网IT', child: ['前端开发', '后端开发', '移动开发', '软件开发', '测试', '技术支持']},
-  //   {pro: '互联网IT', child: ['前端开发', '后端开发', '移动开发', '软件开发', '测试', '技术支持']}
-  // ]
 }
 
 function getLab () {
@@ -74,17 +54,44 @@ function getLab () {
     id: '',
     name: '@cname',
     image_url: '@image',
-    content: '@cparagraph'
+    text: '@cparagraph'
   })
 }
-
+// function getFirstPage () {
+//   return Mock.mock({
+//     'slideshow|3': [{
+//       id: '@increment',
+//       image_url: '@image'
+//     }],
+//     'employment|5': [{
+//       id: '@increment',
+//       title: '@ctitle',
+//       date: Mock.Random.date('yyyy-MM-dd'),
+//       text: '@cparagraph',
+//       user: {}
+//     }],
+//     'competition|3': [{
+//       id: '@increment',
+//       image_url: '@image',
+//       // url: Mock.Random.url('http'),
+//       title: '@ctitle',
+//       text: '@csentence',
+//       state: Mock.Random.boolean,
+//       start_time: Mock.Random.date('yyyy-MM-dd'),
+//       end_time: Mock.Random.date('yyyy-MM-dd'),
+//       user: {}
+//     }],
+//     lab: {
+//       id: '@integer',
+//       name: '@cname',
+//       image_url: '@image',
+//       text: '@cparagraph'
+//     }
+//   })
+// }
 export default {
   getSlideShow,
-  getEmpApi () {
-    let empCount = 4
-    getEmp(empCount)
-    return employment
-  },
+  getEmp,
   getComList,
   getLab,
   getProsList

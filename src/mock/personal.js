@@ -1,16 +1,5 @@
 import Mock from 'mockjs'
 
-// function getUserInfo () {
-//   return Mock.mock({
-//     id: Mock.Random.integer(1, 10),
-//     head: '@image',
-//     user_type: 'user' || 'ent',
-//     username: '@cname',
-//     isFollow: '@boolean',
-//     gender: '',
-//     desc: '@csentence'
-//   })
-// }
 function getActiveList (count) {
   let list = []
   for (let i = 0; i < count; i++) {
@@ -23,12 +12,11 @@ function getActiveList (count) {
           username: '@cname'
         }),
         content: '@cparagraph(100, 200)',
-        image_group: [{url: '@image'}, {url: '@image'}, {url: '@image'}, {url: '@image'}, {url: '@image'}, {url: '@image'}, {url: '@image'}, {url: '@image'}, {url: '@image'}],
+        'image_group|0-9': [{url: '@image'}],
         time: '@time'
       })
     )
   }
-  // console.log(list)
   return list
 }
 
@@ -88,8 +76,19 @@ function getFollow () {
       userInfo: {
         username: '@cname',
         head: '@image',
-        intro: '@Csentence'
+        desc: '@Csentence'
       }
+    }]
+  })
+}
+
+function getFan () {
+  return Mock.mock({
+    'fanList|1-9': [{
+      id: '',
+      username: '@cname',
+      desc: '@cparagrah',
+      head: '@image'
     }]
   })
 }

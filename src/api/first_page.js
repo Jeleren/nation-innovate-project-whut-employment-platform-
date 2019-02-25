@@ -15,3 +15,6 @@ export function fetchLaboratory () {
 export function fetchProsList () {
   return axios.get('/first_page/fetchProsList')
 }
+export function fetchFirstPage () {
+  return axios.get(`/first_page/`)
+}

@@ -6,7 +6,7 @@
         <img :src="item.userInfo.head"/>
         <div class="item-right-wrap">
           <div class="name">{{item.userInfo.username}}</div>
-          <div class="intro">{{item.userInfo.intro}}</div>
+          <div class="desc">{{item.userInfo.desc}}</div>
           <div class="button">已关注</div>
         </div>
       </div>
@@ -72,7 +72,7 @@ export default {
           font: .7rem bold;
           margin-bottom: .2rem;
         }
-        .intro {
+        .desc {
           font-size: .5rem;
           /*white-space: nowrap;*/
           overflow: hidden;

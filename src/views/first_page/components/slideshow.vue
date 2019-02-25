@@ -27,7 +27,7 @@ export default {
   },
   created () {
     fetchSlideShow().then(res => {
-      this.slideshow = res.data
+      this.slideshow = res.data.slideshow
       this.showIndex = this.slideshow[0].id
       this.start()
     })
