@@ -2,7 +2,7 @@
   <div class="section-top">
     <sectionHead title="实验室展示" router="lab"/>
     <div class="lab-content-wrap">
-      <img :src="lab.image_url"/>
+      <img :src="lab.head"/>
       <div class="lab-left-wrap">
         <h1>{{lab.name}}</h1>
         <div class="lab-content">{{lab.content}}</div>

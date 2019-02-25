@@ -2,7 +2,7 @@
   <div class="rec-wrap boxShadow">
     <div class="title">职业圈</div>
     <div class="rec-list" v-for="(item, index) in recList" :key="index">
-      <img :src="item.image_url"/>
+      <img :src="item.head"/>
       <div class="word-wrap"><div class="name">{{item.name}}</div><div class="fan">粉丝{{item.follow}}</div></div>
       <div class="button" v-if="item.isFollow">已关注</div>
       <div class="button" v-if="!item.isFollow"><i class="el-icon-plus"></i>关注</div>

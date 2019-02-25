@@ -27,10 +27,7 @@ function getResume () {
         birth: '@time',
         edu: '本科' || '硕士',
         school: '@ctitle(5, 8)',
-        marry: '未婚' || '已婚',
         nation: '汉',
-        contact_way: '@phone',
-        head: '@image',
         political: '群众',
         gender: '男',
         image: '@image'
@@ -56,8 +53,8 @@ function getRecPros () {
     'recList|1-10': [
       {
         id: '@increment',
-        image_url: '@image',
-        name: '@cname',
+        head: '@image',
+        username: '@cname',
         follow: '@integer(0, 1500)',
         isFollow: Mock.Random.boolean
       }
@@ -68,11 +65,12 @@ function getRecPros () {
 function getFollow () {
   return Mock.mock({
     'followList|1-20': [{
-      id: '@increment',
       userInfo: {
+        id: '@increment',
         username: '@cname',
         head: '@image',
-        desc: '@Csentence'
+        desc: '@Csentence',
+        isFollow: Mock.Random.boolean
       }
     }]
   })
