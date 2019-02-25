@@ -1,6 +1,6 @@
 <template>
   <div class="section-top">
-    <sectionHead title="实验室展示"/>
+    <sectionHead title="实验室展示" router="lab"/>
     <div class="lab-content-wrap">
       <img :src="lab.image_url"/>
       <div class="lab-left-wrap">

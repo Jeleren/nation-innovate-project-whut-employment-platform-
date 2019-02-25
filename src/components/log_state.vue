@@ -31,7 +31,7 @@ export default {
     },
     logOut () {
       // console.log('log out')
-      cookie.remove('user_id')
+      cookie.remove('id')
       this.$router.push({name: 'login'})
     },
     showSelect () {

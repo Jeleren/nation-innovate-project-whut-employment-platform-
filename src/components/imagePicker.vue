@@ -11,11 +11,12 @@
             <img :src="imagePickUrl" class="clip-img" ref="image"/>
           </div>
         </div>
-        <div class="right-img">
+        <div class="right-img" v-if="imagePickUrl">
           <canvas ref="canvas" class="canvas"></canvas>
+          <div>图像预览</div>
         </div>
       </div>
-      <div>
+      <div style="margin-top: .5rem">
         <el-button type="primary" @click="getImage">保存</el-button><el-button type="cancel" @click="setShow">取消</el-button>
       </div>
     </div>
@@ -24,6 +25,8 @@
 </template>
 
 <script>
+import {apiChangeUserInfo} from '@/api/user'
+
 export default {
   name: 'imagePicker',
   data () {
@@ -38,7 +41,8 @@ export default {
       divWidth: 0,
       divHeight: 0,
       ratio: 1,
-      show: false
+      show: false,
+      filename: ''
     }
   },
   methods: {
@@ -50,6 +54,8 @@ export default {
     },
     showImage () {
       let file = this.$refs.input.files[0]
+      // console.log(file)
+      this.filename = file.name
       let reader = new FileReader()
       reader.readAsDataURL(file)
       let _this = this
@@ -196,6 +202,39 @@ export default {
       ctx2.putImageData(data, 0, 0)
       let resultImage = new Image()
       resultImage.src = canvas2.toDataURL('image/png')
+      //  dataUrl change to file/blob
+      let arr = resultImage.src.split(',')
+      let mime = arr[0].match(/:(.*?);/)[1]
+      let bstr = window.atob(arr[1])
+      let n = bstr.length
+      let u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      // console.log(this.filename)
+      let file = new File([u8arr], this.filename, {type: mime})
+      // console.log(typeof file)
+      let formdata = new FormData()
+      formdata.append('head', file)
+      let _this = this
+      apiChangeUserInfo(this.$store.state.user.userInfo.id, formdata).then(res => {
+        console.log(res)
+        if (res) {
+          console.log(res)
+        } else {
+          this.$message({
+            type: 'warning',
+            message: `${res.data.head[0]}`
+          })
+        }
+      }).catch(err => {
+        console.log(err)
+        _this.$message({
+          message: err,
+          type: 'warning'
+        })
+      })
+      // console.log(this)
       this.$emit('setImage', resultImage)
       this.setShow()
     }
@@ -265,6 +304,8 @@ export default {
       }
     }
     .right-img {
+      margin-left: 1rem;
+      text-align: center;
       .canvas {
         width: 100px;
         height: 100px;

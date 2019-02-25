@@ -26,32 +26,32 @@ const router = new Router({
       redirect: '/directory_user/main',
       children: [
         {
-          path: '/directory_user/main',
+          path: 'main',
           name: 'main',
           component: () => import('@/views/first_page/user/first_page')
         },
         {
-          path: '/directory_user/employment',
+          path: 'employment',
           name: 'employment',
           component: () => import('@/views/employment/index')
         },
         {
-          path: '/directory_user/competition',
+          path: 'competition',
           name: 'competition',
           component: () => import('@/views/competition/index')
         },
         {
-          path: '/directory_user/lab',
+          path: 'lab',
           name: 'lab',
           component: () => import('@/views/lab/index')
         },
         {
-          path: '/directory_user/pros',
+          path: 'pros',
           name: 'pros',
           component: () => import('@/views/pros/index')
         },
         {
-          path: '/personal/:user_id',
+          path: '/personal/:id',
           name: 'personal',
           component: () => import('@/views/personal/index'),
           redirect: '/personal/gallery',
@@ -158,8 +158,8 @@ const router = new Router({
   ]
 })
 router.beforeEach((to, from, next) => {
-  if (!store.state.user.userInfo.user_id && cookie.get('user_id')) {
-    store.dispatch('getSelfInfo')
+  if (!store.state.user.userInfo.id && cookie.get('id')) {
+    store.dispatch('getSelfInfo', cookie.get('id'))
   }
   next()
 })

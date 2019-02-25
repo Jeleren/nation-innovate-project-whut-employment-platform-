@@ -1,4 +1,5 @@
-import { login, getUserInfoById } from '@/api/log_reg'
+import { login } from '@/api/log_reg'
+import {apiGetUserInfoById} from '@/api/user'
 import Cookies from 'js-cookie'
 import jwt from 'jsonwebtoken'
 
@@ -29,10 +30,14 @@ const user = {
         login(params).then(res => {
           if (res.status === 200) {
             let decodeRes = jwt.decode(res.data.token)
-            console.log(decodeRes)
             commit('SET_LOG_STATE', true)
-            commit('SET_USER_INFO', decodeRes)
-            Cookies.set('user_id', decodeRes.user_id)
+            let id = decodeRes.user_id
+            this.dispatch('getSelfInfo', id).then(res => {
+              if (res) {
+                commit('SET_USER_INFO', res.data)
+              }
+            })
+            Cookies.set('id', decodeRes.user_id)
             Cookies.set('token', res.data.token)
             resolve()
           } else {
@@ -41,27 +46,14 @@ const user = {
         })
       })
     },
-    getSelfInfo ({state, commit}) {
+    getSelfInfo ({state, commit}, id) {
       return new Promise((resolve, reject) => {
-        let id = Cookies.get('user_id')
-        if (id) {
-          getUserInfoById(Cookies.get('user_id')).then(res => {
-            if (res.status === 200) {
-              console.log(res.data)
-              commit('SET_USER_INFO', res.data)
-              resolve()
-            }
-          })
-        } else { reject(new Error('no user id')) }
-      })
-    },
-    getUserInfoById ({state, commit}, id) {
-      return new Promise((resolve, reject) => {
-        getUserInfoById(id).then(res => {
-          console.log(res.data)
-          commit('SET_IS_SELF', false)
-          commit('SET_SHOW_USER', res.data)
-          resolve()
+        apiGetUserInfoById(id).then(res => {
+          if (res.status === 200) {
+            console.log(res.data)
+            commit('SET_USER_INFO', res.data)
+            resolve()
+          } else { reject(new Error('get user info fail')) }
         })
       })
     }

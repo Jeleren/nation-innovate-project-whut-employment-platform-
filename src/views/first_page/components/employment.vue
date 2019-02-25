@@ -1,6 +1,6 @@
 <template>
   <div class="employment section-top">
-    <sectionHead title="招聘信息"/>
+    <sectionHead title="招聘信息" router="employment"/>
     <empList :empList="emp_list"/>
   </div>
 </template>

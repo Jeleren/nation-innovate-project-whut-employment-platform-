@@ -1,6 +1,6 @@
 <template>
   <div class="section-top">
-    <sectionHead title="职业圈"/>
+    <sectionHead title="职业圈" router="pros"/>
     <div class="pros-wrap">
       <div class="pros-list-wrap">
         <span class="pros-item" v-for="(item, index) in pros_list" :key="index" :class="{'pros-active': index === show_index}" @mouseover="setShowIndex(index)">{{item.pro}}</span>

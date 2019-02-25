@@ -3,7 +3,7 @@
     <div class="content">
       <headSearch/>
       <headNav/>
-      <router-view/>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -19,9 +19,10 @@ export default {
     headNav
   },
   created () {
-    if (!this.$store.state.user.userInfo.id) {
-      this.$store.dispatch('getUserInfoById')
-    }
+    // let id = this.$store.state.user.userInfo.id
+    // if (!id) {
+    //   this.$store.dispatch('getUserInfo', id)
+    // }
   }
 }
 </script>

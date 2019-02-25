@@ -1,7 +1,7 @@
 <template>
   <div class="section-head">
-    <span class="title pointer">{{title}}</span>
-    <span class="more pointer">更多<i class="el-icon-arrow-right"></i></span>
+    <span class="title pointer"><router-link :to="router">{{title}}</router-link></span>
+    <span class="more pointer"><router-link :to="router">更多</router-link><i class="el-icon-arrow-right"></i></span>
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
   name: 'section_head',
   props: {
     title: '',
-    url: ''
+    router: ''
   }
 }
 </script>

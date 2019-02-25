@@ -7,6 +7,9 @@
       <el-form-item label="用户名">
         <el-input v-model="form.username"></el-input>
       </el-form-item>
+      <el-form-item label="密码">
+        <el-input v-model="form.password"></el-input>
+      </el-form-item>
       <el-form-item label="简介">
         <el-input type="textarea" ref="text" v-model="form.desc"></el-input>
       </el-form-item>
@@ -40,7 +43,13 @@ export default {
   },
   methods: {
     onSubmit () {
-      apiChangeUserInfo(this.$store.state.user.userInfo.user_id, this.form)
+      delete this.form['head']
+      if (!this.form.password) {
+        delete this.form.password
+      }
+      apiChangeUserInfo(this.$store.state.user.userInfo.id, this.form).then(res => {
+        this.$message(res)
+      })
     },
     setImage (img) {
       this.form.head = img.src

@@ -1,16 +1,16 @@
 import Mock from 'mockjs'
 
-function getUserInfoById () {
-  return Mock.mock({
-    id: Mock.Random.integer(1, 10),
-    head: '@image',
-    user_type: 'user' || 'ent',
-    username: '@cname',
-    isFollow: '@boolean',
-    gender: '',
-    desc: '@csentence'
-  })
-}
+// function getUserInfo () {
+//   return Mock.mock({
+//     id: Mock.Random.integer(1, 10),
+//     head: '@image',
+//     user_type: 'user' || 'ent',
+//     username: '@cname',
+//     isFollow: '@boolean',
+//     gender: '',
+//     desc: '@csentence'
+//   })
+// }
 function getActiveList (count) {
   let list = []
   for (let i = 0; i < count; i++) {
@@ -94,7 +94,7 @@ function getFollow () {
   })
 }
 export default {
-  getUserInfoById,
+  // getUserInfo,
   getActiveList,
   getResume,
   getRecPros,

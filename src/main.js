@@ -9,7 +9,10 @@ import {Message, Radio, RadioGroup, Row, Col, Menu, Submenu, MenuItem, Form, For
 import './style/common.scss'
 import store from './store'
 import './mock'
-
+//  给message添加install方法
+Message.install = function (Vue) {
+  Vue.prototype.$message = Message
+}
 Vue.use(Message)
 Vue.use(Radio)
 Vue.use(RadioGroup)

@@ -36,6 +36,13 @@ export default {
   },
   methods: {
     doLogin () {
+      console.log(this)
+      if (!this.username || !this.password) {
+        this.$message({
+          type: 'warning',
+          content: '请输入完整信息'
+        })
+      }
       let user = new FormData()
       user.append('username', this.username)
       user.append('password', this.password)

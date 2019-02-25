@@ -1,6 +1,6 @@
 <template>
   <div class="section-top">
-    <sectionHead title="大赛活动"/>
+    <sectionHead title="大赛活动" router="competition"/>
     <compList/>
   </div>
 </template>
