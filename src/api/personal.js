@@ -13,6 +13,7 @@ export function fetchRecPros (id) {
 export function fetchFollowList (id) {
   return axios.get(`/follow/${id}`)
 }
+//  获取用户粉丝
 export function fetchFanList (id) {
   return axios.get(`/fan/${id}`)
 }
@@ -23,7 +24,7 @@ export function fetchCollectList (id) {
 export function changeResume (id, data) {
   return axios.put(`/resume/${id}`, data)
 }
-
+//  关注某个用户
 export function doFollow (data) {
   return axios.post(`/follow`, data)
 }

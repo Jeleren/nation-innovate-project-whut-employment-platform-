@@ -1,23 +1,19 @@
 import Mock from 'mockjs'
 
-function getActiveList (count) {
-  let list = []
-  for (let i = 0; i < count; i++) {
-    list.push(
-      Mock.mock({
+function getActiveList () {
+  return Mock.mock({
+    'activeList|1-5': [{
+      id: '@increment',
+      userInfo: Mock.mock({
         id: '@increment',
-        userInfo: Mock.mock({
-          id: '@increment',
-          head: '@image',
-          username: '@cname'
-        }),
-        content: '@cparagraph(100, 200)',
-        'image_group|0-9': [{url: '@image'}],
-        time: '@time'
-      })
-    )
-  }
-  return list
+        head: '@image',
+        username: '@cname'
+      }),
+      text: '@cparagraph(100, 200)',
+      'image_group|0-9': [{url: '@image'}],
+      time: '@time'
+    }]
+  })
 }
 
 function getResume () {
@@ -92,10 +88,19 @@ function getFan () {
     }]
   })
 }
+function getCollect () {
+  return Mock.mock({
+    'collectList|1-9': [{
+      // 和用户动态一样
+    }]
+  })
+}
 export default {
   // getUserInfo,
   getActiveList,
   getResume,
   getRecPros,
-  getFollow
+  getFollow,
+  getFan,
+  getCollect
 }

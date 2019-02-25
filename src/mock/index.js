@@ -8,9 +8,11 @@ Mock.mock(/\/first_page\/fetchCompetition/, 'get', firstPage.getComList())
 Mock.mock(/\/first_page\/fetchLaboratory/, 'get', firstPage.getLab())
 Mock.mock(/\/first_page\/fetchProsList/, 'get', firstPage.getProsList())
 
-Mock.mock(/\/active_list/, 'get', personal.getActiveList(5))
+Mock.mock(/\/active_list/, 'get', personal.getActiveList())
 Mock.mock(/\/resume/, 'get', personal.getResume())
 Mock.mock(/\/recPros/, 'get', personal.getRecPros())
 Mock.mock(/\/follow/, 'get', personal.getFollow())
+Mock.mock(/\/fan/, 'get', personal.getFan())
+Mock.mock(/\collect/, 'get', personal.getCollect())
 
 export default Mock
