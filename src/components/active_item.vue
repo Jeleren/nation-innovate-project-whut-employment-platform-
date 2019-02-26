@@ -91,12 +91,12 @@ export default {
     // }
   },
   mounted () {
-    // console.log(this.item.content)
-    if (this.item.content.length > 150) {
+    // console.log(this.item)
+    if (this.item.text.length > 150) {
       this.content.over = true
-      this.$refs.content.innerHTML = handleText(`${this.item.content.substr(0, 150)}`)
+      this.$refs.content.innerHTML = handleText(`${this.item.text.substr(0, 150)}`)
     } else {
-      this.$refs.content.innerHTML = handleText(`${this.item.content}`)
+      this.$refs.content.innerHTML = handleText(`${this.item.text}`)
     }
   },
   methods: {
@@ -188,11 +188,11 @@ export default {
     },
     showAllContent () {
       this.content.fold = !this.content.fold
-      this.$refs.content.innerHTML = this.item.content
+      this.$refs.content.innerHTML = this.item.text
     },
     hideAllContent () {
       this.content.fold = !this.content.fold
-      this.$refs.content.innerHTML = this.item.content.substring(0, 150)
+      this.$refs.content.innerHTML = this.item.text.substring(0, 150)
     },
     handleContent (content) {
       if (content.length > 150) {

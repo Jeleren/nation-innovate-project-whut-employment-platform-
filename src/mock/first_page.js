@@ -10,28 +10,39 @@ function getSlideShow () {
 }
 function getEmp () {
   return Mock.mock({
-    'empList|4': [{
+    //  一页的数量 不少于四
+    'empList|4-20': [{
       id: '@increment',
       title: '@ctitle',
       // 招聘截止日期
       date: Mock.Random.date('yyyy-MM-dd'),
       //  发布招聘信息的企业信息
-      user: {}
+      text: '@cparagraph',
+      user: {
+        username: '@cname',
+        head: '@image',
+        id: '@integer'
+      }
     }]
   })
 }
 
 function getComList () {
   return Mock.mock({
-    'comList|3': [{
+    //  一页的数量 不少于三
+    'comList|3-20': [{
       id: '@increment',
-      image_url: '@image',
+      // image_url: '@image',
       title: '@ctitle',
-      text: '@csentence',
+      text: '@cparagraph(100, 200)',
       state: Mock.Random.boolean,
       start_time: Mock.Random.date('yyyy-MM-dd'),
       end_time: Mock.Random.date('yyyy-MM-dd'),
-      user: {}
+      user: {
+        username: '@cname',
+        head: '@image',
+        id: '@integer'
+      }
     }]
   })
 }
@@ -51,10 +62,12 @@ function getProsList () {
 
 function getLab () {
   return Mock.mock({
-    id: '',
-    name: '@cname',
-    image_url: '@image',
-    text: '@cparagraph'
+    'labList|1-5': [{
+      id: '@natural',
+      username: '@cname',
+      head: '@image',
+      text: '@cparagraph'
+    }]
   })
 }
 // function getFirstPage () {

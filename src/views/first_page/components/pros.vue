@@ -29,7 +29,7 @@ export default {
   },
   created () {
     fetchProsList().then(res => {
-      console.log(res)
+      // console.log(res)
       this.pros_list = res.data.prosList
     })
   },
@@ -55,7 +55,7 @@ export default {
     overflow: hidden;
     span {
       display: inline-block;
-      height: .875rem;
+      /*height: .875rem;*/
       /*margin: 0 .5625rem;*/
       margin-right: 1.125rem;
       padding: .1rem .4375rem;
@@ -71,7 +71,7 @@ export default {
   .pros-child-list {
     font-size: .5rem;
     margin: .3rem 0 0 .4325rem;
-    height: .6rem;
+    /*height: .6rem;*/
     overflow: hidden;
     span {
       margin-right: 1.3rem;

@@ -24,7 +24,7 @@ export default {
   created () {
     fetchEmployment().then(res => {
       // console.log('emp_list', res.data)
-      this.emp_list = res.data.empList
+      this.emp_list = res.data.empList.slice(0, 4)
     })
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="content-wrap">
     <div v-for="(item, index) in comList" :key="index" class="com-wrap" @click="showDetail(index)">
-      <img :src="item.image_url"/>
+      <img :src="item.user.head"/>
       <div class="title">{{item.title}}</div>
       <div class="com-content">{{item.text}}</div>
       <div class="state" :class="{'on-state': item.state, 'off-state': !item.state}">
@@ -14,11 +14,11 @@
       <div class="item-content boxShadow">
         <div class="title blue-width clear"><span>{{compItem.title}}</span><i class="el-icon-close pointer" @click="hideDetail"></i></div>
         <div>
-          <div class="title blue-width">主办方：{{compItem.own}}</div>
-          <div class="title blue-width">比赛/活动简介</div>
-          <div class="emp-content">{{compItem.intro}}</div>
+          <div class="title blue-width">主办方：{{compItem.user.username}}</div>
+          <!--<div class="title blue-width">比赛/活动简介</div>-->
+          <!--<div class="emp-content">{{compItem.intro}}</div>-->
           <div class="title blue-width">比赛/活动详情</div>
-          <div class="emp-content">{{compItem.content}}</div>
+          <div class="emp-content">{{compItem.text}}</div>
         </div>
       </div>
     </div>
@@ -29,9 +29,7 @@
 
 export default {
   name: 'compList',
-  props: {
-    comList: []
-  },
+  props: ['comList'],
   data () {
     return {
       // comList: [],
@@ -57,11 +55,11 @@ export default {
   .content-wrap {
     /*height: 11.5625rem;*/
     background-color: #fff;
-    padding: 1.125rem 0;
+    padding-top: 1.125rem;
     .com-wrap {
       display: inline-block;
       width: 9.3rem;
-      margin: 0 .96rem;
+      margin: 0 .96rem .96rem;
       cursor: pointer;
       color: #282828 !important;
       vertical-align: top;

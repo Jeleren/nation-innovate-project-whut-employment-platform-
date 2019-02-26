@@ -23,8 +23,8 @@ export default {
   },
   created () {
     fetchEmployment().then(res => {
-      console.log('emp_list', res.data)
-      this.empList = res.data
+      // console.log('emp_list', res.data)
+      this.empList = res.data.empList
     })
   }
 }

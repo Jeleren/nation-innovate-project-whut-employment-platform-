@@ -28,8 +28,9 @@ const pros = {
     },
     getActiveList ({commit}, id) {
       fetchActiveList(id).then(res => {
+        console.log(res)
         if (res.status) {
-          commit('SET_ACTIVE_LIST', res.data)
+          commit('SET_ACTIVE_LIST', res.data.activeList)
         }
       })
     }

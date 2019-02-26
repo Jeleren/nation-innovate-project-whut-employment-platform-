@@ -1,7 +1,7 @@
 <template>
   <div class="active-list">
     <prosFilter/>
-    <div v-for="(item, index) in activeList" :key="index">
+    <div v-for="(item, index) in activeList" :key="index" v-if="activeList.length">
       <activeItem :item="item"/>
     </div>
   </div>
@@ -19,20 +19,19 @@ export default {
   },
   // data () {
   //   return {
-  //     active_list: []
+  //     activeList: []
   //   }
   // },
   computed: {
     activeList () {
-      console.log(this.$store.state.pros.activeList)
+      // console.log(this.$store.state.pros.activeList)
       return this.$store.state.pros.activeList
     }
   },
   created () {
-    this.$store.dispatch('getActiveList')
-    // fetchActiveList(this.$store.state.user.showUser.id).then(res => {
-    //   this.active_list = res.data
-    // })
+    this.$store.dispatch('getActiveList').then(() => {
+      // this.activeList = this.$store.state.pros.activeList
+    })
   }
 }
 </script>

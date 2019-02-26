@@ -23,7 +23,8 @@ export default {
   },
   created () {
     fetchCompetition().then(res => {
-      this.comList = res.data.comList
+      // console.log(res)
+      this.comList = res.data.comList.splice(0, 3)
     })
   }
 }

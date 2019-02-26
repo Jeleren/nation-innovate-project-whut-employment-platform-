@@ -8,7 +8,8 @@ const user = {
     isLogin: 'true',
     userInfo: {},
     showUser: {},
-    isSelf: true
+    isSelf: true,
+    entInfo: {}
   },
   mutations: {
     SET_LOG_STATE (state, data) {
@@ -22,6 +23,9 @@ const user = {
     },
     SET_IS_SELF (state, data) {
       state.isSelf = data
+    },
+    SET_ENT_INFO (state, data) {
+      state.entInfo = data
     }
   },
   actions: {

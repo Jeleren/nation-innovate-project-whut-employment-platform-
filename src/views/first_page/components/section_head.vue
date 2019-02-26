@@ -20,9 +20,10 @@ export default {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: .9375rem;
+  /*height: .9375rem;*/
   color: #4A4A4A;
   padding: 0 .75rem;
+  margin-top: .2rem;
   margin-bottom: .4375rem;
   line-height: 100%;
   .title {

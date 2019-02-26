@@ -161,6 +161,7 @@ router.beforeEach((to, from, next) => {
   if (!store.state.user.userInfo.id && cookie.get('id')) {
     store.dispatch('getSelfInfo', cookie.get('id'))
   }
+  console.log(to, from)
   next()
 })
 export default router

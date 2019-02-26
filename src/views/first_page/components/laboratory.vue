@@ -1,34 +1,29 @@
 <template>
   <div class="section-top">
     <sectionHead title="实验室展示" router="lab"/>
-    <div class="lab-content-wrap">
-      <img :src="lab.head"/>
-      <div class="lab-left-wrap">
-        <h1>{{lab.name}}</h1>
-        <div class="lab-content">{{lab.content}}</div>
-        <div class="more">了解更多</div>
-      </div>
-    </div>
+    <labList :labList="lab"/>
   </div>
 </template>
 
 <script>
 import sectionHead from '../components/section_head'
 import { fetchLaboratory } from '@/api/first_page'
+import labList from '../../../components/labList'
 
 export default {
   name: 'laboratory',
   components: {
-    sectionHead
+    sectionHead,
+    labList
   },
   data () {
     return {
-      lab: {}
+      lab: []
     }
   },
   created () {
     fetchLaboratory().then(res => {
-      this.lab = res.data
+      this.lab = res.data.labList.slice(0, 1)
     })
   }
 }

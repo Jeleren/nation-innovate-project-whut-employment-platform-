@@ -8,17 +8,19 @@
       <div class="item-content boxShadow">
         <div class="title blue-width clear"><span>职位：{{empItem.title}}</span><i class="el-icon-close pointer" @click="hideDetail"></i></div>
         <div>
-          <div class="title blue-width">公司：{{empItem.emp}}</div>
+          <div class="title blue-width">公司：{{empItem.user.username}}</div>
           <div class="title blue-width">职位详情</div>
           <div class="emp-content">{{empItem.text}}</div>
         </div>
-        <div class="button-wrap"><span class="button">投递简历</span></div>
+        <div class="button-wrap"><span class="button" @click="onSubmit()">投递简历</span></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {postResume} from '@/api/activities'
+
 export default {
   name: 'employList',
   props: {
@@ -41,6 +43,18 @@ export default {
     hideDetail () {
       this.isShowDetail = false
       document.documentElement.style.overflow = 'auto'
+    },
+    onSubmit () {
+      let formdata = new FormData()
+      formdata.append('id', this.$store.state.user.userInfo.id)
+      postResume(this.empItem.id, formdata).then(res => {
+        if (res.data) {
+          this.$message({
+            message: '投递成功',
+            type: 'success'
+          })
+        }
+      })
     }
   }
 }
@@ -50,7 +64,7 @@ export default {
   .content-wrap {
     /*height: 7.625rem;*/
     background-color: #fff;
-    padding:0 1rem;
+    padding:0 1rem 1rem;
     font-size: .5rem;
     box-shadow:0 1px 3px 0 rgba(236,236,236,1);
     color: #4A4A4A;
