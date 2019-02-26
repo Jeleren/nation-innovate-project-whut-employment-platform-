@@ -37,6 +37,7 @@ Mock.mock(/\/changeActivities/, 'post', activity.changeActivity())
 Mock.mock(/\/activitiesByPros/, 'post', activity.getActivityByPros())
 
 Mock.mock(/\/users/, 'get', user.getUserInfo())
+Mock.mock(/\/users/, 'post', user.changeUserInfo())
 Mock.mock(/\/doFollow/, 'post', user.doFollow())
 Mock.mock(/\/cancelFollow/, 'post', user.cancelFollow())
 

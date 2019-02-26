@@ -15,8 +15,18 @@ function doFollow () {
 function cancelFollow () {
   return {isFollow: 0}
 }
+function changeUserInfo () {
+  return Mock.mock({
+    id: '@natural(0, 10)',
+    username: '@cname',
+    head: '@image',
+    desc: '@cparagraph'
+    // password: ''
+  })
+}
 export default {
   getUserInfo,
   doFollow,
-  cancelFollow
+  cancelFollow,
+  changeUserInfo
 }
