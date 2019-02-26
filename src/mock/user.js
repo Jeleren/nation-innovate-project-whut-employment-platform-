@@ -2,12 +2,21 @@ import Mock from 'mockjs'
 
 function getUserInfo () {
   return Mock.mock({
-    id: '@natural',
+    id: '@natural(0, 10)',
     username: '@cname',
     head: '@image',
-    desc: '@cparagraph'
+    desc: '@cparagraph',
+    isFollow: '@natural(0,10)'
   })
 }
+function doFollow () {
+  return {isFollow: Mock.Random.integer(1, 100)}
+}
+function cancelFollow () {
+  return {isFollow: 0}
+}
 export default {
-  getUserInfo
+  getUserInfo,
+  doFollow,
+  cancelFollow
 }

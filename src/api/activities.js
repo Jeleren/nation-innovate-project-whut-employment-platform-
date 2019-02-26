@@ -36,7 +36,9 @@ export function postActivity (data) {
 export function collectActivity (data) {
   return axios.post(`/collects/`, data)
 }
-
+export function cancelCollectActivity (data) {
+  return axios.post(`/cancelCollects/`, data)
+}
 /**
  * 用户评论活动
  * @param data
@@ -44,4 +46,16 @@ export function collectActivity (data) {
  */
 export function commentActivity (data) {
   return axios.post(`/comments/`, data)
+}
+
+/**
+ * 点赞活动
+ * @param data 包括 user的id 和 activity的id
+ * @returns {AxiosPromise<any>}
+ */
+export function likeActivity (data) {
+  return axios.post(`/like/`, data)
+}
+export function cancelLikeActivity (data) {
+  return axios.post(`/cancelLike`, data)
 }

@@ -2,7 +2,7 @@
   <div class="item-wrap" ref="item">
     <div class="top">
       <div class="left-wrap">
-        <span class="user-image" :style="{'background-image':`url(${item.userInfo.head}`}"></span>
+        <span class="user-image pointer" :style="{'background-image':`url(${item.userInfo.head}`}" @click="goUserPersonal"></span>
         <div class="name-wrap">
           <div class="user-name">{{item.userInfo.username}}</div>
           <div class="act-time">{{item.time}}</div>
@@ -215,7 +215,13 @@ export default {
       })
     },
     doCollect () {},
-    cancelCollect () {}
+    cancelCollect () {},
+    goUserPersonal () {
+      let href = this.$router.resolve({
+        path: `/personal/${this.item.userInfo.id}`
+      })
+      window.open(href.href, '_blank')
+    }
   }
 }
 </script>

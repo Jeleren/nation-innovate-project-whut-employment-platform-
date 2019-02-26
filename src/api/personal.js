@@ -24,7 +24,4 @@ export function fetchCollectList (id) {
 export function changeResume (id, data) {
   return axios.put(`/resume/${id}`, data)
 }
-//  关注某个用户
-export function doFollow (data) {
-  return axios.post(`/follow`, data)
-}
+

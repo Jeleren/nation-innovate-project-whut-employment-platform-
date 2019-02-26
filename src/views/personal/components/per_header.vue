@@ -1,12 +1,12 @@
 <template>
   <div class="per-header boxShadow">
     <div class="content-wrap">
-      <img :src="$store.state.user.userInfo.head"/>
-      <span>{{$store.state.user.userInfo.username}}</span>
-      <div class="button" v-if="!isSelf">
+      <img :src="$store.state.user.showUser.head"/>
+      <span class="username">{{$store.state.user.showUser.username}}</span>
+      <div class="button">
         <span>
           <span v-if="isFollow"><i class="el-icon-check"></i>已关注</span>
-          <span v-if="!isFollow">+ 关注</span>
+          <span v-if="!isFollow" @click="doFollow">+ 关注</span>
         </span>
       </div>
     </div>
@@ -17,9 +17,9 @@
 export default {
   name: 'per_header',
   data () {
-    console.log(this.$router)
     return {
       isFollow: this.$store.state.user.showUser.isFollow
+      // showUser: {}
     }
   },
   computed: {
@@ -28,6 +28,9 @@ export default {
     }
   },
   created () {
+  },
+  methods: {
+    doFollow () {}
   }
 }
 </script>
@@ -50,14 +53,19 @@ export default {
       height: 3.125rem;
       margin-right: .625rem;
     }
-    span {
+    .username {
       //vertical-align: top;
       font-size: .75rem;
     }
     .button {
-      height: .875rem;
+      /*height: .875rem;*/
+      padding: .1rem .2rem;
       line-height: .875rem;
       margin-left: .625rem;
+      font-size: .5rem;
+      span {
+        vertical-align: top;
+      }
       /*vertical-align: middle;*/
       .edit {
         display: inline-block;

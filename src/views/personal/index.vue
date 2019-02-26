@@ -1,6 +1,6 @@
 <template>
   <div class="personal">
-    <perHeader/>
+    <!--<perHeader/>-->
     <router-view></router-view>
     <!--<left/>-->
     <right/>
@@ -23,6 +23,7 @@ export default {
 
 <style scoped>
 .personal {
+  padding-top: 1rem;
   /*position: relative;*/
 }
 </style>

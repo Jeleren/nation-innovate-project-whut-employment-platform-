@@ -1,7 +1,7 @@
 <template>
   <div class="emp-edit">
     <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="组织名称">
+      <el-form-item label="名称">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="简介">

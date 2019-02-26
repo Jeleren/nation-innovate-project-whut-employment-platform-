@@ -21,14 +21,14 @@ const pros = {
     getProsList ({commit}) {
       fetchProsList().then(res => {
         if (res.status) {
-          console.log(res.data)
+          // console.log(res.data)
           commit('SET_PROS_LIST', res.data.prosList)
         }
       })
     },
     getActiveList ({commit}, id) {
       fetchActiveList(id).then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.status) {
           commit('SET_ACTIVE_LIST', res.data.activeList)
         }

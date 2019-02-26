@@ -9,9 +9,12 @@ function getActiveList () {
         head: '@image',
         username: '@cname'
       }),
-      text: '@cparagraph(100, 200)',
+      text: '@cparagraph(50, 200)',
       'image_group|0-9': [{url: '@image'}],
-      time: '@time'
+      time: '@time',
+      isCollect: Mock.Random.boolean,
+      commentsNum: '@integer(0-1000)',
+      isLike: Mock.Random.boolean
     }]
   })
 }
@@ -56,7 +59,7 @@ function getRecPros () {
         head: '@image',
         username: '@cname',
         follow: '@integer(0, 1500)',
-        isFollow: Mock.Random.boolean
+        isFollow: '@integer(0, 10)'
       }
     ]
   })
@@ -86,6 +89,7 @@ function getFan () {
     }]
   })
 }
+
 function getCollect () {
   return Mock.mock({
     'collectList|1-9': [{
@@ -93,6 +97,7 @@ function getCollect () {
     }]
   })
 }
+
 export default {
   // getUserInfo,
   getActiveList,

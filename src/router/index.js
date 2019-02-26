@@ -161,6 +161,9 @@ router.beforeEach((to, from, next) => {
   if (!store.state.user.userInfo.id && cookie.get('id')) {
     store.dispatch('getSelfInfo', cookie.get('id'))
   }
+  if (to.query.entId) {
+    store.dispatch('getEntInfo', to.query.entId)
+  }
   console.log(to, from)
   next()
 })

@@ -19,7 +19,7 @@ export default {
     goLabPersonal (item) {
       const href = this.$router.resolve({
         path: '/ent',
-        query: {id: item.id}
+        query: {entId: item.id}
       })
       window.open(href.href, '_blank')
     }
