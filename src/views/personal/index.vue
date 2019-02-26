@@ -1,6 +1,6 @@
 <template>
   <div class="personal">
-    <!--<perHeader/>-->
+    <perHeader v-if="!$store.state.user.isSelf"/>
     <router-view></router-view>
     <!--<left/>-->
     <right/>

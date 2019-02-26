@@ -59,3 +59,21 @@ export function likeActivity (data) {
 export function cancelLikeActivity (data) {
   return axios.post(`/cancelLike`, data)
 }
+
+/**
+ * 修改动态
+ * @param data: id, changeContent
+ * @returns {AxiosPromise<any>}
+ */
+export function changeActivity (data) {
+  return axios.post(`/changeActivities`, data)
+}
+
+/**
+ * 根据职业圈id获取动态
+ * @param data: id
+ * @returns {AxiosPromise<any>}
+ */
+export function getActivityByPros (data) {
+  return axios.post(`/activitiesByPros/`, data)
+}

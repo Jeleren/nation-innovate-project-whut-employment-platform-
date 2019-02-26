@@ -21,7 +21,29 @@ export function fetchCollectList (id) {
   return axios.get(`/collect/${id}`)
 }
 
-export function changeResume (id, data) {
-  return axios.put(`/resume/${id}`, data)
+/**
+ * 修改简历自定义信息
+ * @param data: id, changeContent
+ * @returns {AxiosPromise<any>}
+ */
+export function changeResume (data) {
+  return axios.post(`/resumeChange/`, data)
 }
 
+/**
+ * 修改简历基本信息
+ * @param data: id, changeContent
+ * @returns {AxiosPromise<any>}
+ */
+export function changeBaseInfo (data) {
+  return axios.post(`/resumeBase/`, data)
+}
+
+/**
+ * 添加简历信息
+ * @param data: id, formData
+ * @returns {AxiosPromise<any>}
+ */
+export function addResumeItem (data) {
+  return axios.post(`/resumeAdd/`, data)
+}

@@ -59,9 +59,7 @@ import { handleText } from '@/utils/handleText'
 
 export default {
   name: 'active_item',
-  props: {
-    item: {}
-  },
+  props: ['item'],
   data () {
     return {
       imageGroup: true,
@@ -91,7 +89,7 @@ export default {
     // }
   },
   mounted () {
-    // console.log(this.item)
+    console.log('mounted')
     if (this.item.text.length > 150) {
       this.content.over = true
       this.$refs.content.innerHTML = handleText(`${this.item.text.substr(0, 150)}`)
@@ -138,8 +136,6 @@ export default {
       this.setTop()
     },
     setTop () {
-      // this.$refs.item.scrollTo(0, 0)
-      // document.getElementsByClassName('item-wrap')[0].scrollTo(0, 0)
       if (this.scrollTop > this.offsetTop) {
         window.scrollTo(0, this.offsetTop)
       }

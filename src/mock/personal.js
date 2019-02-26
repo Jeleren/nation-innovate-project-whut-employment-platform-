@@ -9,7 +9,7 @@ function getActiveList () {
         head: '@image',
         username: '@cname'
       }),
-      text: '@cparagraph(50, 200)',
+      text: '@cparagraph(1, 20)',
       'image_group|0-9': [{url: '@image'}],
       time: '@time',
       isCollect: Mock.Random.boolean,
@@ -23,7 +23,7 @@ function getResume () {
   return Mock.mock({
     id: '@increment',
     resume: [
-      {index: '@increment',
+      { id: '@increment',
         title: '基本信息',
         name: '@cname',
         age: '@age',
@@ -33,15 +33,16 @@ function getResume () {
         nation: '汉',
         political: '群众',
         gender: '男',
-        image: '@image'
+        image: '@image',
+        contact_way: ''
       },
       {
-        index: '@increment',
+        id: '@increment',
         title: '教育背景',
         content: '@cparagraph'
       },
       {
-        index: '@increment',
+        id: '@increment',
         title: '自我评价',
         content: '@cparagraph'
       }
@@ -98,12 +99,48 @@ function getCollect () {
   })
 }
 
+function addResumeItem () {
+  return Mock.mock({
+    id: '@increment',
+    title: '@ctitle',
+    text: '@cparagraph'
+  })
+}
+
+/**
+ * 修改简历中的个人基本信息
+ */
+function changeResumeBase () {
+  return Mock.mock({
+    id: '@increment',
+    title: '基本信息',
+    name: '@cname',
+    age: '@age',
+    birth: '@time',
+    edu: '本科' || '硕士',
+    school: '@ctitle(5, 8)',
+    nation: '汉',
+    political: '群众',
+    gender: '男',
+    image: '@image',
+    contact_way: ''
+  })
+}
+function changeResume () {
+  return Mock.mock({
+    id: '@increment',
+    title: '@ctitle',
+    text: '@cparagraph'
+  })
+}
 export default {
-  // getUserInfo,
   getActiveList,
   getResume,
   getRecPros,
   getFollow,
   getFan,
-  getCollect
+  getCollect,
+  changeResume,
+  changeResumeBase,
+  addResumeItem
 }

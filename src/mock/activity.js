@@ -75,6 +75,40 @@ function LikeActivity () {
 function cancelLikeActivity () {
   return {isLike: 0}
 }
+function changeActivity () {
+  return Mock.mock({
+    id: '@increment',
+    userInfo: Mock.mock({
+      id: '@increment',
+      head: '@image',
+      username: '@cname'
+    }),
+    text: '@cparagraph(50, 200)',
+    'image_group|0-9': [{url: '@image'}],
+    time: '@time',
+    isCollect: Mock.Random.boolean,
+    commentsNum: '@integer(0-1000)',
+    isLike: Mock.Random.boolean
+  })
+}
+function getActivityByPros () {
+  return Mock.mock({
+    'activeList|1-5': [{
+      id: '@increment',
+      userInfo: Mock.mock({
+        id: '@increment',
+        head: '@image',
+        username: '@cname'
+      }),
+      text: '@cparagraph(50, 200)',
+      'image_group|0-9': [{url: '@image'}],
+      time: '@time',
+      isCollect: Mock.Random.boolean,
+      commentsNum: '@integer(0-1000)',
+      isLike: Mock.Random.boolean
+    }]
+  })
+}
 export default {
   postResume,
   createActivity,
@@ -83,5 +117,7 @@ export default {
   cancelCollectActivity,
   commentActivity,
   LikeActivity,
-  cancelLikeActivity
+  cancelLikeActivity,
+  changeActivity,
+  getActivityByPros
 }

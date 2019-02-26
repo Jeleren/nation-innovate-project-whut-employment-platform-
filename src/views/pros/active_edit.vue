@@ -25,20 +25,6 @@ export default {
   data () {
     return {
       content: '',
-      // compRows: {
-      //   fontSize: 0,
-      //   preLen: 0,
-      //   selectionStart: 0,
-      //   selectionEnd: 0,
-      //   curRows: 0,
-      //   preRows: 0,
-      //   curRowLen: 0,
-      //   clientWidth: 0,
-      //   initRows: 0,
-      //   basicState: false,
-      //   over: false,
-      //   contentList: []
-      // },
       imgList: []
     }
   },
@@ -52,90 +38,6 @@ export default {
     save () {
       this.$refs.text_wrap.style.border = '1px solid rgba(187,187,187,1)'
     },
-    // editing (e) {
-    //   console.log(e.target.value)
-    // if (e.isTrusted) {
-    //   console.log(e, e.target.selectionStart, e.target.selectionEnd)
-    //
-    //   //  获取元素基本数据
-    //   if (!this.compRows.basicState) {
-    //     if (!this.compRows.fontSize) {
-    //       this.compRows.fontSize = parseFloat(window.getComputedStyle(this.$refs.text).fontSize)
-    //     }
-    //     this.compRows.clientWidth = e.target.clientWidth
-    //     this.compRows.initRows = e.target.rows
-    //     this.compRows.basicState = true
-    //   }
-    //   //  检测行数是否有变化
-    //   this.compRows.preRows = this.compRows.curRows
-    //   //  设置内容索引
-    //   if (e.target.selectionStart !== this.compRows.selectionStart) this.compRows.selectionEnd = e.target.selectionStart
-    //   //  输入
-    //   if (e.isComposing) {
-    //     // if (e.target.textLength ===)
-    //     //  对输入进行过滤，确定输入内容
-    //     // let curStr = this.content.substring(this.compRows.preLen, this.content.length)
-    //     let curStr = e.data || ''
-    //     console.log(curStr)
-    //     this.compRows.preLen = this.content.length
-    //     if (curStr.length) {
-    //       // console.log('handle')
-    //       this.handleContent(curStr)
-    //     } else {
-    //       return
-    //     }
-    //     if (this.compRows.preRows !== this.compRows.curRows) {
-    //       e.srcElement.rows++
-    //       //  一次输入的文字存在于两行
-    //       let wordLen = curStr.length - Math.ceil(this.compRows.curRowLen / this.compRows.fontSize)
-    //       console.log('word length', wordLen)
-    //       let str1 = curStr.substring(0, wordLen)
-    //       let str2 = curStr.substring(wordLen)
-    //       this.compRows.contentList[this.compRows.preRows] = `${this.compRows.contentList[this.compRows.preRows] || ''}${str1}`
-    //       this.compRows.contentList[this.compRows.curRows] = str2
-    //     } else {
-    //       this.compRows.contentList[this.compRows.preRows] = `${this.compRows.contentList[this.compRows.preRows] || ''}${curStr}`
-    //       console.log(this.compRows.contentList)
-    //     }
-    //   } else { //  删除
-    //     if (this.compRows.curRowLen === 0) {
-    //       console.log('decrement')
-    //       e.target.rows--
-    //     }
-    //   }
-    // }
-    // },
-    // handleContent (str) {
-    //   //  中文，中文符号正则字面量
-    //   // let chineseReg = /[^\x00-\xff]/g
-    //   let chineseReg = ''
-    //   //  中间的 | 两侧不能有空格
-    //   let enterReg = /(\r\n)|(\n)/g
-    //   // console.log(enterReg.test(str))
-    //   if (enterReg.test(str)) {
-    //     // console.log(enterReg.test(str))
-    //     this.compRows.curRows++
-    //     console.log('rows change')
-    //     this.compRows.curRowLen = 0
-    //   } else {
-    //     let CHN = str.match(chineseReg)
-    //     if (CHN) {
-    //       this.compRows.curRowLen += CHN.length * this.compRows.fontSize
-    //       console.log(str.match(chineseReg).length)
-    //       var unCHNLen = str.length - CHN.length
-    //     } else {
-    //       this.compRows.curRowLen += str.length * this.compRows.fontSize / 2
-    //     }
-    //     if (unCHNLen) {
-    //       this.compRows.curRowLen += unCHNLen * this.compRows.fontSize / 2
-    //     }
-    //     let separation = this.compRows.curRowLen - this.compRows.clientWidth
-    //     if (separation >= 0) {
-    //       this.compRows.curRows++
-    //       this.compRows.curRowLen = separation
-    //     }
-    //   }
-    // },
     autoTextarea (elem, extra, maxHeight) {
       extra = extra || 0
       let isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window
@@ -158,7 +60,7 @@ export default {
       let minHeight = parseFloat(getStyle('height'))
       elem.style.resize = 'none'
       var change = function (e) {
-        console.log(e)
+        // console.log(e)
         let scrollTop
         let height
         let padding = 0
@@ -210,7 +112,7 @@ export default {
             try {
               _this.imgList.push(reader.result)
             } catch (e) {
-              console.log(e)
+              // console.log(e)
             }
           }
         }
@@ -225,9 +127,9 @@ export default {
       this.imgList.splice(index, 1)
     },
     submitActive () {
-      let item = {id: 2, userInfo: {username: 'aa', head: ''}, time: 'ad', content: `${this.content}`}
+      let item = {id: 2, userInfo: {username: 'aa', head: 'https://www.zhihu.com/special/19631549'}, time: 'ad', text: `${this.content}`}
       this.$store.commit('ADD_ACTIVE_ITEM', item)
-      console.log(item)
+      // console.log(item)
     }
   }
 }
