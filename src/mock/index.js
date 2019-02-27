@@ -10,6 +10,8 @@ Mock.mock(/\/first_page\/fetchEmployment/, 'get', firstPage.getEmp())
 Mock.mock(/\/first_page\/fetchCompetition/, 'get', firstPage.getComList())
 Mock.mock(/\/first_page\/fetchLaboratory/, 'get', firstPage.getLab())
 Mock.mock(/\/first_page\/fetchProsList/, 'get', firstPage.getProsList())
+//  搜所结果
+Mock.mock(/\/search/, 'post', firstPage.searchResult())
 
 Mock.mock(/\/active_list/, 'get', personal.getActiveList())
 Mock.mock(/\/resume/, 'get', personal.getResume())

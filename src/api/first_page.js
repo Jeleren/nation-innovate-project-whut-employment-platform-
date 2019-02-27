@@ -18,3 +18,7 @@ export function fetchProsList () {
 export function fetchFirstPage () {
   return axios.get(`/first_page/`)
 }
+
+export function search (data) {
+  return axios.post('/search/', data)
+}
