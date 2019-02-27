@@ -41,7 +41,6 @@ export default {
   height: 3rem;
   background: #0074E1;
   color: #fff;
-  margin-bottom: .93rem;
   .content-wrap {
     position: absolute;
     display: flex;

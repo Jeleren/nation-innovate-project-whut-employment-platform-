@@ -13,7 +13,7 @@ export function apiGetUserInfoById (id) {
  * @returns {AxiosPromise<any>} 返回关系id
  */
 export function doFollow (data) {
-  return axios.post(`/follow/`, data)
+  return axios.post(`/doFollow/`, data)
 }
 
 /**

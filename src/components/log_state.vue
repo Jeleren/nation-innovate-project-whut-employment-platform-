@@ -22,12 +22,12 @@ export default {
   methods: {
     toPersonal () {
       // console.log('to person')
-      if (!/person/.test(this.$router.currentRoute.path)) {
-        this.$router.push(`/personal/${this.$store.state.user.userInfo.id}`)
-      }
+      // if (!/person/.test(this.$router.currentRoute.path)) {
+      this.$router.push(`/personal/${this.$store.state.user.userInfo.id}/`)
+      // }
     },
     toInfoSet () {
-      this.$router.push('/personal/userInfo')
+      this.$router.push('userInfo')
     },
     logOut () {
       // console.log('log out')

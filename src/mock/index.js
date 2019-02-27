@@ -22,6 +22,10 @@ Mock.mock(/\/resumeBase/, 'post', personal.changeResumeBase())
 Mock.mock(/\/resumeAdd/, 'post', personal.addResumeItem())
 //  修改自定义简历信息
 Mock.mock(/\/resumeChange/, 'post', personal.changeResume())
+//  修改简历图片
+Mock.mock(/\/resumeImage/, 'post', personal.changeResumeImage())
+//  删除自定义简历信息
+Mock.mock(/\/resumeDelete/, 'post', personal.deleteResumeItem())
 
 Mock.mock(/\/activities\/postResume/, 'post', activity.postResume())
 Mock.mock(/\/activities/, 'get', activity.getActivityByType(Math.ceil(Math.random() * 3)))
@@ -33,6 +37,8 @@ Mock.mock(/\/like/, 'post', activity.LikeActivity())
 Mock.mock(/\/cancelLike/, 'post', activity.cancelLikeActivity())
 //  修改动态信息
 Mock.mock(/\/changeActivities/, 'post', activity.changeActivity())
+//  删除动态
+Mock.mock(/\/deleteActivities/, 'post', activity.deleteActivity())
 //  根据职业圈id来获取动态，动态类固定为用户动态
 Mock.mock(/\/activitiesByPros/, 'post', activity.getActivityByPros())
 

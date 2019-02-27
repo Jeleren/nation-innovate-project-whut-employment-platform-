@@ -3,11 +3,14 @@
     <div class="title">全部关注</div>
     <div class="follow-wrap">
       <div class="follow-item" v-for="(item, index) in followList" :key="index">
-        <img :src="item.userInfo.head"/>
+        <img :src="item.head"/>
         <div class="item-right-wrap">
-          <div class="name">{{item.userInfo.username}}</div>
-          <div class="desc">{{item.userInfo.desc}}</div>
-          <div class="button">已关注</div>
+          <div class="name">{{item.username}}</div>
+          <div class="desc">{{item.desc}}</div>
+          <div class="button" @click="changeFollow(item)">
+            <span v-if="item.isFollow" >已关注</span>
+            <span v-if="!item.isFollow">+关注</span>
+          </div>
         </div>
       </div>
     </div>
@@ -16,6 +19,8 @@
 
 <script>
 import {fetchFollowList} from '@/api/personal'
+// import {cancelFollow, doFollow} from '@/api/user'
+import {relation} from '@/utils/handleRelation'
 
 export default {
   name: 'follow',
@@ -28,9 +33,13 @@ export default {
     fetchFollowList(this.$store.state.user.userInfo.id).then(res => {
       if (res.status) {
         this.followList = res.data.followList
-        console.log(this.followList)
       }
     })
+  },
+  methods: {
+    changeFollow (item) {
+      relation.changeFollow(item)
+    }
   }
 }
 </script>
@@ -60,6 +69,7 @@ export default {
       img {
         width: 2.5rem;
         height: 2.5rem;
+        min-width: 2.5rem;
         border-radius: 50%;
         margin: 0 .5rem;
       }

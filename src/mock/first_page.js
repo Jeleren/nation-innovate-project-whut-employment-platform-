@@ -70,38 +70,6 @@ function getLab () {
     }]
   })
 }
-// function getFirstPage () {
-//   return Mock.mock({
-//     'slideshow|3': [{
-//       id: '@increment',
-//       image_url: '@image'
-//     }],
-//     'employment|5': [{
-//       id: '@increment',
-//       title: '@ctitle',
-//       date: Mock.Random.date('yyyy-MM-dd'),
-//       text: '@cparagraph',
-//       user: {}
-//     }],
-//     'competition|3': [{
-//       id: '@increment',
-//       image_url: '@image',
-//       // url: Mock.Random.url('http'),
-//       title: '@ctitle',
-//       text: '@csentence',
-//       state: Mock.Random.boolean,
-//       start_time: Mock.Random.date('yyyy-MM-dd'),
-//       end_time: Mock.Random.date('yyyy-MM-dd'),
-//       user: {}
-//     }],
-//     lab: {
-//       id: '@integer',
-//       name: '@cname',
-//       image_url: '@image',
-//       text: '@cparagraph'
-//     }
-//   })
-// }
 export default {
   getSlideShow,
   getEmp,

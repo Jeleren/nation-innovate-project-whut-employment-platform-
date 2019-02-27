@@ -70,6 +70,15 @@ export function changeActivity (data) {
 }
 
 /**
+ * 删除动态
+ * @param data: 用户id，动态id
+ * @returns {AxiosPromise<any>}
+ */
+export function deleteActivity (data) {
+  return axios.post(`/deleteActivities/`, data)
+}
+
+/**
  * 根据职业圈id获取动态
  * @param data: id
  * @returns {AxiosPromise<any>}

@@ -1,9 +1,8 @@
 <template>
   <div class="personal">
     <perHeader v-if="!$store.state.user.isSelf"/>
-    <router-view></router-view>
-    <!--<left/>-->
-    <right/>
+    <router-view style="margin-top: 1rem"></router-view>
+    <right style="margin-top: 1rem"/>
   </div>
 </template>
 
@@ -17,13 +16,20 @@ export default {
     perHeader,
     left,
     right
+  },
+  created () {
+    //  check identify
+    let user = this.$store.state.user
+    if (!user.showUser || user.userInfo.id === user.showUser.id) {
+      this.$store.commit('SET_IS_SELF', true)
+    }
   }
 }
 </script>
 
 <style scoped>
 .personal {
-  padding-top: 1rem;
+  /*padding-top: 1rem;*/
   /*position: relative;*/
 }
 </style>

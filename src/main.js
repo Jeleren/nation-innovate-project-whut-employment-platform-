@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import 'element-ui/lib/theme-chalk/index.css'
 import {Message, Radio, RadioGroup, Row, Col, Menu, Submenu, MenuItem, Form, FormItem, Input,
-  DatePicker, Switch, Button, Table, TableColumn, Tag} from 'element-ui'
+  DatePicker, Switch, Button, Table, TableColumn, Tag, Popover, Dropdown, DropdownMenu, DropdownItem} from 'element-ui'
 import './style/common.scss'
 import store from './store'
 import './mock'
@@ -30,6 +30,10 @@ Vue.use(Button)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Tag)
+Vue.use(Popover)
+Vue.use(DropdownMenu)
+Vue.use(Dropdown)
+Vue.use(DropdownItem)
 
 Vue.config.productionTip = false
 

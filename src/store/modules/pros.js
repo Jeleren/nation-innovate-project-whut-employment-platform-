@@ -14,9 +14,10 @@ const pros = {
       state.activeList = data
     },
     ADD_ACTIVE_ITEM (state, data) {
-      let arr = state.activeList
-      console.log(arr)
-      state.activeList = arr.unshift(data)
+      state.activeList.splice(0, 0, data)
+    },
+    DELETE_ACTIVE_ITEM (state, data) {
+      state.activeList.splice(data.index, 1)
     }
   },
   actions: {

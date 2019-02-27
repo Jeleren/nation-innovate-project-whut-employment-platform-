@@ -30,7 +30,12 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('getProsList')
+    if (!this.prosList.length) {
+      this.$store.dispatch('getProsList')
+    }
+    if (this.$router.currentRouter) {
+      console.log(this.$router)
+    }
   },
   methods: {
     handleFirst (index) {

@@ -7,9 +7,9 @@
       <el-form-item label="用户名">
         <el-input v-model="form.username"></el-input>
       </el-form-item>
-      <el-form-item label="密码">
-        <el-input v-model="form.password"></el-input>
-      </el-form-item>
+      <!--<el-form-item label="密码">-->
+        <!--<el-input v-model="form.password"></el-input>-->
+      <!--</el-form-item>-->
       <el-form-item label="简介">
         <el-input type="textarea" ref="text" v-model="form.desc"></el-input>
       </el-form-item>
@@ -55,7 +55,6 @@ export default {
       this.form.head = img.src
     },
     showImagePicker () {
-      // this.$refs.imagePicker.methods.setShow()
       this.imagePickerState = true
       document.documentElement.style.overflow = 'hidden'
     },
@@ -78,5 +77,8 @@ export default {
     cursor: pointer;
     width: 10rem;
     height: 10rem;
+  }
+  textarea {
+    overflow-y: hidden;
   }
 </style>

@@ -6,7 +6,7 @@
         <span class="pros-item" v-for="(item, index) in pros_list" :key="index" :class="{'pros-active': index === show_index}" @mouseover="setShowIndex(index)">{{item.pro}}</span>
       </div>
       <div class="pros-child-list" v-if="pros_list.length">
-        <span v-for="(item, index) in pros_list[show_index].child" :key="index">{{item.pro}}</span>
+        <span v-for="(item, index) in pros_list[show_index].child" :key="index" @click="goPros(index)">{{item.pro}}</span>
       </div>
     </div>
   </div>
@@ -15,6 +15,7 @@
 <script>
 import sectionHead from '../components/section_head'
 import { fetchProsList } from '@/api/first_page'
+import {getActivityByPros} from '@/api/activities'
 
 export default {
   name: 'pros',
@@ -29,13 +30,23 @@ export default {
   },
   created () {
     fetchProsList().then(res => {
-      // console.log(res)
       this.pros_list = res.data.prosList
+      this.$store.commit('SET_PROS_LIST', res.data.prosList)
     })
   },
   methods: {
     setShowIndex (index) {
       this.show_index = index
+    },
+    goPros (index) {
+      this.$router.push({name: 'pros', params: {index1: this.show_index, index2: index}})
+      window.scrollTo(0, 0)
+      getActivityByPros({id: this.pros_list[this.show_index].child[index].id}).then(res => {
+        console.log(res)
+        if (res.data) {
+          this.$store.commit('SET_ACTIVE_LIST', res.data.activeList)
+        }
+      })
     }
   }
 }

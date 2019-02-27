@@ -51,45 +51,47 @@ const router = new Router({
           component: () => import('@/views/pros/index')
         },
         {
-          path: '/personal/:id',
+          path: '/personal/:id/',
           name: 'personal',
           component: () => import('@/views/personal/index'),
-          redirect: '/personal/gallery',
+          redirect: '/personal/:id/gallery',
           children: [
             {
-              path: '/personal/gallery',
+              path: '/personal/:id/gallery',
               name: 'gallery',
               component: () => import('@/views/personal/components/left'),
-              redirect: '/personal/active',
+              redirect: '/personal/:id/active',
               children: [
                 {
-                  path: '/personal/active',
+                  path: '/personal/:id/active',
                   name: 'active',
                   component: () => import('@/views/personal/components/active')
                 },
                 {
-                  path: '/personal/resume',
+                  path: '/personal/:id/resume',
                   name: 'resume',
                   component: () => import('@/views/personal/components/resume')
                 }
               ]
             },
             {
-              path: '/personal/fan',
+              path: 'fan',
               name: 'fan',
               component: () => import('@/views/personal/fan')
             },
             {
-              path: '/personal/follow',
+              path: 'follow',
               name: 'follow',
               component: () => import('@/views/personal/follow')
 
             },
             {
-              path: '/personal/collect'
+              path: 'collect',
+              name: '',
+              component: () => import('@/views/personal/collect')
             },
             {
-              path: '/personal/userInfo',
+              path: 'userInfo',
               name: '',
               component: () => import('@/views/personal/info')
             }
@@ -162,7 +164,10 @@ router.beforeEach((to, from, next) => {
     store.dispatch('getSelfInfo', cookie.get('id'))
   }
   if (to.query.entId) {
-    store.dispatch('getEntInfo', to.query.entId)
+    store.dispatch('getInfo', {id: to.query.entId})
+  }
+  if (to.meta.new) {
+    store.dispatch('getInfo', {id: to.params.id})
   }
   console.log(to, from)
   next()

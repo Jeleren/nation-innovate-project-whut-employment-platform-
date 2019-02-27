@@ -58,9 +58,9 @@ const user = {
         })
       })
     },
-    getEntInfo ({state, commit}, id) {
+    getInfo ({state, commit}, data) {
       return new Promise((resolve, reject) => {
-        apiGetUserInfoById(id).then(res => {
+        apiGetUserInfoById(data.id).then(res => {
           if (res.data) {
             console.log(res.data)
             commit('SET_ENT_INFO', res.data)

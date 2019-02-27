@@ -2,7 +2,7 @@
   <div class="active-list">
     <prosFilter/>
     <div v-for="(item, index) in activeList" :key="index" v-if="activeList.length">
-      <activeItem :item="item"/>
+      <activeItem :item="item" :index="index"/>
     </div>
   </div>
 </template>

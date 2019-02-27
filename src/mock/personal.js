@@ -13,8 +13,18 @@ function getActiveList () {
       'image_group|0-9': [{url: '@image'}],
       time: '@time',
       isCollect: Mock.Random.boolean,
-      commentsNum: '@integer(0-1000)',
-      isLike: Mock.Random.boolean
+      // collectNum: '@integer',
+      commentsNum: '@integer(0, 10)',
+      isLike: Mock.Random.boolean,
+      likeNum: '@integer(0, 10)',
+      'commentList|1-9': [{
+        userInfo: {
+          id: '@increment',
+          username: '@cname',
+          head: '@image'
+        },
+        text: '@csentence(10, 30)'
+      }]
     }]
   })
 }
@@ -39,12 +49,12 @@ function getResume () {
       {
         id: '@increment',
         title: '教育背景',
-        content: '@cparagraph'
+        text: '@cparagraph'
       },
       {
         id: '@increment',
         title: '自我评价',
-        content: '@cparagraph'
+        text: '@cparagraph'
       }
     ]
 
@@ -53,14 +63,13 @@ function getResume () {
 
 function getRecPros () {
   return Mock.mock({
-    id: '@increment',
     'recList|1-10': [
       {
         id: '@increment',
         head: '@image',
         username: '@cname',
         follow: '@integer(0, 1500)',
-        isFollow: '@integer(0, 10)'
+        isFollow: Mock.Random.boolean()
       }
     ]
   })
@@ -69,13 +78,11 @@ function getRecPros () {
 function getFollow () {
   return Mock.mock({
     'followList|1-20': [{
-      userInfo: {
-        id: '@increment',
-        username: '@cname',
-        head: '@image',
-        desc: '@Csentence',
-        isFollow: Mock.Random.boolean
-      }
+      id: '@increment',
+      username: '@cname',
+      head: '@image',
+      desc: '@Csentence',
+      isFollow: Mock.Random.boolean()
     }]
   })
 }
@@ -83,10 +90,11 @@ function getFollow () {
 function getFan () {
   return Mock.mock({
     'fanList|1-9': [{
-      id: '',
+      id: '@increment',
       username: '@cname',
-      desc: '@cparagrah',
-      head: '@image'
+      head: '@image',
+      desc: '@Csentence',
+      isFollow: Mock.Random.boolean()
     }]
   })
 }
@@ -94,7 +102,28 @@ function getFan () {
 function getCollect () {
   return Mock.mock({
     'collectList|1-9': [{
-      // 和用户动态一样
+      id: '@increment',
+      userInfo: Mock.mock({
+        id: '@increment',
+        head: '@image',
+        username: '@cname'
+      }),
+      text: '@cparagraph(1, 20)',
+      'image_group|0-9': [{url: '@image'}],
+      time: '@time',
+      isCollect: Mock.Random.boolean,
+      // collectNum: '@integer',
+      commentsNum: '@integer(0, 10)',
+      isLike: Mock.Random.boolean,
+      likeNum: '@integer(0, 10)',
+      'commentList|1-9': [{
+        userInfo: {
+          id: '@increment',
+          username: '@cname',
+          head: '@image'
+        },
+        text: '@csentence(10, 30)'
+      }]
     }]
   })
 }
@@ -123,7 +152,7 @@ function changeResumeBase () {
     political: '群众',
     gender: '男',
     image: '@image',
-    contact_way: ''
+    contact_way: '@natural'
   })
 }
 function changeResume () {
@@ -132,6 +161,14 @@ function changeResume () {
     title: '@ctitle',
     text: '@cparagraph'
   })
+}
+function changeResumeImage () {
+  return Mock.mock({
+    message: '上传成功'
+  })
+}
+function deleteResumeItem () {
+  return {message: '删除成功'}
 }
 export default {
   getActiveList,
@@ -142,5 +179,7 @@ export default {
   getCollect,
   changeResume,
   changeResumeBase,
-  addResumeItem
+  addResumeItem,
+  changeResumeImage,
+  deleteResumeItem
 }

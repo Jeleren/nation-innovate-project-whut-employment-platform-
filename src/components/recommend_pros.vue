@@ -1,11 +1,13 @@
 <template>
   <div class="rec-wrap boxShadow">
-    <div class="title">职业圈</div>
+    <div class="title">职业圈推荐</div>
     <div class="rec-list" v-for="(item, index) in recList" :key="index">
       <img :src="item.head"/>
-      <div class="word-wrap"><div class="name">{{item.name}}</div><div class="fan">粉丝{{item.follow}}</div></div>
-      <div class="button" v-if="item.isFollow">已关注</div>
-      <div class="button" v-if="!item.isFollow"><i class="el-icon-plus"></i>关注</div>
+      <div class="word-wrap"><div class="name">{{item.username}}</div><div class="fan">粉丝{{item.follow}}</div></div>
+      <div class="button" @click="changeFollow(item)">
+        <span v-if="item.isFollow">已关注</span>
+        <span v-if="!item.isFollow">+关注</span>
+      </div>
     </div>
     <div class="more pointer">查看更多职业圈<i class="el-icon-arrow-right"></i></div>
   </div>
@@ -13,6 +15,8 @@
 
 <script>
 import { fetchRecPros } from '../api/personal'
+import {relation} from '@/utils/handleRelation'
+
 export default {
   name: 'recommend_pros',
   data () {
@@ -24,6 +28,11 @@ export default {
     fetchRecPros(this.$store.state.user.userInfo.id).then(res => {
       this.recList = res.data.recList
     })
+  },
+  methods: {
+    changeFollow (item) {
+      relation.changeFollow(item)
+    }
   }
 }
 </script>
@@ -69,6 +78,7 @@ export default {
       padding: .2rem;
       box-sizing: content-box;
       width: 2.1rem;
+      text-align: center;
     }
   }
   .more {

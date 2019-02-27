@@ -1,13 +1,16 @@
 <template>
   <div class="left-wrap">
     <div class="title">全部粉丝</div>
-    <div class="follow-wrap">
+    <div class="follow-wrap" v-if="fanList.length">
       <div class="follow-item" v-for="(item, index) in fanList" :key="index">
-        <img :src="item.userInfo.head"/>
+        <img :src="item.head"/>
         <div class="item-right-wrap">
-          <div class="name">{{item.userInfo.username}}</div>
-          <div class="desc">{{item.userInfo.desc}}</div>
-          <div class="button">+关注</div>
+          <div class="name">{{item.username}}</div>
+          <div class="desc">{{item.desc}}</div>
+          <div class="button" @click="changeFollow(item)">
+            <span v-if="item.isFollow" >已关注</span>
+            <span v-if="!item.isFollow">+关注</span>
+          </div>
         </div>
       </div>
     </div>
@@ -15,11 +18,28 @@
 </template>
 
 <script>
+import {fetchFanList} from '@/api/personal'
+import {relation} from '@/utils/handleRelation'
+
 export default {
   name: 'fan',
   data () {
     return {
       fanList: []
+    }
+  },
+  created () {
+    if (!this.fanList.length) {
+      fetchFanList(this.$store.state.user.userInfo.id).then(res => {
+        if (res.data) {
+          this.fanList = res.data.fanList
+        }
+      })
+    }
+  },
+  methods: {
+    changeFollow (item) {
+      relation.changeFollow(item)
     }
   }
 }
@@ -50,6 +70,7 @@ export default {
       img {
         width: 2.5rem;
         height: 2.5rem;
+        min-width: 2.5rem;
         border-radius: 50%;
         margin: 0 .5rem;
       }

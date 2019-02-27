@@ -1,7 +1,7 @@
 <template>
   <div class="resume-wrap">
     <div class="resume-item">
-      <div class="item-title"><span class="title">{{baseInfo.title}}</span><span class="edit pointer" @click="showEdit('showEditBase')">点击编辑</span></div>
+      <div class="item-title"><span class="title">{{baseInfo.title}}</span><span class="edit pointer" @click="showEdit('showEditBase')" v-if="$store.state.user.isSelf">点击编辑</span></div>
       <div class="base-info">
         <div class="left">
           <span class="left-item-wrap"><span class="left-item-title">姓&emsp;&emsp;名 : </span>{{baseInfo.name}}</span>
@@ -11,6 +11,7 @@
           <span class="left-item-wrap"><span>政治面貌 : </span><span>{{baseInfo.political}}</span></span>
           <span class="left-item-wrap"><span>学&emsp;&emsp;历 : </span><span>{{baseInfo.edu}}</span></span>
           <span class="left-item-wrap"><span>毕业院校 : </span>{{baseInfo.school}}</span>
+          <span class="left-item-wrap"><span>联系方式 : </span>{{baseInfo.contact_way}}</span>
         </div>
         <div class="right">
           <img :src="baseInfo.image" @click="showImagePicker" title="更改图片"/>
@@ -41,15 +42,18 @@
             <div class="pop-item mar-tb"><span>毕业院校 : </span><label>
               <input v-model="baseInfo.school"/>
             </label></div>
+            <div class="pop-item mar-tb"><span>联系方式 : </span><label>
+              <input v-model="baseInfo.contact_way"/>
+            </label></div>
             <div class="pop-bottom">
-              <div class="button">保存信息</div>
+              <div class="button" @click="submitBase">保存信息</div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="resume-item" v-for="(item, index) in resume" :key="index" >
-      <div class="item-title"><span class="title">{{item.title}}</span><span class="edit pointer" @click="showEdit('showEditItem', index)">点击编辑</span></div>
+      <div class="item-title"><span class="title">{{item.title}}</span><span class="edit pointer" @click="showEdit('showEditItem', index)" v-if="$store.state.user.isSelf">点击编辑</span></div>
       <div class="item-content" ref="content"></div>
     </div>
     <div class="pop-wrap" v-if="showEditItem">
@@ -59,7 +63,7 @@
           <input v-model="editItem.title"/>
         </label></div>
         <div class="pop-item"><span>内容 : </span><label>
-          <textarea v-model="editItem.content" ref="text"></textarea>
+          <textarea v-model="editItem.text" ref="text"></textarea>
         </label></div>
         <div class="pop-bottom"><div class="button" @click="deleteItem('showEditItem')">删除信息</div><div class="button" @click="saveContent('showEditItem')">保存信息</div></div>
       </div>
@@ -70,7 +74,7 @@
 </template>
 
 <script>
-import { fetchResume } from '@/api/personal'
+import { fetchResume, changeBaseInfo, changeResumeImage, deleteResumeItem, changeResume, addResumeItem } from '@/api/personal'
 import editInput from './edit_input'
 import editArea from './edit_area'
 import {autoTextarea} from '@/utils/textAutoHeight'
@@ -112,10 +116,10 @@ export default {
     handleContent (index) {
       if (index === undefined) {
         for (let [index, item] of this.resume.entries()) {
-          this.$refs.content[index].innerHTML = handleText(item.content)
+          this.$refs.content[index].innerHTML = handleText(item.text)
         }
       } else {
-        this.$refs.content[index].innerHTML = handleText(this.resume[index].content)
+        this.$refs.content[index].innerHTML = handleText(this.resume[index].text)
       }
     },
     showEdit (param, index) {
@@ -126,7 +130,7 @@ export default {
         this.editItem = this.resume[index]
         let addEvent = new Promise((resolve, reject) => {
           let a = setInterval(() => {
-            if (this.$refs.text) {
+            if (this.$refs.content) {
               resolve()
               clearInterval(a)
             }
@@ -139,46 +143,75 @@ export default {
     },
     closePop (param) {
       this[param] = !this[param]
+      this.editIndex = -1
       document.documentElement.style.overflow = 'auto'
     },
     saveContent (param) {
-      //  api
-      if (this.editIndex === -1) {
-        // api
-        this.resume.push(this.editItem)
-        let len = this.resume.length - 1
-        let a = setInterval(() => {
-          if (this.$refs.content[len]) {
-            this.handleContent(len)
-            clearInterval(a)
+      if (!this.editItem.title || !this.editItem.text) {
+        return
+      }
+      //  普通保存
+      if (this.editIndex !== -1) {
+        changeResume(this.editItem).then(res => {
+          if (res.data) {
+            this.resume[this.editIndex] = res.data
+            this.handleContent(this.editIndex)
           }
-        }, 100)
+        })
       } else {
-        this.handleContent(this.editIndex)
+        addResumeItem(this.editItem).then(res => {
+          if (res.data) {
+            this.resume.push(res.data)
+            let len = this.resume.length - 1
+            let a = setInterval(() => {
+              if (this.$refs.content[len]) {
+                this.handleContent(len)
+                clearInterval(a)
+              }
+            }, 100)
+          }
+        })
       }
       this.closePop(param)
       this.cleanData()
     },
     deleteItem (param) {
-      //  api
-      this.resume.splice(this.editIndex, 1)
-      this.closePop(param)
-      this.cleanData()
+      deleteResumeItem({id: this.editItem.id}).then(res => {
+        if (res.data) {
+          this.resume.splice(this.editIndex, 1)
+          this.closePop(param)
+          this.cleanData()
+        }
+      })
     },
     cleanData () {
       this.editItem = -1
     },
     setImage (img) {
-      this.baseInfo.image = img.src
+      let data = {}
+      data.id = this.baseInfo.id
+      data.image = img
+      changeResumeImage(data).then(res => {
+        if (res.data) {
+          this.baseInfo.image = img.src
+        }
+      })
     },
     showImagePicker () {
-      // this.$refs.imagePicker.methods.setShow()
       this.imagePickerState = true
       document.documentElement.style.overflow = 'hidden'
     },
     closeImagePicker () {
       this.imagePickerState = false
       document.documentElement.style.overflow = 'auto'
+    },
+    submitBase () {
+      changeBaseInfo(this.baseInfo).then(res => {
+        if (res.data) {
+          this.baseInfo = res.data
+          this.closePop('showEditBase')
+        }
+      })
     }
   }
 }

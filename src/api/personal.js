@@ -40,10 +40,28 @@ export function changeBaseInfo (data) {
 }
 
 /**
+ * 修改简历图片
+ * @param data: id image
+ * @returns {AxiosPromise<any>}
+ */
+export function changeResumeImage (data) {
+  return axios.post('/resumeImage/', data)
+}
+
+/**
  * 添加简历信息
  * @param data: id, formData
  * @returns {AxiosPromise<any>}
  */
 export function addResumeItem (data) {
   return axios.post(`/resumeAdd/`, data)
+}
+
+/**
+ * 删除简历信息
+ * @param data: id
+ * @returns {AxiosPromise<any>}
+ */
+export function deleteResumeItem (data) {
+  return axios.post(`/resumeDelete/`, data)
 }

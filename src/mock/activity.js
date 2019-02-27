@@ -13,12 +13,22 @@ function createActivity () {
       head: '@image',
       username: '@cname'
     }),
-    text: '@cparagraph(50, 200)',
+    text: '@cparagraph(1, 20)',
     'image_group|0-9': [{url: '@image'}],
     time: '@time',
     isCollect: Mock.Random.boolean,
+    collectNum: '@integer',
     commentsNum: '@integer(0-1000)',
-    isLike: Mock.Random.boolean
+    isLike: Mock.Random.boolean,
+    likeNum: '@integer',
+    'commentList|1-9': [{
+      userInfo: {
+        id: '@increment',
+        username: '@cname',
+        head: '@image'
+      },
+      text: '@csentence(10, 30)'
+    }]
   })
 }
 function getActivityByType (type) {
@@ -41,17 +51,27 @@ function getActivityByType (type) {
         head: '@image',
         username: '@cname'
       }),
-      text: '@cparagraph(50, 200)',
+      text: '@cparagraph(1, 20)',
       'image_group|0-9': [{url: '@image'}],
       time: '@time',
       isCollect: Mock.Random.boolean,
+      collectNum: '@integer',
       commentsNum: '@integer(0-1000)',
-      isLike: Mock.Random.boolean
+      isLike: Mock.Random.boolean,
+      likeNum: '@integer',
+      'commentList|1-9': [{
+        userInfo: {
+          id: '@increment',
+          username: '@cname',
+          head: '@image'
+        },
+        text: '@csentence(10, 30)'
+      }]
     }]
   })
 }
 function collectActivity () {
-  return {isCollect: Mock.Random.integer}
+  return {isCollect: Mock.Random.natural()}
 }
 function cancelCollectActivity () {
   return {isCollect: 0}
@@ -70,7 +90,7 @@ function commentActivity () {
   })
 }
 function LikeActivity () {
-  return {isLike: Mock.Random.integer}
+  return {isLike: Mock.Random.integer()}
 }
 function cancelLikeActivity () {
   return {isLike: 0}
@@ -83,30 +103,55 @@ function changeActivity () {
       head: '@image',
       username: '@cname'
     }),
-    text: '@cparagraph(50, 200)',
+    text: '@cparagraph(1, 20)',
     'image_group|0-9': [{url: '@image'}],
     time: '@time',
     isCollect: Mock.Random.boolean,
+    collectNum: '@integer',
     commentsNum: '@integer(0-1000)',
-    isLike: Mock.Random.boolean
+    isLike: Mock.Random.boolean,
+    likeNum: '@integer',
+    'commentList|1-9': [{
+      userInfo: {
+        id: '@increment',
+        username: '@cname',
+        head: '@image'
+      },
+      text: '@csentence(10, 30)'
+    }]
   })
 }
 function getActivityByPros () {
   return Mock.mock({
-    'activeList|1-5': [{
+    'activeList|2-5': [{
       id: '@increment',
       userInfo: Mock.mock({
         id: '@increment',
         head: '@image',
         username: '@cname'
       }),
-      text: '@cparagraph(50, 200)',
+      text: '@cparagraph(1, 20)',
       'image_group|0-9': [{url: '@image'}],
       time: '@time',
-      isCollect: Mock.Random.boolean,
-      commentsNum: '@integer(0-1000)',
-      isLike: Mock.Random.boolean
+      isCollect: Mock.Random.boolean(),
+      collectNum: '@integer',
+      commentsNum: '@integer(0-10)',
+      isLike: Mock.Random.boolean(),
+      likeNum: '@integer',
+      'commentList|1-9': [{
+        userInfo: {
+          id: '@increment',
+          username: '@cname',
+          head: '@image'
+        },
+        text: '@csentence(10, 30)'
+      }]
     }]
+  })
+}
+function deleteActivity () {
+  return Mock.mock({
+    isDelete: true
   })
 }
 export default {
@@ -119,5 +164,6 @@ export default {
   LikeActivity,
   cancelLikeActivity,
   changeActivity,
-  getActivityByPros
+  getActivityByPros,
+  deleteActivity
 }

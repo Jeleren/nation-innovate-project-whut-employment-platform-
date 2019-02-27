@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import {postActivity} from '@/api/activities'
+
 export default {
   name: 'active_edit',
   data () {
@@ -127,9 +129,16 @@ export default {
       this.imgList.splice(index, 1)
     },
     submitActive () {
-      let item = {id: 2, userInfo: {username: 'aa', head: 'https://www.zhihu.com/special/19631549'}, time: 'ad', text: `${this.content}`}
-      this.$store.commit('ADD_ACTIVE_ITEM', item)
-      // console.log(item)
+      if (this.content) {
+        let formData = new FormData()
+        formData.append('id', this.$store.state.user.userInfo.id)
+        formData.append('text', this.content)
+        postActivity(formData).then(res => {
+          if (res.data) {
+            this.$store.commit('ADD_ACTIVE_ITEM', res.data)
+          }
+        })
+      }
     }
   }
 }
@@ -187,6 +196,7 @@ export default {
         }
       }
       .top {
+        position: relative;
         height: auto;
         line-height: 100%;
         .hint {
@@ -217,15 +227,8 @@ export default {
             right: 0;
             top: 0;
             display: inline-block;
-            width: 1rem;
-            height: 1rem;
             background: #696969;
             color: #fff;
-            /*i {*/
-            /*display: inline-block;*/
-            /*height: 50%;*/
-            /*width: 50%;*/
-            /*}*/
           }
         }
       }

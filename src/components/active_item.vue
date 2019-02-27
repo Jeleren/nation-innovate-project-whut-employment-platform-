@@ -1,14 +1,23 @@
 <template>
   <div class="item-wrap" ref="item">
     <div class="top">
-      <div class="left-wrap">
+      <div class="item-left-wrap">
         <span class="user-image pointer" :style="{'background-image':`url(${item.userInfo.head}`}" @click="goUserPersonal"></span>
         <div class="name-wrap">
           <div class="user-name">{{item.userInfo.username}}</div>
           <div class="act-time">{{item.time}}</div>
         </div>
       </div>
-      <i class="el-icon-arrow-down"></i>
+      <!--v-if="$store.state.user.userInfo.id === item.userInfo.id"-->
+      <el-dropdown>
+        <span class="el-dropdown-link">
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item @click.stop="editActivity">编辑</el-dropdown-item>
+          <el-dropdown-item @click.native="deleteActivity">删除</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <div class="active-content">
       <span ref="content"></span><span v-if="content.fold&&content.over">...</span>
@@ -30,22 +39,22 @@
       </div>
     </div>
     <div class="bottom-handle">
-      <div class="handle-item"><span v-if="!item.isCollect" @click="cancelCollect">收藏</span><span v-if="item.isCollect" @click="doCollect">收藏</span></div>
-      <div class="handle-item border-left" @click="showComment">评论</div>
-      <div class="handle-item border-left">点赞</div>
+      <div class="handle-item"><span v-if="!item.isCollect"  @click="doCollect"><i class="icon-unCollect"></i>收藏</span><span v-if="item.isCollect" @click="cancelCollect"><i class="icon-collect"></i>已收藏</span></div>
+      <div class="handle-item border-left" @click="showComment"><i class="icon-comment"></i>{{item.commentList.length}}</div>
+      <div class="handle-item border-left" @click="changeLike"><span v-if="!item.isLike"><i class="icon-unLike"></i></span><span v-if="item.isLike"><i class="icon-like"></i></span>{{item.likeNum}}</div>
     </div>
     <div class="comment" v-if="isShowComment">
       <div class="top-comment clear">
         <div class="user-image" :style="{'background-image': `url(${$store.state.user.userInfo.head})`}"></div>
-        <textarea ref="text" class="textarea" rows="1"></textarea>
-        <div class="button">评论</div>
+        <textarea ref="text" class="textarea" rows="1" v-model="comment"></textarea>
+        <div class="button" @click="submitComment">评论</div>
       </div>
       <div class="comment-list-wrap">
-        <div class="comment-item" v-for="(item, index) in commentList" :key="index">
-          <div class="user-image" :style="{'background-image': `url(${item.head})`}"></div>
+        <div class="comment-item" v-for="(item, index) in item.commentList" :key="index">
+          <div class="user-image" :style="{'background-image': `url(${item.userInfo.head})`}"></div>
           <div class="comment-content">
-            <div class="user-name">{{item.username}}</div>
-            <span>{{item.content}}</span>
+            <div class="user-name">{{item.userInfo.username}}</div>
+            <span>{{item.text}}</span>
           </div>
         </div>
       </div>
@@ -56,10 +65,11 @@
 <script>
 import { autoTextarea } from '../utils/textAutoHeight'
 import { handleText } from '@/utils/handleText'
+import {cancelCollectActivity, collectActivity, deleteActivity, commentActivity, likeActivity, cancelLikeActivity} from '@/api/activities'
 
 export default {
   name: 'active_item',
-  props: ['item'],
+  props: ['item', 'index'],
   data () {
     return {
       imageGroup: true,
@@ -71,12 +81,7 @@ export default {
         over: false,
         fold: true
       },
-      commentList: [{
-        id: 1,
-        head: 'https://misc.aotu.io/712/2018-03-22-nerv/nerv_cover_logo.jpg',
-        content: 'goodajsdhfkafjasdhfkajhfa卡机话费卡数据借否卡都是废话哈看收到话费卡就是放空间啊哈数据库hkakajhsfjkashkfhasjdfhkajsdadsfhk',
-        username: 'ssd啊看见的话'
-      }],
+      comment: '',
       isShowComment: false
     }
   },
@@ -89,7 +94,6 @@ export default {
     // }
   },
   mounted () {
-    console.log('mounted')
     if (this.item.text.length > 150) {
       this.content.over = true
       this.$refs.content.innerHTML = handleText(`${this.item.text.substr(0, 150)}`)
@@ -197,26 +201,91 @@ export default {
       }
     },
     showComment () {
-      this.isShowComment = true
-      let addEvent = new Promise((resolve, reject) => {
-        let a = setInterval(() => {
-          if (this.$refs.text) {
-            resolve()
-            clearInterval(a)
-          }
-        }, 500)
-      })
-      addEvent.then(() => {
-        autoTextarea(this.$refs.text)
+      this.isShowComment = !this.isShowComment
+      if (this.isShowComment) {
+        let addEvent = new Promise((resolve, reject) => {
+          let a = setInterval(() => {
+            if (this.$refs.text) {
+              resolve()
+              clearInterval(a)
+            }
+          }, 100)
+        })
+        addEvent.then(() => {
+          autoTextarea(this.$refs.text, 10)
+        })
+      }
+    },
+    doCollect () {
+      let data = {}
+      data.user_id = this.$store.state.user.userInfo.id
+      data.activity_id = this.item.id
+      collectActivity(data).then(res => {
+        console.log(res)
+        if (res.data) {
+          this.item.isCollect = res.data.isCollect
+        }
       })
     },
-    doCollect () {},
-    cancelCollect () {},
+    cancelCollect () {
+      let data = {}
+      data.user_id = this.$store.state.user.userInfo.id
+      data.activity_id = this.item.id
+      cancelCollectActivity(data).then(res => {
+        if (res.data) {
+          this.item.isCollect = res.data.isCollect
+        }
+      })
+    },
     goUserPersonal () {
       let href = this.$router.resolve({
-        path: `/personal/${this.item.userInfo.id}`
+        path: `/personal/${this.item.userInfo.id}`,
+        meta: 'new'
       })
       window.open(href.href, '_blank')
+    },
+    editActivity () {},
+    deleteActivity () {
+      let data = {}
+      data.user_id = this.$store.state.user.userInfo.id
+      data.activity_id = this.item.id
+      deleteActivity(data).then(res => {
+        if (res.data) {
+          this.$store.commit('DELETE_ACTIVE_ITEM', {index: this.index})
+        }
+      })
+    },
+    submitComment () {
+      let data = {}
+      data.user_id = this.$store.state.user.userInfo.id
+      data.activity_id = this.item.id
+      data.text = this.comment
+      commentActivity(data).then(res => {
+        if (res.data) {
+          this.item.commentList.splice(0, 0, res.data.comment)
+          this.comment = ''
+        }
+      })
+    },
+    changeLike () {
+      let data = {}
+      data.user_id = this.$store.state.user.userInfo.id
+      data.activity_id = this.item.id
+      if (this.item.isLike) {
+        cancelLikeActivity(data).then(res => {
+          if (res.data) {
+            this.item.isLike = res.data.isLike
+            this.item.likeNum--
+          }
+        })
+      } else {
+        likeActivity(data).then(res => {
+          if (res.data) {
+            this.item.isLike = res.data.isLike
+            this.item.likeNum++
+          }
+        })
+      }
     }
   }
 }
@@ -231,7 +300,10 @@ export default {
     height: 2.5rem;
     display: flex;
     justify-content: space-between;
-    .left-wrap {
+    .el-dropdown {
+      height: .3rem;
+    }
+    .item-left-wrap {
       display: flex;
       .user-image {
         display: inline-block;
@@ -268,6 +340,7 @@ export default {
     .image-group {
       margin-left: 3rem;
       position: relative;
+      padding-bottom: .7rem;
       .image-item {
         display: inline-block;
         cursor: url(https://img.t.sinajs.cn/t6/style/images/common/big.cur), auto;
@@ -323,6 +396,7 @@ export default {
       width: 33%;
       text-align: center;
       line-height: 1.5rem;
+      /*height: 1rem;*/
       /*margin: .2rem 0;*/
       cursor: pointer;
       &:hover {
@@ -368,8 +442,8 @@ export default {
     .comment-list-wrap {
       .comment-item {
         display: flex;
-        border-top: 1px solid #d9d9d9;
-        padding-top: .3rem;
+        border-top: 1px solid #ececec;
+        padding: .3rem 0;
         .comment-content {
           display: flex;
           flex-direction: column;
@@ -384,6 +458,39 @@ export default {
       }
     }
   }
+}
+// icon style
+[class^='icon']{
+  //line-height: 1.5rem;
+  margin: 0 .2rem .1rem;
+  vertical-align: middle;
+  background-size: cover;
+  height: .8rem;
+  width: .8rem;
+}
+.icon-unCollect {
+  background-image: url(../assets/unCollect.svg);
+  &:hover{
+    background-image: url(../assets/isCollect.svg);
+  }
+}
+.icon-collect {
+  background-image: url(../assets/isCollect.svg);
+}
+.icon-comment{
+  background-image: url(../assets/unComment.svg);
+  &:hover{
+    background-image: url(../assets/isComment.svg);
+  }
+}
+.icon-unLike {
+  background-image: url(../assets/unLike.svg);
+  &:hover{
+    background-image: url(../assets/isLike.svg);
+  }
+}
+.icon-like{
+  background-image: url(../assets/isLike.svg);
 }
 
 </style>

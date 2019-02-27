@@ -1,6 +1,6 @@
 <template>
   <div class="left-wrap">
-    <div class="nav">
+    <div class="nav" v-if="$store.state.user.isSelf">
       <router-link to="active"><span>{{user}}的动态</span></router-link>
       <router-link to="resume"><span>{{user}}的简历</span></router-link>
     </div>
@@ -34,6 +34,7 @@ export default {
 <style lang="scss" scoped>
 .left-wrap {
   margin-bottom: .93rem;
+  /*margin-top: 1rem;*/
   .nav {
     height: 1.5rem;
     margin-bottom: .5rem;
