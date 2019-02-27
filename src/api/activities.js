@@ -84,5 +84,15 @@ export function deleteActivity (data) {
  * @returns {AxiosPromise<any>}
  */
 export function getActivityByPros (data) {
+  console.log('api pros')
   return axios.post(`/activitiesByPros/`, data)
+}
+
+/**
+ * 根据类型和职业圈获取动态
+ * @param data: id, type
+ * @returns {AxiosPromise<any>}
+ */
+export function getActivityByTypePros (data) {
+  return axios.post(`/activitiesByTypePros/`, data)
 }

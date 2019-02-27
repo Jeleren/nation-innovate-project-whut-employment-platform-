@@ -16,17 +16,15 @@ export default {
     compFilter,
     compList
   },
-  data () {
-    return {
-      comList: []
+  computed: {
+    comList () {
+      return this.$store.state.pros.comList
     }
   },
   created () {
     if (!this.comList.length) {
       fetchCompetition().then(res => {
-        if (res.data) {
-          this.comList = res.data.comList
-        }
+        this.$store.commit('SET_COM_LIST', res.data.comList)
       })
     }
   }

@@ -39,14 +39,14 @@ export default {
       this.show_index = index
     },
     goPros (index) {
-      this.$router.push({name: 'pros', params: {index1: this.show_index, index2: index}})
-      window.scrollTo(0, 0)
       getActivityByPros({id: this.pros_list[this.show_index].child[index].id}).then(res => {
-        console.log(res)
+        console.log(res.data)
         if (res.data) {
           this.$store.commit('SET_ACTIVE_LIST', res.data.activeList)
         }
       })
+      this.$router.push({name: 'pros', params: {index1: this.show_index, index2: index}})
+      window.scrollTo(0, 0)
     }
   }
 }

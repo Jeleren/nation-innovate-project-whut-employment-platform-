@@ -17,21 +17,16 @@ export default {
     activeItem,
     prosFilter
   },
-  // data () {
-  //   return {
-  //     activeList: []
-  //   }
-  // },
   computed: {
     activeList () {
-      // console.log(this.$store.state.pros.activeList)
       return this.$store.state.pros.activeList
     }
   },
   created () {
-    this.$store.dispatch('getActiveList').then(() => {
-      // this.activeList = this.$store.state.pros.activeList
-    })
+    console.log(this.$router, this.activeList)
+    if (!this.activeList.length && !this.$router.currentRoute.params.index1 >= 0) {
+      this.$store.dispatch('getActiveList')
+    }
   }
 }
 </script>

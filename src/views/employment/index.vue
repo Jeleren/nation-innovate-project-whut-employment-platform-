@@ -16,15 +16,16 @@ export default {
     empFilter,
     empList
   },
-  data () {
-    return {
-      empList: []
+  computed: {
+    empList () {
+      return this.$store.state.pros.empList
     }
   },
   created () {
     fetchEmployment().then(res => {
-      // console.log('emp_list', res.data)
-      this.empList = res.data.empList
+      if (res.data) {
+        this.$store.commit('SET_EMP_LIST', res.data.empList)
+      }
     })
   }
 }

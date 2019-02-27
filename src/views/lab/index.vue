@@ -16,17 +16,15 @@ export default {
     labFilter,
     labList
   },
-  data () {
-    return {
-      labList: []
+  computed: {
+    labList () {
+      return this.$store.state.pros.labList
     }
   },
   created () {
     if (!this.labList.length) {
       fetchLaboratory().then(res => {
-        if (res.data) {
-          this.labList = res.data.labList
-        }
+        this.$store.commit('SET_LAB_LIST', res.data.labList)
       })
     }
   }

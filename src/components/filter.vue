@@ -33,8 +33,10 @@ export default {
     if (!this.prosList.length) {
       this.$store.dispatch('getProsList')
     }
-    if (this.$router.currentRouter) {
-      console.log(this.$router)
+    let route = this.$router.currentRoute
+    if (route.params.index1) {
+      this.firstIndex = route.params.index1
+      this.secondIndex = route.params.index2
     }
   },
   methods: {
@@ -75,6 +77,7 @@ export default {
       font-weight: bold;
       .list {
         position: absolute;
+        top: 1.4rem;
         display: none;
         list-style: none;
         padding: 0;

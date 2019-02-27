@@ -12,10 +12,10 @@ function getActiveList () {
       text: '@cparagraph(1, 20)',
       'image_group|0-9': [{url: '@image'}],
       time: '@time',
-      isCollect: Mock.Random.boolean,
+      isCollect: Mock.Random.boolean(),
       // collectNum: '@integer',
       commentsNum: '@integer(0, 10)',
-      isLike: Mock.Random.boolean,
+      isLike: Mock.Random.boolean(),
       likeNum: '@integer(0, 10)',
       'commentList|1-9': [{
         userInfo: {
@@ -57,7 +57,6 @@ function getResume () {
         text: '@cparagraph'
       }
     ]
-
   })
 }
 

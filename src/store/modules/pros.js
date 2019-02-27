@@ -4,7 +4,10 @@ import { fetchActiveList } from '@/api/personal'
 const pros = {
   state: {
     prosList: [],
-    activeList: []
+    activeList: [],
+    comList: [],
+    empList: [],
+    labList: []
   },
   mutations: {
     SET_PROS_LIST (state, data) {
@@ -18,6 +21,15 @@ const pros = {
     },
     DELETE_ACTIVE_ITEM (state, data) {
       state.activeList.splice(data.index, 1)
+    },
+    SET_COM_LIST (state, data) {
+      state.comList = data
+    },
+    SET_EMP_LIST (state, data) {
+      state.empList = data
+    },
+    SET_LAB_LIST (state, data) {
+      state.labList = data
     }
   },
   actions: {

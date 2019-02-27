@@ -70,10 +70,39 @@ function getLab () {
     }]
   })
 }
+function searchResult () {
+  return Mock.mock({
+    'activeList|1-5': [{
+      id: '@increment',
+      userInfo: Mock.mock({
+        id: '@increment',
+        head: '@image',
+        username: '@cname'
+      }),
+      text: '@cparagraph(1, 20)',
+      'image_group|0-9': [{url: '@image'}],
+      time: '@time',
+      isCollect: Mock.Random.boolean(),
+      // collectNum: '@integer',
+      commentsNum: '@integer(0, 10)',
+      isLike: Mock.Random.boolean(),
+      likeNum: '@integer(0, 10)',
+      'commentList|1-9': [{
+        userInfo: {
+          id: '@increment',
+          username: '@cname',
+          head: '@image'
+        },
+        text: '@csentence(10, 30)'
+      }]
+    }]
+  })
+}
 export default {
   getSlideShow,
   getEmp,
   getComList,
   getLab,
-  getProsList
+  getProsList,
+  searchResult
 }

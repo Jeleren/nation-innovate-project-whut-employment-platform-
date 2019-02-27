@@ -3,6 +3,7 @@ import firstPage from './first_page'
 import personal from './personal'
 import activity from './activity'
 import user from './user'
+import ent from './ent'
 
 Mock.mock(/\/first_page\/fetchSlideShow/, 'get', firstPage.getSlideShow())
 Mock.mock(/\/first_page\/fetchEmployment/, 'get', firstPage.getEmp())
@@ -28,7 +29,8 @@ Mock.mock(/\/resumeImage/, 'post', personal.changeResumeImage())
 Mock.mock(/\/resumeDelete/, 'post', personal.deleteResumeItem())
 
 Mock.mock(/\/activities\/postResume/, 'post', activity.postResume())
-Mock.mock(/\/activities/, 'get', activity.getActivityByType(Math.ceil(Math.random() * 3)))
+// //  type id
+Mock.mock(/\/activities/, 'get', activity.getActivityByType())
 Mock.mock(/\/activities/, 'post', activity.createActivity())
 Mock.mock(/\/collects/, 'post', activity.collectActivity())
 Mock.mock(/\/cancelCollects/, 'post', activity.cancelCollectActivity())
@@ -39,12 +41,14 @@ Mock.mock(/\/cancelLike/, 'post', activity.cancelLikeActivity())
 Mock.mock(/\/changeActivities/, 'post', activity.changeActivity())
 //  删除动态
 Mock.mock(/\/deleteActivities/, 'post', activity.deleteActivity())
-//  根据职业圈id来获取动态，动态类固定为用户动态
-Mock.mock(/\/activitiesByPros/, 'post', activity.getActivityByPros())
 
 Mock.mock(/\/users/, 'get', user.getUserInfo())
 Mock.mock(/\/users/, 'post', user.changeUserInfo())
 Mock.mock(/\/doFollow/, 'post', user.doFollow())
 Mock.mock(/\/cancelFollow/, 'post', user.cancelFollow())
+
+Mock.mock(/\/entResume/, 'post', ent.getResume())
+Mock.mock(/\/passResume/, 'post', ent.passResume())
+Mock.mock(/\/rejectResume/, 'post', ent.rejectResume())
 
 export default Mock
