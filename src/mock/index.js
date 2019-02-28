@@ -29,7 +29,7 @@ Mock.mock(/\/resumeChange/, 'post', personal.changeResume())
 Mock.mock(/\/resumeImage/, 'post', personal.changeResumeImage())
 //  删除自定义简历信息 简历id：id 删除的信息的id：delete_id: int
 Mock.mock(/\/resumeDelete/, 'post', personal.deleteResumeItem())
-
+// 用户id：id；动态id：active_id；
 Mock.mock(/\/activities\/postResume/, 'post', activity.postResume())
 // 获取活动 活动类型type：int；职业圈id：pros_id
 Mock.mock(/\/activities/, 'get', activity.getActivity(4))
