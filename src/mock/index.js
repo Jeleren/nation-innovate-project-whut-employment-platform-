@@ -33,7 +33,7 @@ Mock.mock(/\/resumeDelete/, 'post', personal.deleteResumeItem())
 Mock.mock(/\/activities\/postResume/, 'post', activity.postResume())
 // 获取活动 活动类型type：int；职业圈id：pros_id
 Mock.mock(/\/activities/, 'get', activity.getActivity(4))
-// 创建活动 活动类型type：int，根据类型有不同的表单activity: {} 参照mock/activity/getActivity中的四种类型
+// 创建活动 用户id：id；活动类型type：int，根据类型有不同的表单activity: {} 参照mock/activity/getActivity中的四种类型
 Mock.mock(/\/activities/, 'post', activity.createActivity())
 Mock.mock(/\/collects/, 'post', activity.collectActivity())
 Mock.mock(/\/cancelCollects/, 'post', activity.cancelCollectActivity())
