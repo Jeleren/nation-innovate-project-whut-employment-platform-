@@ -10,7 +10,7 @@ Mock.mock(/\/first_page\/fetchEmployment/, 'get', firstPage.getEmp())
 Mock.mock(/\/first_page\/fetchCompetition/, 'get', firstPage.getComList())
 Mock.mock(/\/first_page\/fetchLaboratory/, 'get', firstPage.getLab())
 Mock.mock(/\/first_page\/fetchProsList/, 'get', firstPage.getProsList())
-//  搜所结果
+//  搜所结果  动态类型type：int；搜索内容text：''；
 Mock.mock(/\/search/, 'post', firstPage.searchResult())
 
 Mock.mock(/\/active_list/, 'get', personal.getActiveList())
@@ -35,10 +35,15 @@ Mock.mock(/\/activities\/postResume/, 'post', activity.postResume())
 Mock.mock(/\/activities/, 'get', activity.getActivity(4))
 // 创建活动 用户id：id；活动类型type：int，根据类型有不同的表单activity: {} 参照mock/activity/getActivity中的四种类型
 Mock.mock(/\/activities/, 'post', activity.createActivity())
+// 用户id：id；动态id：active_id；
 Mock.mock(/\/collects/, 'post', activity.collectActivity())
+// 用户id：id；动态id：active_id；
 Mock.mock(/\/cancelCollects/, 'post', activity.cancelCollectActivity())
+// 用户id：id；动态id：active_id；评论：comment:{text: ''}
 Mock.mock(/\/comments/, 'post', activity.commentActivity())
+// 用户id：id；动态id：active_id；
 Mock.mock(/\/like/, 'post', activity.LikeActivity())
+// 用户id：id；动态id：active_id；
 Mock.mock(/\/cancelLike/, 'post', activity.cancelLikeActivity())
 //  修改动态信息  用户id：id；动态id：active_id；修改内容change：{title: , text: , startDate: Date, endDate: , status: boolean}
 Mock.mock(/\/changeActivities/, 'post', activity.changeActivity())
@@ -46,8 +51,11 @@ Mock.mock(/\/changeActivities/, 'post', activity.changeActivity())
 Mock.mock(/\/deleteActivities/, 'post', activity.deleteActivity())
 
 Mock.mock(/\/users/, 'get', user.getUserInfo())
+// 用户id：id；userInfo: {username: ,image: file, desc: ''}
 Mock.mock(/\/users/, 'post', user.changeUserInfo())
+// 用户id：id；对象用户id：target_id；
 Mock.mock(/\/doFollow/, 'post', user.doFollow())
+// 用户id：id；对象用户id：target_id；
 Mock.mock(/\/cancelFollow/, 'post', user.cancelFollow())
 
 //  获取简历列表 用户id：id；
