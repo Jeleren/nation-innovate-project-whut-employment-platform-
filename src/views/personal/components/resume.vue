@@ -1,7 +1,7 @@
 <template>
   <div class="resume-wrap">
     <div class="resume-item">
-      <div class="item-title"><span class="title">{{baseInfo.title}}</span><span class="edit pointer" @click="showEdit('showEditBase')" v-if="$store.state.user.isSelf">点击编辑</span></div>
+      <div class="item-title"><span class="title">{{baseInfo.title}}</span><span class="edit pointer" @click="showEdit('showEditBase')" v-if="!watchModel">点击编辑</span></div>
       <div class="base-info">
         <div class="left">
           <span class="left-item-wrap"><span class="left-item-title">姓&emsp;&emsp;名 : </span>{{baseInfo.name}}</span>
@@ -14,7 +14,8 @@
           <span class="left-item-wrap"><span>联系方式 : </span>{{baseInfo.contact_way}}</span>
         </div>
         <div class="right">
-          <img :src="baseInfo.image" @click="showImagePicker" title="更改图片"/>
+          <img :src="baseInfo.image" v-if="watchModel"/>
+          <img :src="baseInfo.image" v-if="!watchModel" @click="showImagePicker" title="更改图片"/>
         </div>
         <div class="pop-wrap" v-if="showEditBase">
           <div class="pop-content">
@@ -53,7 +54,7 @@
       </div>
     </div>
     <div class="resume-item" v-for="(item, index) in resume" :key="index" >
-      <div class="item-title"><span class="title">{{item.title}}</span><span class="edit pointer" @click="showEdit('showEditItem', index)" v-if="$store.state.user.isSelf">点击编辑</span></div>
+      <div class="item-title"><span class="title">{{item.title}}</span><span class="edit pointer" @click="showEdit('showEditItem', index)" v-if="!watchModel">点击编辑</span></div>
       <div class="item-content" ref="content"></div>
     </div>
     <div class="pop-wrap" v-if="showEditItem">
@@ -68,7 +69,8 @@
         <div class="pop-bottom"><div class="button" @click="deleteItem('showEditItem')">删除信息</div><div class="button" @click="saveContent('showEditItem')">保存信息</div></div>
       </div>
     </div>
-    <div class="button-wrap"><span class="button" @click="showEdit('showEditItem')">添加简历信息</span></div>
+    <div class="button-wrap" v-if="!watchModel"><span class="button" @click="showEdit('showEditItem')">添加简历信息</span></div>
+    <div class="button-wrap" v-if="watchModel"><span class="button" style="margin-right: .5rem" @click="rejectResume">拒绝简历</span><span class="button" @click="passResume">通过简历</span></div>
     <imagePicker @setImage="setImage" @closeImagePicker="closeImagePicker" v-if="imagePickerState"/>
   </div>
 </template>
@@ -80,9 +82,11 @@ import editArea from './edit_area'
 import {autoTextarea} from '@/utils/textAutoHeight'
 import {handleText} from '@/utils/handleText'
 import imagePicker from '../../../components/imagePicker'
+import {passResume, rejectResume} from '@/api/ent'
 
 export default {
   name: 'resume',
+  props: ['data'],
   components: {
     editInput,
     editArea,
@@ -96,23 +100,36 @@ export default {
       editItem: {},
       showEditItem: false,
       editIndex: -1,
-      imagePickerState: false
+      imagePickerState: false,
+      watchModel: false
     }
   },
   created () {
-    fetchResume(this.$store.state.user.userInfo.id).then(res => {
-      this.baseInfo = res.data.resume[0]
-      res.data.resume.splice(0, 1)
-      this.resume = res.data.resume
+    if (this.$router.currentRoute.meta.model === 'watch') {
+      this.init(this.data)
+      this.watchModel = true
+    }
+    if (!this.resume.length) {
+      fetchResume(this.$store.state.user.userInfo.id).then(res => {
+        if (res.data) {
+          this.init(res.data)
+        }
+      })
+    }
+  },
+  methods: {
+    init (data) {
+      let {...dataCopy} = data
+      this.baseInfo = dataCopy.resume[0]
+      // dataCopy.resume.splice(0, 1)
+      this.resume = dataCopy.resume.slice(1)
       let a = setInterval(() => {
         if (this.$refs.content) {
           clearInterval(a)
           this.handleContent()
         }
       }, 100)
-    })
-  },
-  methods: {
+    },
     handleContent (index) {
       if (index === undefined) {
         for (let [index, item] of this.resume.entries()) {
@@ -212,6 +229,16 @@ export default {
           this.closePop('showEditBase')
         }
       })
+    },
+    rejectResume () {
+      rejectResume({user_id: this.$store.state.user.userInfo.id, resume_id: this.data.id}).then(res => {
+        this.$emit('closePop', {state: 0})
+      })
+    },
+    passResume () {
+      passResume({user_id: this.$store.state.user.userInfo.id, resume_id: this.data.id}).then(res => {
+        this.$emit('closePop', {state: 2})
+      })
     }
   }
 }
@@ -222,6 +249,7 @@ export default {
     height: auto;
     background: #fff;
     padding: .75rem;
+    /*<!--margin-right: -1rem;-->*/
     .button-wrap {
       font-size: .6rem;
       text-align: center;
@@ -265,6 +293,9 @@ export default {
         min-width: 48%;
         min-height: .8rem;
         margin-bottom: .3rem;
+        span:nth-child(1) {
+          font-weight: bold;
+        }
         /*overflow: hidden;*/
         .left-item-title {
           width: fit-content;

@@ -1,15 +1,15 @@
 <template>
   <div>
-    <el-table
-      :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+    <el-table v-if="empList.length"
+      :data="empList.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
       <el-table-column
         label="招聘职位"
-        prop="name">
+        prop="title">
       </el-table-column>
       <el-table-column
-        label="招聘时间"
-        prop="date">
+        label="招聘截止时间"
+        prop="endDate">
       </el-table-column>
       <el-table-column
         align="right">
@@ -30,29 +30,58 @@
         </template>
       </el-table-column>
     </el-table>
+    <popEdit :data="editItem" v-if="editItem.title" @closePop="closeEdit"/>
   </div>
 </template>
 
 <script>
+import {deleteActivity, getActivity} from '@/api/activities'
+import popEdit from '../popEdit'
+
 export default {
   name: 'emp_manage',
+  components: {
+    popEdit
+  },
   data () {
     return {
-      tableData: [
-        {
-          name: 'dahfkj',
-          date: '234-12'
-        }, {
-          name: 'adfa ',
-          date: 'adf-32'
-        }
-      ],
-      search: ''
+      empList: [],
+      search: '',
+      editItem: {},
+      editIndex: -1
+    }
+  },
+  created () {
+    if (!this.empList.length) {
+      let id = this.$store.state.user.userInfo.id
+      let type = 4
+      getActivity({id: id, type: type}).then(res => {
+        console.log(res)
+        this.empList = res.data.empList
+      })
     }
   },
   methods: {
-    handleEdit () {},
-    handleDelete () {}
+    handleEdit (index, row) {
+      this.editItem = row
+      this.editIndex = index
+      document.documentElement.style.overflow = 'hidden'
+    },
+    closeEdit (data) {
+      this.editItem = {}
+      if (data.title) {
+        this.empList[this.editIndex] = data
+      }
+      document.documentElement.style.overflow = 'auto'
+    },
+    handleDelete (index, row) {
+      // console.log(index, row)
+      deleteActivity({id: this.$store.state.user.userInfo.id, active_id: row.id}).then(res => {
+        if (res.data) {
+          this.empList.splice(index, 1)
+        }
+      })
+    }
   }
 }
 </script>

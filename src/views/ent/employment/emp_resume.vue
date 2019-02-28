@@ -1,27 +1,27 @@
 <template>
   <div>
     <el-table
-      :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-      :span-method="objectSpanMethod"
+      :data="resumeList.filter(data => !search || data.position.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
       <el-table-column
+        width="150"
         prop="position"
         label="职位">
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="resume[0].name"
         label="姓名">
       </el-table-column>
       <el-table-column
-        prop="tag"
+        prop="state"
         label="状态"
-        :filters="[{ text: '未处理', value: '未处理' }, { text: '已通过', value: '已通过' }, { text: '未通过', value: ''}]"
+        :filters="[{ text: '未处理', value: 1 }, { text: '已通过', value: 2 }, { text: '未通过', value: 0}]"
         :filter-method="filterTag"
         filter-placement="bottom-end">
         <template slot-scope="scope">
           <el-tag
-            :type="handleType(scope.row.tag)"
-            >{{scope.row.tag}}</el-tag>
+            :type="handleType(scope.row.state)"
+            >{{handleTag(scope.row.state)}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column>
@@ -34,71 +34,76 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+            @click="handleWatch(scope.$index, scope.row)">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <popResume @closePop="closePop" :data="watchItem" v-if="watchItem.id"/>
   </div>
 </template>
 
 <script>
+import {getResume} from '@/api/ent'
+import popResume from '../popResume'
+
 export default {
   name: 'emp_resume',
+  components: {
+    popResume
+  },
   data () {
     return {
-      tableData: [
-        {
-          position: '字节跳动前端工程师',
-          name: 'ada',
-          tag: '未处理'
-        },
-        {
-          position: 'aada',
-          name: 'ada',
-          tag: '未通过'
-        },
-        {
-          position: 'aada',
-          name: 'ada',
-          tag: '未处理'
-        },
-        {
-          position: 'aada',
-          name: 'adal'
+      resumeList: [],
+      search: '',
+      watchIndex: -1,
+      watchItem: {}
+    }
+  },
+  created () {
+    if (!this.resumeList.length) {
+      getResume({id: this.$store.state.user.userInfo.id}).then(res => {
+        if (res.data) {
+          this.resumeList = res.data.resumeList
+          console.log(this.resumeList)
         }
-      ],
-      search: ''
+      })
     }
   },
   methods: {
-    objectSpanMethod ({ row, column, rowIndex, columnIndex }) {
-      if (columnIndex === 0) {
-        if (rowIndex % 2 === 0) {
-          return {
-            rowspan: 2,
-            colspan: 1
-          }
-        } else {
-          return {
-            rowspan: 0,
-            colspan: 0
-          }
-        }
-      }
-    },
     filterTag (value, row) {
-      return row.tag === value
+      return row.state === value
     },
     handleType (value) {
       switch (value) {
-        case '未处理': {
+        case 1:
           return 'info'
-        }
-        case '已通过':
+        case 2:
           return 'success'
-        case '未通过':
+        case 0:
           return 'warning'
       }
+    },
+    handleTag (value) {
+      switch (value) {
+        case 1:
+          return '未处理'
+        case 2:
+          return '已通过'
+        case 0:
+          return '未通过'
+      }
+    },
+    handleWatch (index, row) {
+      this.watchIndex = index
+      this.watchItem = this.resumeList[index]
+      document.documentElement.style.overflow = 'hidden'
+    },
+    closePop (data) {
+      if (data.state >= 0) {
+        this.resumeList[this.watchIndex].state = data.state
+      }
+      this.watchItem = {}
+      document.documentElement.style.overflow = 'auto'
     }
   }
 }

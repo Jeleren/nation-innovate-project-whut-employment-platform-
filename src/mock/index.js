@@ -20,28 +20,29 @@ Mock.mock(/\/follow/, 'get', personal.getFollow())
 Mock.mock(/\/fan/, 'get', personal.getFan())
 Mock.mock(/\/collect/, 'get', personal.getCollect())
 //  修改简历个人基本信息
-Mock.mock(/\/resumeBase/, 'post', personal.changeResumeBase())
-//  添加自定义简历信息
+Mock.mock(/\/resumeBase/, 'post', personal.changeResumeBase()) // id baseInfo
+//  添加自定义简历信息 简历id：id；添加的信息：resumeItem : {id: , title: , text}
 Mock.mock(/\/resumeAdd/, 'post', personal.addResumeItem())
-//  修改自定义简历信息
+//  修改自定义简历信息 简历id：id；修改的信息：resumeItem : {id: , title: , text}
 Mock.mock(/\/resumeChange/, 'post', personal.changeResume())
-//  修改简历图片
+//  修改简历图片  简历id：id；修改的图片：file
 Mock.mock(/\/resumeImage/, 'post', personal.changeResumeImage())
-//  删除自定义简历信息
+//  删除自定义简历信息 简历id：id 删除的信息的id：delete_id: int
 Mock.mock(/\/resumeDelete/, 'post', personal.deleteResumeItem())
 
 Mock.mock(/\/activities\/postResume/, 'post', activity.postResume())
-// //  type id
-Mock.mock(/\/activities/, 'get', activity.getActivityByType())
+// 获取活动 活动类型type：int；职业圈id：pros_id
+Mock.mock(/\/activities/, 'get', activity.getActivity(4))
+// 创建活动 活动类型type：int，根据类型有不同的表单activity: {} 参照mock/activity/getActivity中的四种类型
 Mock.mock(/\/activities/, 'post', activity.createActivity())
 Mock.mock(/\/collects/, 'post', activity.collectActivity())
 Mock.mock(/\/cancelCollects/, 'post', activity.cancelCollectActivity())
 Mock.mock(/\/comments/, 'post', activity.commentActivity())
 Mock.mock(/\/like/, 'post', activity.LikeActivity())
 Mock.mock(/\/cancelLike/, 'post', activity.cancelLikeActivity())
-//  修改动态信息
+//  修改动态信息  用户id：id；动态id：active_id；修改内容change：{title: , text: , startDate: Date, endDate: , status: boolean}
 Mock.mock(/\/changeActivities/, 'post', activity.changeActivity())
-//  删除动态
+//  删除动态 用户id: id；动态id: active_id
 Mock.mock(/\/deleteActivities/, 'post', activity.deleteActivity())
 
 Mock.mock(/\/users/, 'get', user.getUserInfo())
@@ -49,8 +50,11 @@ Mock.mock(/\/users/, 'post', user.changeUserInfo())
 Mock.mock(/\/doFollow/, 'post', user.doFollow())
 Mock.mock(/\/cancelFollow/, 'post', user.cancelFollow())
 
+//  获取简历列表 用户id：id；
 Mock.mock(/\/entResume/, 'post', ent.getResume())
+//  通过简历 用户id：id；简历id：resume_id
 Mock.mock(/\/passResume/, 'post', ent.passResume())
+//  删除简历 用户id：id；简历id：resume_id
 Mock.mock(/\/rejectResume/, 'post', ent.rejectResume())
 
 export default Mock

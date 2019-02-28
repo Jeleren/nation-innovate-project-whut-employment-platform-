@@ -3,11 +3,14 @@ function getResume () {
   return Mock.mock({
     'resumeList|1-9': [{
       id: '@increment',
+      // 投递岗位
+      position: '@ctitle',
       resume: [
-        { id: '@increment',
+        {
+          id: '@increment',
           title: '基本信息',
           name: '@cname',
-          age: '@age',
+          age: '@increment',
           birth: '@time',
           edu: '本科' || '硕士',
           school: '@ctitle(5, 8)',
@@ -15,7 +18,7 @@ function getResume () {
           political: '群众',
           gender: '男',
           image: '@image',
-          contact_way: ''
+          contact_way: '@ctitle'
         },
         {
           id: '@increment',

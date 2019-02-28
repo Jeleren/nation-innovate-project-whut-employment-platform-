@@ -129,6 +129,7 @@ const router = new Router({
             {
               path: '/ent/employment/resume',
               name: '',
+              meta: {model: 'watch'},
               component: () => import('@/views/ent/employment/emp_resume')
             }
           ]

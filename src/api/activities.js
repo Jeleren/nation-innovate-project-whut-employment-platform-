@@ -1,12 +1,12 @@
 import axios from '../utils/request'
 
 /**
- * 根据动态类型获取动态信息
- * @param type  动态类型
+ *  根据动态类型，用户id，职业圈id获取动态
+ * @param data: type, user_id, pros_id
  * @returns {AxiosPromise<any>}
  */
-export function getActivityByType (type) {
-  return axios.get(`/activities/${type}`)
+export function getActivity (data) {
+  return axios.get(`/activities/`, data)
 }
 
 /**

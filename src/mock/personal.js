@@ -36,7 +36,7 @@ function getResume () {
       { id: '@increment',
         title: '基本信息',
         name: '@cname',
-        age: '@age',
+        age: '@increment',
         birth: '@time',
         edu: '本科' || '硕士',
         school: '@ctitle(5, 8)',

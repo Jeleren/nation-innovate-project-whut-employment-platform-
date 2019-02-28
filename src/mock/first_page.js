@@ -36,8 +36,8 @@ function getComList () {
       title: '@ctitle',
       text: '@cparagraph(100, 200)',
       state: Mock.Random.boolean,
-      start_time: Mock.Random.date('yyyy-MM-dd'),
-      end_time: Mock.Random.date('yyyy-MM-dd'),
+      startDate: Mock.Random.date('yyyy-MM-dd'),
+      endDate: Mock.Random.date('yyyy-MM-dd'),
       user: {
         username: '@cname',
         head: '@image',

@@ -7,7 +7,7 @@
       <div class="state" :class="{'on-state': item.state, 'off-state': !item.state}">
         <div v-if="item.state"><i></i><span>进行中</span></div>
         <div v-if="!item.state"><i></i><span>已结束</span></div>
-        <span>{{item.start_time}}——{{item.end_time}}</span>
+        <span>{{item.startDate}}——{{item.endDate}}</span>
       </div>
     </div>
     <div class="item-detail" v-if="isShowDetail">

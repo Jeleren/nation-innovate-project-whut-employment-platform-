@@ -1,11 +1,11 @@
 <template>
   <div>
     <el-table
-      :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+      :data="tableData.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
       <el-table-column
         label="名称"
-        prop="name">
+        prop="title">
       </el-table-column>
       <el-table-column
         label="比赛时间"
@@ -38,14 +38,12 @@ export default {
   name: 'comp_manage',
   data () {
     return {
-      tableData: [
-        {
-          name: 'adfa',
-          date: 'dafafa'
-        }
-      ],
+      comList: [],
       search: ''
     }
+  },
+  created () {
+    // if (this.)
   },
   methods: {
     handleEdit () {},

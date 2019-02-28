@@ -31,7 +31,7 @@ function createActivity () {
     }]
   })
 }
-function getActivityByType (type) {
+function getActivity (type) {
   switch (type) {
     case 1: {
       return Mock.mock({
@@ -42,8 +42,8 @@ function getActivityByType (type) {
           title: '@ctitle',
           text: '@cparagraph(100, 200)',
           state: Mock.Random.boolean,
-          start_time: Mock.Random.date('yyyy-MM-dd'),
-          end_time: Mock.Random.date('yyyy-MM-dd'),
+          startDate: Mock.Random.date('yyyy-MM-dd'),
+          endDate: Mock.Random.date('yyyy-MM-dd'),
           user: {
             username: '@cname',
             head: '@image',
@@ -96,10 +96,12 @@ function getActivityByType (type) {
         'empList|4-20': [{
           id: '@increment',
           title: '@ctitle',
+          startDate: Mock.Random.date('yyyy-MM-dd'),
           // 招聘截止日期
-          date: Mock.Random.date('yyyy-MM-dd'),
+          endDate: Mock.Random.date('yyyy-MM-dd'),
           //  发布招聘信息的企业信息
           text: '@cparagraph',
+          status: Mock.Random.boolean,
           user: {
             username: '@cname',
             head: '@image',
@@ -202,8 +204,8 @@ function getActivityByTypePros (type) {
           title: '@ctitle',
           text: '@cparagraph(100, 200)',
           state: Mock.Random.boolean,
-          start_time: Mock.Random.date('yyyy-MM-dd'),
-          end_time: Mock.Random.date('yyyy-MM-dd'),
+          startDate: Mock.Random.date('yyyy-MM-dd'),
+          endDate: Mock.Random.date('yyyy-MM-dd'),
           user: {
             username: '@cname',
             head: '@image',
@@ -278,7 +280,7 @@ function deleteActivity () {
 export default {
   postResume,
   createActivity,
-  getActivityByType,
+  getActivity,
   collectActivity,
   cancelCollectActivity,
   commentActivity,
