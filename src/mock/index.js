@@ -53,7 +53,7 @@ Mock.mock(/\/comments/, 'post', activity.commentActivity())
 Mock.mock(/\/like/, 'post', activity.LikeActivity())
 // 用户id：id；动态id：active_id；
 Mock.mock(/\/cancelLike/, 'post', activity.cancelLikeActivity())
-//  修改动态信息  用户id：id；动态id：active_id；修改内容change：{title: , text: , startDate: Date, endDate: , status: boolean}
+//  修改动态信息  用户id：id；动态id：active_id；修改内容change：{title: , text: , startDate: Date, endDate: }
 Mock.mock(/\/changeActivities/, 'post', activity.changeActivity())
 //  删除动态 用户id: id；动态id: active_id
 Mock.mock(/\/deleteActivities/, 'post', activity.deleteActivity())
