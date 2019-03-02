@@ -15,7 +15,7 @@
         </el-col>
       </el-form-item>
       <el-form-item label="招聘状态">
-        <el-switch v-model="form.status"></el-switch>
+        <el-switch v-model="form.state"></el-switch>
       </el-form-item>
       <el-form-item label="招聘内容">
         <el-input type="textarea" ref="text" v-model="form.text"></el-input>
@@ -40,7 +40,7 @@ export default {
         title: '',
         startDate: '',
         endDate: '',
-        status: '',
+        state: '',
         text: ''
       }
     }

@@ -1,5 +1,6 @@
 import { fetchProsList } from '@/api/first_page'
 import { fetchActiveList } from '@/api/personal'
+import {getActivity} from '@/api/activities'
 
 const pros = {
   state: {
@@ -46,6 +47,13 @@ const pros = {
         // console.log(res)
         if (res.status) {
           commit('SET_ACTIVE_LIST', res.data.activeList)
+        }
+      })
+    },
+    getComList ({commit}, data) {
+      getActivity(data).then(res => {
+        if (res.data) {
+          commit('SET_COM_LIST', res.data.comList.map(item => { item.date = item.startDate + '至' + item.endDate; return item }))
         }
       })
     }

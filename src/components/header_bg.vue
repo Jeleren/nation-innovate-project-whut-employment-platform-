@@ -1,6 +1,6 @@
 <template>
   <div class="header-bg">
-    <div class="header-title">WHUT大学生就业平台</div>
+    <div class="header-title">大学生就业指导平台</div>
   </div>
 </template>
 

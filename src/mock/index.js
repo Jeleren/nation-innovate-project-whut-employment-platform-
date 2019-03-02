@@ -19,21 +19,29 @@ Mock.mock(/\/recPros/, 'get', personal.getRecPros())
 Mock.mock(/\/follow/, 'get', personal.getFollow())
 Mock.mock(/\/fan/, 'get', personal.getFan())
 Mock.mock(/\/collect/, 'get', personal.getCollect())
+
 //  修改简历个人基本信息
 Mock.mock(/\/resumeBase/, 'post', personal.changeResumeBase()) // id baseInfo
+
 //  添加自定义简历信息 简历id：id；添加的信息：resumeItem : {id: , title: , text}
 Mock.mock(/\/resumeAdd/, 'post', personal.addResumeItem())
+
 //  修改自定义简历信息 简历id：id；修改的信息：resumeItem : {id: , title: , text}
 Mock.mock(/\/resumeChange/, 'post', personal.changeResume())
+
 //  修改简历图片  简历id：id；修改的图片：file
 Mock.mock(/\/resumeImage/, 'post', personal.changeResumeImage())
+
 //  删除自定义简历信息 简历id：id 删除的信息的id：delete_id: int
 Mock.mock(/\/resumeDelete/, 'post', personal.deleteResumeItem())
+
 // 用户id：id；动态id：active_id；
 Mock.mock(/\/activities\/postResume/, 'post', activity.postResume())
+
 // 获取活动 活动类型type：int；职业圈id：pros_id
-Mock.mock(/\/activities/, 'get', activity.getActivity(4))
-// 创建活动 用户id：id；活动类型type：int，根据类型有不同的表单activity: {} 参照mock/activity/getActivity中的四种类型
+Mock.mock(/\/activities/, 'get', activity.getActivity(1))
+
+// 创建活动 用户id：id；活动类型type：int，title: ''; 唯一必需:text: '' ; image_group: [file], startDate: Date; endDate: Date
 Mock.mock(/\/activities/, 'post', activity.createActivity())
 // 用户id：id；动态id：active_id；
 Mock.mock(/\/collects/, 'post', activity.collectActivity())

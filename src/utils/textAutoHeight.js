@@ -1,5 +1,5 @@
 export function autoTextarea (elem, extra, maxHeight) {
-  console.log(elem)
+  // console.log(elem)
   extra = extra || 0
   let isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window
   let isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera')
