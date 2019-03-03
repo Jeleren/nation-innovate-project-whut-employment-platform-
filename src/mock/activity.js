@@ -38,7 +38,7 @@ function getActivity (type) {
         //  一页的数量 不少于三
         'comList|3-20': [{
           id: '@increment',
-          // image_url: '@image',
+          // url: '@image',
           title: '@ctitle',
           text: '@cparagraph(100, 200)',
           state: Mock.Random.boolean,
@@ -200,7 +200,7 @@ function getActivityByTypePros (type) {
         //  一页的数量 不少于三
         'comList|3-20': [{
           id: '@increment',
-          // image_url: '@image',
+          // url: '@image',
           title: '@ctitle',
           text: '@cparagraph(100, 200)',
           state: Mock.Random.boolean,

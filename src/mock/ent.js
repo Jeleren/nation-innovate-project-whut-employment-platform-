@@ -5,6 +5,7 @@ function getResume () {
       id: '@increment',
       // 投递岗位
       position: '@ctitle',
+      emp_id: '@increment',
       resume: [
         {
           id: '@increment',

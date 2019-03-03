@@ -15,7 +15,13 @@ Mock.mock(/\/search/, 'post', firstPage.searchResult())
 
 Mock.mock(/\/active_list/, 'get', personal.getActiveList())
 Mock.mock(/\/resume/, 'get', personal.getResume())
-Mock.mock(/\/recPros/, 'get', personal.getRecPros())
+//  根据id获取推荐职业圈
+Mock.mock(/\/recPros\/{id}/, 'get', personal.getRecPros())
+//  关注职业圈
+Mock.mock(/\/recProsFollow/, 'post', personal.recProsFollow())
+//  取消关注职业圈
+Mock.mock(/\/recProsCancelFollow/, 'post', personal.recProsCancelFollow())
+
 Mock.mock(/\/follow/, 'get', personal.getFollow())
 Mock.mock(/\/fan/, 'get', personal.getFan())
 Mock.mock(/\/collect/, 'get', personal.getCollect())
@@ -41,7 +47,7 @@ Mock.mock(/\/activities\/postResume/, 'post', activity.postResume())
 // 获取活动 活动类型type：int；职业圈id：pros_id
 Mock.mock(/\/activities/, 'get', activity.getActivity(1))
 
-// 创建活动 用户id：id；活动类型type：int，title: ''; 唯一必需:text: '' ; image_group: [file], startDate: Date; endDate: Date
+// 创建活动 用户id：id；活动类型type：int，title: ''; 唯一必需:text: '' ; image_group: [file], startDate: Date; endDate: Date; pros_id:
 Mock.mock(/\/activities/, 'post', activity.createActivity())
 // 用户id：id；动态id：active_id；
 Mock.mock(/\/collects/, 'post', activity.collectActivity())
@@ -68,9 +74,9 @@ Mock.mock(/\/cancelFollow/, 'post', user.cancelFollow())
 
 //  获取简历列表 用户id：id；
 Mock.mock(/\/entResume/, 'post', ent.getResume())
-//  通过简历 用户id：id；简历id：resume_id
+//  通过简历 用户id：id；简历id：resume_id; emp_id
 Mock.mock(/\/passResume/, 'post', ent.passResume())
-//  删除简历 用户id：id；简历id：resume_id
+//  删除简历 用户id：id；简历id：resume_id; emp_id
 Mock.mock(/\/rejectResume/, 'post', ent.rejectResume())
 
 export default Mock

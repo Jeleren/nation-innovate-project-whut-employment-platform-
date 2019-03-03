@@ -4,7 +4,7 @@ function getSlideShow () {
   return Mock.mock({
     'slideshow|1-5': [{
       id: '@increment',
-      image_url: '@image'
+      url: '@image'
     }]
   })
 }
@@ -32,7 +32,7 @@ function getComList () {
     //  一页的数量 不少于三
     'comList|3-20': [{
       id: '@increment',
-      // image_url: '@image',
+      // url: '@image',
       title: '@ctitle',
       text: '@cparagraph(100, 200)',
       state: Mock.Random.boolean,

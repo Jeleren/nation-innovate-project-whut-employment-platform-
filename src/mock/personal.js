@@ -73,6 +73,14 @@ function getRecPros () {
     ]
   })
 }
+function recProsFollow () {
+  return Mock.mock({
+    isFollow: '@increment'
+  })
+}
+function recProsCancelFollow () {
+  return {isFollow: 0}
+}
 
 function getFollow () {
   return Mock.mock({
@@ -173,6 +181,8 @@ export default {
   getActiveList,
   getResume,
   getRecPros,
+  recProsFollow,
+  recProsCancelFollow,
   getFollow,
   getFan,
   getCollect,
