@@ -21,7 +21,8 @@ Mock.mock(/\/recPros\/{id}/, 'get', personal.getRecPros())
 Mock.mock(/\/recProsFollow/, 'post', personal.recProsFollow())
 //  取消关注职业圈
 Mock.mock(/\/recProsCancelFollow/, 'post', personal.recProsCancelFollow())
-
+//  获取用户关注的所有职业圈
+Mock.mock(/\/followPros\/{id}/, 'get', personal.getFollowPros())
 Mock.mock(/\/follow/, 'get', personal.getFollow())
 Mock.mock(/\/fan/, 'get', personal.getFan())
 Mock.mock(/\/collect/, 'get', personal.getCollect())

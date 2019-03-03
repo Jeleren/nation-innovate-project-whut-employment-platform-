@@ -81,6 +81,14 @@ function recProsFollow () {
 function recProsCancelFollow () {
   return {isFollow: 0}
 }
+function getFollowPros () {
+  return Mock.mock({
+    'followProsList|1-5': [{
+      id: '@increment',
+      pros: '@title'
+    }]
+  })
+}
 
 function getFollow () {
   return Mock.mock({
@@ -183,6 +191,7 @@ export default {
   getRecPros,
   recProsFollow,
   recProsCancelFollow,
+  getFollowPros,
   getFollow,
   getFan,
   getCollect,
