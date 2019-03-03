@@ -17,11 +17,11 @@ Mock.mock(/\/active_list/, 'get', personal.getActiveList())
 Mock.mock(/\/resume/, 'get', personal.getResume())
 //  根据id获取推荐职业圈
 Mock.mock(/\/recPros\/{id}/, 'get', personal.getRecPros())
-//  关注职业圈
+//  关注职业圈 用户id：id；职业圈id：pros_id
 Mock.mock(/\/recProsFollow/, 'post', personal.recProsFollow())
 //  取消关注职业圈
 Mock.mock(/\/recProsCancelFollow/, 'post', personal.recProsCancelFollow())
-//  获取用户关注的所有职业圈
+//  获取用户关注的所有职业圈 用户id
 Mock.mock(/\/followPros\/{id}/, 'get', personal.getFollowPros())
 Mock.mock(/\/follow/, 'get', personal.getFollow())
 Mock.mock(/\/fan/, 'get', personal.getFan())
