@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <empFilter>
     <el-table v-if="empList.length"
       :data="empList.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
@@ -31,34 +31,30 @@
       </el-table-column>
     </el-table>
     <popEdit :data="editItem" v-if="editItem.title" @closePop="closeEdit"/>
-  </div>
+  </empFilter>
 </template>
 
 <script>
-import {deleteActivity, getActivity} from '@/api/activities'
 import popEdit from '../popEdit'
+import empFilter from '../../../components/filter/filter_active_list'
+import {deleteActivity} from '@/api/activities'
 
 export default {
   name: 'emp_manage',
   components: {
-    popEdit
+    popEdit,
+    empFilter
   },
   data () {
     return {
-      empList: [],
       search: '',
       editItem: {},
       editIndex: -1
     }
   },
-  created () {
-    if (!this.empList.length) {
-      let id = this.$store.state.user.userInfo.id
-      let type = 4
-      getActivity({id: id, type: type}).then(res => {
-        console.log(res)
-        this.empList = res.data.empList
-      })
+  computed: {
+    empList () {
+      return this.$store.state.pros.empList
     }
   },
   methods: {
@@ -76,9 +72,16 @@ export default {
     },
     handleDelete (index, row) {
       // console.log(index, row)
-      deleteActivity({id: this.$store.state.user.userInfo.id, active_id: row.id}).then(res => {
-        if (res.data) {
+      let formData = new FormData()
+      formData.append('id', this.$store.state.user.userInfo.id)
+      formData.append('active_id', row.id)
+      deleteActivity(formData).then(res => {
+        if (res.data.isDelete) {
           this.empList.splice(index, 1)
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
         }
       })
     }

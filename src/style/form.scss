@@ -1,11 +1,14 @@
 .form-wrap {
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
+  z-index: 1000;
+  min-height: 20rem;
 }
 .form{
-  position: absolute;
-  top: 5rem;
+  //position: absolute;
+  //top: 5rem;
   width: 25rem;
   //height: 20.5rem;
   padding: 1rem 2rem;
@@ -15,6 +18,7 @@
   .form-title {
     text-align: left;
     font-size: 1.125rem;
+    margin-bottom: 1rem;
   }
   .form-input-item{
     position: relative;
@@ -56,14 +60,18 @@
   .form-button{
     display: inline-block;
     width: 10rem;
-    height: 1.625rem;
+    height: 1.8rem;
     color: #fff;
     text-align: center;
-    background-color: #6BD9F2;
+    background-color: #409eff;
     font-size: .75rem;
     line-height: 1.625rem;
     font-weight: bold;
     cursor: pointer;
+    border-radius: 5px;
+    &:hover{
+      background-color: #66b1ff;
+    }
   }
   .zc-button{
     display: inline-block;
@@ -75,4 +83,22 @@
     top: .4rem;
     font-size: .5625rem;
   }
+}
+.el-icon-peoples {
+  width: .6rem;
+  height: .9rem;
+  background-image: url(../assets/peoples.svg);
+  background-size: 100% 100%;
+}
+[class^='icon-'] {
+  width: 24px;
+  height: 20px;
+  background-size: 100% 100%;
+  margin-right: 5px;
+}
+.icon-fan {
+  background-image: url(../assets/fan.svg);
+}
+.icon-follow {
+  background-image: url(../assets/follow.svg);
 }

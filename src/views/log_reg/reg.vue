@@ -1,80 +1,63 @@
 <template>
-  <div class="form-wrap">
-    <!--<headerBg></headerBg>-->
+  <div class="form-wrap content-top-mar">
     <div class="form">
       <div class="form-title">注册</div>
-      <inputItem placeholder="请输入名称" @getContent="setEntName"/>
-      <inputItem placeholder="请设置密码，由8-20位数字、字母、符号组成" type="password" @getContent="setPassword" />
-      <inputItem placeholder="请输入相同的密码" type="password" @getContent="setPassword" />
-      <inputItem placeholder="请输入电子邮箱" type="email" @getContent="setEmail" />
-      <div class="set-type"><span>请选择注册类型：</span>
-        <el-radio-group v-model="type">
-          <el-radio :label="1">个人</el-radio>
-          <el-radio :label="2">企业</el-radio>
-          <el-radio :label="3">教师（实验室）</el-radio>
-        </el-radio-group>
-      </div>
-      <!--<div class="form-input-item" >-->
-        <!--<i class="tra-ani" ref="arrow"></i>-->
-        <!--<input placeholder="请选择省份及城市" readonly v-model="region" @click="showRegionPick" />-->
-        <!--<regionPick @setRegion = setRegion v-if="show_region_pick" />-->
-      <!--</div>-->
-      <invalidCheck mode="获取邮箱验证码" :target="email" @getContent="setVerificationCode"/>
+      <el-form>
+        <el-form-item label="用户名">
+          <el-input v-model="username"></el-input>
+        </el-form-item>
+        <el-form-item label="设置密码，由8-20位数字、字母、符号组成">
+          <el-input v-model="password" type="password"></el-input>
+        </el-form-item>
+        <el-form-item label="输入相同的密码">
+          <el-input v-model="passwordCheck" type="password"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱">
+          <el-input v-model="email" type="email"></el-input>
+        </el-form-item>
+        <el-form-item label="注册类型">
+          <el-radio-group  v-model="type">
+            <el-radio :label="1">个人</el-radio>
+            <el-radio :label="2">企业</el-radio>
+            <el-radio :label="3">教师（实验室）</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="获取邮箱验证码">
+          <el-input v-model="v_code">
+            <template slot="append"><el-button>点击获取验证码</el-button></template>
+          </el-input>
+        </el-form-item>
+      </el-form>
       <div class="form-bottom">
-        <div>
-          <div class="form-button zc-button">注册</div>
-        </div>
+        <div class="form-button zc-button" @click="doReg">注册</div>
+        <router-link class="set-type" to="/">返回登录</router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import headerBg from '../../components/header_bg'
-import inputItem from '../../components/input_item'
-import regionPick from './region_pick'
-import invalidCheck from './invalid_check'
-// import el-radio from 'element-ui/el-radio'
+
+import {register} from '@/api/log_reg'
+
 export default {
   name: 'ent_reg',
   components: {
-    headerBg,
-    inputItem,
-    regionPick,
-    invalidCheck
+    // footer_bg
   },
   data () {
     return {
       show_region_pick: false,
-      entName: '',
-      email: '',
-      password: '',
+      username: '百度',
+      email: '17771396576@163.com',
+      password: '123456',
+      passwordCheck: '',
       region: '',
       v_code: '',
       type: 1
     }
   },
   methods: {
-    setEntName (prop) {
-      this.entName = prop
-    },
-    setEmail (prop) {
-      this.email = prop
-    },
-    setPassword (prop) {
-      this.password = prop
-    },
-    setVerificationCode (prop) {
-      this.v_code = prop
-    },
-    showRegionPick () {
-      if (this.show_region_pick) {
-        this.passiveArrow()
-      } else {
-        this.activeArrow()
-      }
-      this.show_region_pick = !this.show_region_pick
-    },
     setRegion (region) {
       this.region = region
       this.show_region_pick = false
@@ -94,6 +77,26 @@ export default {
     },
     toUserRegister () {
       this.$router.push('user_register')
+    },
+    doReg () {
+      let data = new FormData()
+      data.append('username', this.username)
+      data.append('password', this.password)
+      data.append('email', this.email)
+      data.append('type', this.type)
+      // let data = {username: this.username, password: this.password, email: this.email}
+      register(data).then(res => {
+        console.log(res)
+        if (res.data) {
+          this.$store.dispatch('login', {username: res.data.username, password: this.password}).then(res => {
+            if (res === 1) {
+              this.$router.push('/gc/directory_user')
+            } else {
+              this.$router.push('/gc/ent')
+            }
+          })
+        }
+      })
     }
   }
 }
@@ -114,9 +117,17 @@ export default {
   margin: 3rem 0;
   display: flex;
   justify-content: center;
+  /*flex-direction: column;*/
 }
   .set-type {
+    position: absolute;
     font-size: .6rem;
-    margin-top: 1.5rem;
+    right: 1rem;
+    bottom: 0;
+    text-decoration: underline;
+    cursor: pointer;
+    /*vertical-align: bottom;*/
+    /*margin-left: 2rem;*/
+    /*margin-top: 1rem;*/
   }
 </style>

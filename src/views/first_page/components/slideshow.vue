@@ -1,9 +1,9 @@
 <template>
   <div class="slideshow">
     <transition-group name="slideshow" tag="div" class="list-wrap">
-      <!--<span v-for="item in slideshow" :key="item.id" :style="{'background-image': `url(${item.image_url})`}" class="list-item">{{item.image_url}}</span>-->
+      <!--<span v-for="item in slideshow" :key="item.id" :style="{'background-image': `url(${item.url})`}" class="list-item">{{item.url}}</span>-->
       <!--<div v-for="item in slideshow" :key="item.id" v-if="item.id === showIndex">-->
-        <img v-for="item in slideshow" :key="item.id" v-if="item.id === showIndex" class="list-item" :src="item.image_url" @mouseover="stop" @mouseleave="start"/>
+        <img v-for="item in slideshow" :key="item.id" v-if="item.id === showIndex" class="list-item" :src="''+item.url" @mouseover="stop" @mouseleave="start"/>
       <!--</div>-->
     </transition-group>
     <div class="dot-wrap">
@@ -22,7 +22,7 @@ export default {
     return {
       slideshow: [],
       showIndex: -1,
-      timeInt: 2000
+      timeInt: 2500
     }
   },
   created () {

@@ -5,7 +5,7 @@
       <div class="lab-left-wrap">
         <h1>{{item.username}}</h1>
         <div class="lab-content">{{item.text}}</div>
-        <div class="more" @click="goLabPersonal(item)">了解更多</div>
+        <!--<div class="more" @click="goLabPersonal(item)">了解更多</div>-->
       </div>
     </div>
   </div>
@@ -61,7 +61,7 @@ export default {
       font-size: .5rem;
       /*height: .75rem;*/
       width: 3rem;
-      background-color: #6BD9F2;
+      background-color: #409eff;
       color: #fff;
       text-align: center;
       /*vertical-align: center;*/

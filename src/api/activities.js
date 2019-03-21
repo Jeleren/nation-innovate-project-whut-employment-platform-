@@ -1,12 +1,16 @@
 import axios from '../utils/request'
-
+import {api} from './index'
 /**
  *  根据动态类型，用户id，职业圈id获取动态
  * @param data: type, user_id, pros_id
  * @returns {AxiosPromise<any>}
  */
 export function getActivity (data) {
-  return axios.get(`/activities/`, data)
+  if (data.type && !data.pros_id) {
+    return axios.get(`${api}/activities/${data}`)
+  } else {
+    return axios.get(`${api}/activities/${data}`)
+  }
 }
 
 /**
@@ -15,8 +19,8 @@ export function getActivity (data) {
  * @param data  有关用户信息，可只包含用户id
  * @returns {AxiosPromise<any>}
  */
-export function postResume (id, data) {
-  return axios.post(`/activities/postResume/${id}`, data)
+export function postResume (data) {
+  return axios.post(`${api}/activities/postResume/`, data)
 }
 
 /**
@@ -25,7 +29,10 @@ export function postResume (id, data) {
  * @returns {AxiosPromise<any>}
  */
 export function postActivity (data) {
-  return axios.post(`/activities/`, data)
+  return axios.post(`${api}/activities/`, data)
+}
+export function createImage (data) {
+  return axios.post(`${api}/images/`, data)
 }
 
 /**
@@ -34,10 +41,10 @@ export function postActivity (data) {
  * @returns {AxiosPromise<any>}
  */
 export function collectActivity (data) {
-  return axios.post(`/collects/`, data)
+  return axios.post(`${api}/collects/`, data)
 }
 export function cancelCollectActivity (data) {
-  return axios.post(`/cancelCollects/`, data)
+  return axios.post(`/api/cancelCollects/`, data)
 }
 /**
  * 用户评论活动
@@ -45,7 +52,7 @@ export function cancelCollectActivity (data) {
  * @returns {AxiosPromise<any>}
  */
 export function commentActivity (data) {
-  return axios.post(`/comments/`, data)
+  return axios.post(`${api}/comments/`, data)
 }
 
 /**
@@ -54,10 +61,10 @@ export function commentActivity (data) {
  * @returns {AxiosPromise<any>}
  */
 export function likeActivity (data) {
-  return axios.post(`/like/`, data)
+  return axios.post(`${api}/like/`, data)
 }
 export function cancelLikeActivity (data) {
-  return axios.post(`/cancelLike`, data)
+  return axios.post(`${api}/cancelLike/`, data)
 }
 
 /**
@@ -66,7 +73,7 @@ export function cancelLikeActivity (data) {
  * @returns {AxiosPromise<any>}
  */
 export function changeActivity (data) {
-  return axios.post(`/changeActivities`, data)
+  return axios.post(`${api}/changeActivities/`, data)
 }
 
 /**
@@ -75,7 +82,7 @@ export function changeActivity (data) {
  * @returns {AxiosPromise<any>}
  */
 export function deleteActivity (data) {
-  return axios.post(`/deleteActivities/`, data)
+  return axios.post(`${api}/deleteActivities/`, data)
 }
 
 /**
@@ -84,8 +91,7 @@ export function deleteActivity (data) {
  * @returns {AxiosPromise<any>}
  */
 export function getActivityByPros (data) {
-  console.log('api pros')
-  return axios.post(`/activitiesByPros/`, data)
+  return axios.post(`${api}/activitiesByPros/`, data)
 }
 
 /**

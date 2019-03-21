@@ -7,11 +7,8 @@
       <el-form-item label="用户名">
         <el-input v-model="form.username"></el-input>
       </el-form-item>
-      <!--<el-form-item label="密码">-->
-        <!--<el-input v-model="form.password"></el-input>-->
-      <!--</el-form-item>-->
       <el-form-item label="简介">
-        <el-input type="textarea" ref="text" v-model="form.desc"></el-input>
+        <el-input type="textarea" ref="text" v-model="form.text"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -24,7 +21,6 @@
 <script>
 import {autoTextarea} from '@/utils/textAutoHeight'
 import imagePicker from '../../components/imagePicker'
-import {apiChangeUserInfo} from '@/api/user'
 
 export default {
   name: 'info',
@@ -33,26 +29,37 @@ export default {
   },
   data () {
     return {
-      form: {},
+      form: {
+        username: this.$store.state.user.userInfo.username,
+        text: this.$store.state.user.userInfo.text,
+        head: this.$store.state.user.userInfo.head
+      },
+      file: '',
       imagePickerState: false
     }
   },
   mounted () {
     autoTextarea(this.$refs.text.$el.children[0], 10)
-    this.form = this.$store.state.user.userInfo
+    // this.form = this.$store.state.user.userInfo
   },
   methods: {
     onSubmit () {
-      delete this.form['head']
-      if (!this.form.password) {
-        delete this.form.password
+      let formData = new FormData()
+      formData.append('id', this.$store.state.user.userInfo.id)
+      if (this.file) {
+        formData.append('image', this.file)
       }
-      apiChangeUserInfo(this.$store.state.user.userInfo.id, this.form).then(res => {
-        this.$message(res)
+      formData.append('userInfo', JSON.stringify({ username: this.form.username, text: this.form.text }))
+      this.$store.dispatch('changeUserInfo', formData).then(res => {
+        this.$message({
+          message: '保存成功',
+          type: 'success'
+        })
       })
     },
-    setImage (img) {
+    setImage ([img, file]) {
       this.form.head = img.src
+      this.file = file
     },
     showImagePicker () {
       this.imagePickerState = true
@@ -75,8 +82,8 @@ export default {
   }
   img {
     cursor: pointer;
-    width: 10rem;
-    height: 10rem;
+    width: 5rem;
+    height: 5rem;
   }
   textarea {
     overflow-y: hidden;

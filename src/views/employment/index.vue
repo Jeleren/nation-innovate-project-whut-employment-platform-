@@ -1,14 +1,15 @@
 <template>
   <div class="content-header-mar">
-    <empFilter/>
-    <empList :empList="empList" v-if="empList"/>
+    <empFilter>
+      <empList :empList="empList" v-if="empList"/>
+    </empFilter>
   </div>
 </template>
 
 <script>
-import empFilter from '../../components/filter'
+import empFilter from '../../components/filter/filter_active_list'
 import empList from '../../components/employList'
-import {fetchEmployment} from '@/api/first_page'
+// import {fetchEmployment} from '@/api/first_page'
 
 export default {
   name: 'index',
@@ -20,13 +21,6 @@ export default {
     empList () {
       return this.$store.state.pros.empList
     }
-  },
-  created () {
-    fetchEmployment().then(res => {
-      if (res.data) {
-        this.$store.commit('SET_EMP_LIST', res.data.empList)
-      }
-    })
   }
 }
 </script>

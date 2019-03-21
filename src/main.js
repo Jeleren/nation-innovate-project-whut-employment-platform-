@@ -5,10 +5,11 @@ import App from './App'
 import router from './router'
 import 'element-ui/lib/theme-chalk/index.css'
 import {Message, Radio, RadioGroup, Row, Col, Menu, Submenu, MenuItem, Form, FormItem, Input,
-  DatePicker, Switch, Button, Table, TableColumn, Tag, Popover, Dropdown, DropdownMenu, DropdownItem} from 'element-ui'
+  DatePicker, Switch, Button, Table, TableColumn, Tag, Popover, Dropdown, DropdownMenu, DropdownItem, Pagination, Collapse, CollapseItem} from 'element-ui'
 import './style/common.scss'
 import store from './store'
-import './mock'
+import './permission'
+// import './mock'
 //  给message添加install方法
 Message.install = function (Vue) {
   Vue.prototype.$message = Message
@@ -34,6 +35,11 @@ Vue.use(Popover)
 Vue.use(DropdownMenu)
 Vue.use(Dropdown)
 Vue.use(DropdownItem)
+// Vue.use(CheckboxGroup)
+// Vue.use(Checkbox)
+Vue.use(Pagination)
+Vue.use(Collapse)
+Vue.use(CollapseItem)
 
 Vue.config.productionTip = false
 

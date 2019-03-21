@@ -1,53 +1,59 @@
 <template>
   <div class="resume-wrap">
     <div class="resume-item">
-      <div class="item-title"><span class="title">{{baseInfo.title}}</span><span class="edit pointer" @click="showEdit('showEditBase')" v-if="!watchModel">点击编辑</span></div>
+      <div class="item-title"><span class="title">基本信息</span><span class="edit pointer" @click="showEdit('showEditBase')" v-if="!watchModel">点击编辑</span></div>
       <div class="base-info">
         <div class="left">
           <span class="left-item-wrap"><span class="left-item-title">姓&emsp;&emsp;名 : </span>{{baseInfo.name}}</span>
-          <span class="left-item-wrap"><span>出生年月 : </span><span>{{baseInfo.birth}}</span></span>
+          <span class="left-item-wrap"><span>出生年月 : </span><span v-if="baseInfo.birth">{{changeBirth(baseInfo.birth)}}</span></span>
           <span class="left-item-wrap"><span>民&emsp;&emsp;族 : </span>{{baseInfo.nation}}</span>
-          <span class="left-item-wrap"><span>性&emsp;&emsp;别 : </span><span>{{baseInfo.gender}}</span></span>
+          <span class="left-item-wrap"><span>性&emsp;&emsp;别 : </span><span v-if="baseInfo.gender === 1">男</span><span v-if="baseInfo.gender === 0">女</span></span>
           <span class="left-item-wrap"><span>政治面貌 : </span><span>{{baseInfo.political}}</span></span>
           <span class="left-item-wrap"><span>学&emsp;&emsp;历 : </span><span>{{baseInfo.edu}}</span></span>
           <span class="left-item-wrap"><span>毕业院校 : </span>{{baseInfo.school}}</span>
           <span class="left-item-wrap"><span>联系方式 : </span>{{baseInfo.contact_way}}</span>
         </div>
         <div class="right">
-          <img :src="baseInfo.image" v-if="watchModel"/>
-          <img :src="baseInfo.image" v-if="!watchModel" @click="showImagePicker" title="更改图片"/>
+          <img :src="baseInfo.image" v-if="watchModel && baseInfo.image"/>
+          <img :src="baseInfo.image" v-if="!watchModel && baseInfo.image" @click="showImagePicker" title="更改图片"/>
+          <div v-if="!baseInfo.image" class="default-img" @click="showImagePicker"></div>
         </div>
         <div class="pop-wrap" v-if="showEditBase">
           <div class="pop-content">
-            <div class="pop-top mar-tb">
-              <div class="pop-big-title">{{baseInfo.title}}</div><i class="el-icon-close" @click="closePop('showEditBase')"></i>
-            </div>
-            <div class="pop-item mar-tb"><span>姓&emsp;&emsp;名 : </span><label>
-              <input v-model="baseInfo.name"/>
-            </label></div>
-            <div class="pop-item mar-tb"><span>出生年月 : </span><label>
-              <input v-model="baseInfo.birth"/>
-            </label></div>
-            <div class="pop-item mar-tb"><span>民&emsp;&emsp;族 : </span><label>
-              <input v-model="baseInfo.nation"/>
-            </label></div>
-            <div class="pop-item mar-tb"><span>性&emsp;&emsp;别 : </span><label>
-              <input v-model="baseInfo.gender"/>
-            </label></div>
-            <div class="pop-item mar-tb"><span>政治面貌 : </span><label>
-              <input v-model="baseInfo.political"/>
-            </label></div>
-            <div class="pop-item mar-tb"><span>学&emsp;&emsp;历 : </span><label>
-              <input v-model="baseInfo.edu"/>
-            </label></div>
-            <div class="pop-item mar-tb"><span>毕业院校 : </span><label>
-              <input v-model="baseInfo.school"/>
-            </label></div>
-            <div class="pop-item mar-tb"><span>联系方式 : </span><label>
-              <input v-model="baseInfo.contact_way"/>
-            </label></div>
+            <el-form>
+              <div class="pop-top mar-tb">
+                <div class="pop-big-title">{{baseInfo.title}}</div><i class="el-icon-close" @click="closePop('showEditBase')"></i>
+              </div>
+              <el-form-item label="姓名" label-width="80px">
+                <el-input v-model="baseInfo.name"></el-input>
+              </el-form-item>
+              <el-form-item label="出生日期" label-width="80px">
+                <el-date-picker v-model="baseInfo.birth"></el-date-picker>
+              </el-form-item>
+              <el-form-item label="民族" label-width="80px">
+                <el-input v-model="baseInfo.nation"></el-input>
+              </el-form-item>
+              <el-form-item label="性别" label-width="80px">
+                <el-radio-group v-model="baseInfo.gender" @change="changeGender">
+                  <el-radio :label=1 >男</el-radio>
+                  <el-radio :label=2 >女</el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item label="政治面貌" label-width="80px">
+                <el-input v-model="baseInfo.political"></el-input>
+              </el-form-item>
+              <el-form-item label="学历" label-width="80px">
+                <el-input v-model="baseInfo.edu"></el-input>
+              </el-form-item>
+              <el-form-item label="毕业院校" label-width="80px">
+                <el-input v-model="baseInfo.school"></el-input>
+              </el-form-item>
+              <el-form-item label="联系方式" label-width="80px">
+                <el-input v-model="baseInfo.contact_way"></el-input>
+              </el-form-item>
+            </el-form>
             <div class="pop-bottom">
-              <div class="button" @click="submitBase">保存信息</div>
+              <el-button type="primary" @click="submitBase">保存信息</el-button>
             </div>
           </div>
         </div>
@@ -64,7 +70,7 @@
           <input v-model="editItem.title"/>
         </label></div>
         <div class="pop-item"><span>内容 : </span><label>
-          <textarea v-model="editItem.text" ref="text"></textarea>
+          <textarea v-model="editItem.content" ref="text"></textarea>
         </label></div>
         <div class="pop-bottom"><div class="button" @click="deleteItem('showEditItem')">删除信息</div><div class="button" @click="saveContent('showEditItem')">保存信息</div></div>
       </div>
@@ -94,6 +100,7 @@ export default {
   },
   data () {
     return {
+      resumeId: 0,
       resume: [],
       baseInfo: {},
       showEditBase: false,
@@ -110,19 +117,26 @@ export default {
       this.watchModel = true
     }
     if (!this.resume.length) {
-      fetchResume(this.$store.state.user.userInfo.id).then(res => {
+      fetchResume().then(res => {
         if (res.data) {
+          this.resumeId = res.data.id
           this.init(res.data)
         }
       })
+    } else {
+      this.init()
     }
   },
   methods: {
     init (data) {
       let {...dataCopy} = data
-      this.baseInfo = dataCopy.resume[0]
+      if (!this.baseInfo.id) {
+        this.baseInfo = dataCopy.resume[0]
+      }
       // dataCopy.resume.splice(0, 1)
-      this.resume = dataCopy.resume.slice(1)
+      if (!this.resume.length) {
+        this.resume = dataCopy.resume.slice(1)
+      }
       let a = setInterval(() => {
         if (this.$refs.content) {
           clearInterval(a)
@@ -133,10 +147,10 @@ export default {
     handleContent (index) {
       if (index === undefined) {
         for (let [index, item] of this.resume.entries()) {
-          this.$refs.content[index].innerHTML = handleText(item.text)
+          this.$refs.content[index].innerHTML = handleText(item.content)
         }
       } else {
-        this.$refs.content[index].innerHTML = handleText(this.resume[index].text)
+        this.$refs.content[index].innerHTML = handleText(this.resume[index].content)
       }
     },
     showEdit (param, index) {
@@ -164,19 +178,22 @@ export default {
       document.documentElement.style.overflow = 'auto'
     },
     saveContent (param) {
-      if (!this.editItem.title || !this.editItem.text) {
+      if (!this.editItem.title || !this.editItem.content) {
         return
       }
+      let formData = new FormData()
+      formData.append('id', this.resumeId)
+      formData.append('resumeItem', JSON.stringify({title: this.editItem.title, content: this.editItem.content}))
       //  普通保存
       if (this.editIndex !== -1) {
-        changeResume(this.editItem).then(res => {
+        changeResume(formData).then(res => {
           if (res.data) {
             this.resume[this.editIndex] = res.data
             this.handleContent(this.editIndex)
           }
         })
       } else {
-        addResumeItem(this.editItem).then(res => {
+        addResumeItem(formData).then(res => {
           if (res.data) {
             this.resume.push(res.data)
             let len = this.resume.length - 1
@@ -204,15 +221,16 @@ export default {
     cleanData () {
       this.editItem = -1
     },
-    setImage (img) {
-      let data = {}
-      data.id = this.baseInfo.id
-      data.image = img
+    setImage ([img, file]) {
+      let data = new FormData()
+      data.append('id', this.baseInfo.id)
+      data.append('file', file)
       changeResumeImage(data).then(res => {
         if (res.data) {
           this.baseInfo.image = img.src
         }
       })
+      this.baseInfo.image = img.src
     },
     showImagePicker () {
       this.imagePickerState = true
@@ -223,22 +241,59 @@ export default {
       document.documentElement.style.overflow = 'auto'
     },
     submitBase () {
-      changeBaseInfo(this.baseInfo).then(res => {
+      let formData = new FormData()
+      formData.append('id', this.resumeId)
+      formData.append('baseinfo', JSON.stringify(this.baseInfo))
+      changeBaseInfo(formData).then(res => {
         if (res.data) {
           this.baseInfo = res.data
           this.closePop('showEditBase')
         }
       })
     },
+    ObjectToFormData (object) {
+      delete object.image
+      let formData = new FormData()
+      for (let item in object) {
+        formData.append(`${item}`, object[item])
+      }
+      return formData
+    },
     rejectResume () {
-      rejectResume({user_id: this.$store.state.user.userInfo.id, resume_id: this.data.id}).then(res => {
-        this.$emit('closePop', {state: 0})
+      let formData = new FormData()
+      formData.append('id', this.$store.state.user.userInfo.id)
+      formData.append('resume_id', this.data.id)
+      formData.append('emp_id', this.data.emp_id)
+      rejectResume(formData).then(res => {
+        if (!res.data.state) {
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          })
+          this.$emit('closePop', {state: 0})
+        }
       })
     },
     passResume () {
-      passResume({user_id: this.$store.state.user.userInfo.id, resume_id: this.data.id}).then(res => {
-        this.$emit('closePop', {state: 2})
+      let formData = new FormData()
+      formData.append('id', this.$store.state.user.userInfo.id)
+      formData.append('resume_id', this.data.id)
+      formData.append('emp_id', this.data.emp_id)
+      passResume(formData).then(res => {
+        if (res.data.state) {
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          })
+          this.$emit('closePop', {state: 2})
+        }
       })
+    },
+    changeGender (val) {
+      this.baseInfo.gender = val
+    },
+    changeBirth (val) {
+      return val.split(' ')[0]
     }
   }
 }
@@ -304,10 +359,21 @@ export default {
     }
     .right {
       display: inline-block;
+      width: 30%;
       img {
         cursor: pointer;
         max-width: 6rem;
         max-height: 8rem;
+      }
+      .default-img {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        max-width: 6rem;
+        max-height: 8rem;
+        background-image: url(../../../assets/default_cover.png);
+        -webkit-background-size: 100% 100%;
+        background-size: 100% 100%;
       }
     }
   }

@@ -5,7 +5,6 @@
       <active/>
     </div>
     <div class="right-wrap">
-      <!--<smallHead/>-->
       <recPros/>
     </div>
   </div>
@@ -32,6 +31,7 @@ export default {
 
 <style lang="scss" scoped>
 .pros-wrap {
-
+  display: flex;
+  justify-content: space-between;
 }
 </style>

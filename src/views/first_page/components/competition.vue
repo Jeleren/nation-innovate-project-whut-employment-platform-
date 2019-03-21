@@ -8,7 +8,6 @@
 <script>
 import sectionHead from '../components/section_head'
 import compList from '../../../components/compList'
-import { fetchCompetition } from '@/api/first_page'
 
 export default {
   name: 'competition',
@@ -16,16 +15,15 @@ export default {
     sectionHead,
     compList
   },
-  data () {
-    return {
-      comList: []
+  computed: {
+    comList () {
+      return this.$store.state.pros.comList.slice(0, 3)
     }
   },
   created () {
-    fetchCompetition().then(res => {
-      // console.log(res)
-      this.comList = res.data.comList.splice(0, 3)
-    })
+    if (!this.comList.length) {
+      this.$store.dispatch('getActiveList', {type: 1, num: 3})
+    }
   }
 }
 </script>

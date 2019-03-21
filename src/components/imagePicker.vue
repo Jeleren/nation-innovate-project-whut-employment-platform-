@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import {apiChangeUserInfo} from '@/api/user'
 
 export default {
   name: 'imagePicker',
@@ -161,21 +160,27 @@ export default {
         e.preventDefault()
       }
       function resize (e) {
-        let distance = e.clientX - clienX
+        let distance = Math.abs(e.clientX - clienX)
         let width = parseFloat(dragDiv.style.width)
+        let height = parseFloat(dragDiv.style.height)
+        let top = parseFloat(dragDiv.style.top)
         let left = parseFloat(dragDiv.style.left)
-        clienX = e.clientX
         if (e.clientX < clienX) {
-          if (parseFloat(dragDiv.style.width) > 100) {
+          if (parseFloat(dragDiv.style.width) > 50) {
             dragDiv.style.height = dragDiv.style.width = width - distance + 'px'
           }
         } else {
           if (width + left < _this.width) {
-            dragDiv.style.height = dragDiv.style.width = width + distance + 'px'
+            if (height + top < _this.height) {
+              dragDiv.style.height = dragDiv.style.width = width + distance + 'px'
+            } else {
+              dragDiv.style.top = _this.height - height + 'px'
+            }
           } else {
             dragDiv.style.left = _this.width - width + 'px'
           }
         }
+        clienX = e.clientX
         _this.setClip(dragDiv.style)
         _this.clipImage()
       }
@@ -211,31 +216,8 @@ export default {
       while (n--) {
         u8arr[n] = bstr.charCodeAt(n)
       }
-      // console.log(this.filename)
       let file = new File([u8arr], this.filename, {type: mime})
-      // console.log(typeof file)
-      let formdata = new FormData()
-      formdata.append('head', file)
-      let _this = this
-      apiChangeUserInfo(this.$store.state.user.userInfo.id, formdata).then(res => {
-        console.log(res)
-        if (res) {
-          console.log(res)
-        } else {
-          this.$message({
-            type: 'warning',
-            message: `${res.data.head[0]}`
-          })
-        }
-      }).catch(err => {
-        console.log(err)
-        _this.$message({
-          message: err,
-          type: 'warning'
-        })
-      })
-      // console.log(this)
-      this.$emit('setImage', resultImage)
+      this.$emit('setImage', [resultImage, file])
       this.setShow()
     }
   }

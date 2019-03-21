@@ -14,15 +14,6 @@ export default {
     activeContent,
     activeEdit
   }
-  // computed: {
-  //   activeList () {
-  //     // console.log(this.$store.state.pros.activeList)
-  //     return this.$store.state.pros.activeList
-  //   }
-  // },
-  // created () {
-  //   this.$store.dispatch('getActiveList')
-  // }
 }
 </script>
 

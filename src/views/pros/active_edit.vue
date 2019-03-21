@@ -1,13 +1,41 @@
 <template>
   <div class="active-edit-wrap boxShadow">
     <div class="text-wrap" ref="text_wrap">
-      <textarea v-model="content" placeholder="编辑个人动态" @focus="edit" @blur="save" ref="text"></textarea>
+      <textarea v-model="text" placeholder="编辑个人动态" @focus="edit" @blur="save" ref="text"></textarea>
     </div>
     <div class="button-wrap">
-      <div class="add-img pointer" @click="triggerInput">添加图片</div>
-      <div class="submit button" @click="submitActive">发布</div>
+      <div>
+        <el-button type="primary" size="mini" class="add-img" @click="triggerInput">添加图片</el-button>
+        <div class="pro">
+          <el-dropdown>
+            <el-button  size="mini"  type="primary">
+              职业圈<i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+            <el-table
+              ref="multipleTable"
+              :data="followProsList"
+              tooltip-effect="dark"
+              style="width: 100%"
+              max-height="350"
+              @selection-change="selectPro">
+              <el-table-column
+                type="selection"
+                width="30">
+              </el-table-column>
+              <el-table-column
+                label="职业圈"
+                width="100">
+                <template slot-scope="scope">{{ scope.row.pro }}</template>
+              </el-table-column>
+            </el-table>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+      </div>
+      <el-button type="primary" class="submit" @click="submitActive">发布</el-button>
     </div>
-    <div class="img-list clear" ref="img_list">
+    <div class="img-list clear" ref="imgList">
       <div class="top clear"><span class="hint">最多可添加9张图片</span><i class="el-icon-close pointer clear" @click="closeList"></i></div>
       <div class="input-wrap"><input type="file" accept="image/*" multiple class="input" ref="input" @input="setImg"/></div>
       <div class="img-wrap" v-if="imgList.length">
@@ -20,17 +48,26 @@
 </template>
 
 <script>
-import {postActivity} from '@/api/activities'
+import {createImage, postActivity} from '@/api/activities'
 
 export default {
   name: 'active_edit',
   data () {
     return {
-      content: '',
-      imgList: []
+      text: '',
+      imgList: [],
+      selectedPros: []
+    }
+  },
+  computed: {
+    followProsList () {
+      return this.$store.state.pros.followProsList
     }
   },
   mounted () {
+    if (!this.followProsList.length) {
+      this.$store.dispatch('getFollowProsList')
+    }
     this.autoTextarea(this.$refs.text)
   },
   methods: {
@@ -99,11 +136,11 @@ export default {
       this.$refs.input.click()
     },
     closeList () {
-      this.$refs.img_list.style.display = 'none'
+      this.$refs.imgList.style.display = 'none'
       this.imgList = []
     },
     setImg (e) {
-      this.$refs.img_list.style.display = 'block'
+      this.$refs.imgList.style.display = 'block'
       let fileList = e.target.files
       if (this.imgList.length + fileList.length < 10) {
         for (let item of fileList) {
@@ -129,16 +166,53 @@ export default {
       this.imgList.splice(index, 1)
     },
     submitActive () {
-      if (this.content) {
-        let formData = new FormData()
-        formData.append('id', this.$store.state.user.userInfo.id)
-        formData.append('text', this.content)
-        postActivity(formData).then(res => {
-          if (res.data) {
-            this.$store.commit('ADD_ACTIVE_ITEM', res.data)
-          }
-        })
+      if (!this.text) {
+        return
       }
+      if (!this.selectedPros.length) {
+        this.$message({
+          message: '请选择职业圈'
+        })
+        return
+      }
+      let idList = this.selectedPros.map(item => { return item.id })
+      let formData = new FormData()
+      formData.append('id', this.$store.state.user.userInfo.id)
+      formData.append('type', 2)
+      formData.append('activity', JSON.stringify({pros_id: idList, text: this.text}))
+      postActivity(formData).then(res => {
+        let activity = res.data.id
+        if (res.data) {
+          this.$store.commit('ADD_ACTIVE_ITEM', res.data)
+        }
+        let imgLength = this.imgList.length
+        if (imgLength) {
+          let files = this.$refs.input.files
+          for (let i = 0; i < imgLength; i++) {
+            let data = new FormData()
+            data.append('image', files[0])
+            data.append('activity', activity)
+            createImage(data).then(res => {
+              if (res.data.image) {
+                this.closeList()
+                this.text = ''
+                this.$message({
+                  message: '发布成功',
+                  type: 'success'
+                })
+              }
+            })
+          }
+        } else {
+          this.text = ''
+        }
+      })
+    },
+    handleClose (index) {
+      this.selectedPros.splice(index, 1)
+    },
+    selectPro (pro) {
+      this.selectedPros = pro
     }
   }
 }
@@ -172,14 +246,18 @@ export default {
       font-size: .6rem;
       display: flex;
       justify-content: space-between;
-      height: 1.2rem;
+      /*height: 1.2rem;*/
       margin-top: .4rem;
       line-height: 1.2rem;
       margin-bottom: .2rem;
       .add-img {
-        padding: 0 .2rem;
-        border: 1px solid #ececec;
+        /*padding: 0 .2rem;*/
+        /*border: 1px solid #ececec;*/
+        display: inline-block;
         /*line-height: 1.2rem;*/
+      }
+      .pro {
+        display: inline-block;
       }
       .submit {
         padding: 0 .5rem;

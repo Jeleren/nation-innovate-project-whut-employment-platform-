@@ -1,8 +1,8 @@
 <template>
-  <div class="content-wrap">
+  <div class="content-wrap" v-if="empList.length">
     <div v-for="(item, index) in empList" :key="index" class="emp-item" @click="showDetail(index)">
       <span class="part"><i></i><a class="a-link">{{item.title}}</a></span>
-      <span class="part">{{item.date}}</span>
+      <span class="part">截止时间：{{item.endDate}}</span>
     </div>
     <div class="item-detail" v-if="isShowDetail">
       <div class="item-content boxShadow">
@@ -47,12 +47,14 @@ export default {
     onSubmit () {
       let formdata = new FormData()
       formdata.append('id', this.$store.state.user.userInfo.id)
-      postResume(this.empItem.id, formdata).then(res => {
+      formdata.append('active_id', this.empItem.id)
+      postResume(formdata).then(res => {
         if (res.data) {
           this.$message({
             message: '投递成功',
             type: 'success'
           })
+          this.hideDetail()
         }
       })
     }
@@ -89,7 +91,7 @@ export default {
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         border-radius: 50%;
-        background-color: #6BD9F2;
+        background-color: #409eff;
       }
     }
   }

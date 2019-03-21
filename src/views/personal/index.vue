@@ -1,35 +1,31 @@
 <template>
   <div class="personal">
-    <perHeader v-if="!$store.state.user.isSelf"/>
-    <router-view style="margin-top: 1rem"></router-view>
-    <right style="margin-top: 1rem"/>
+    <slideBar style="margin-right: 1rem"/>
+    <router-view style="display: inline-block; width: 100%;"></router-view>
   </div>
 </template>
 
 <script>
-import perHeader from './components/per_header'
-import left from './components/left'
-import right from './components/right'
+import slideBar from './components/slideBar'
 export default {
   name: 'index',
   components: {
-    perHeader,
-    left,
-    right
-  },
-  created () {
-    //  check identify
-    let user = this.$store.state.user
-    if (!user.showUser || user.userInfo.id === user.showUser.id) {
-      this.$store.commit('SET_IS_SELF', true)
-    }
+    slideBar
   }
+  // created () {
+  //   //  check identify
+  //   let user = this.$store.state.user
+  //   if (!user.showUser || user.userInfo.id === user.showUser.id) {
+  //     this.$store.commit('SET_IS_SELF', true)
+  //   }
+  // }
 }
 </script>
 
 <style scoped>
 .personal {
-  /*padding-top: 1rem;*/
-  /*position: relative;*/
+  padding-top: 1rem;
+  position: relative;
+  display: flex;
 }
 </style>

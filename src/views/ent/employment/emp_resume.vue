@@ -61,7 +61,10 @@ export default {
   },
   created () {
     if (!this.resumeList.length) {
-      getResume({id: this.$store.state.user.userInfo.id}).then(res => {
+      let formData = new FormData()
+      formData.append('id', this.$store.state.user.userInfo.id)
+      // formData.append('active_id', 10)
+      getResume(formData).then(res => {
         if (res.data) {
           this.resumeList = res.data.resumeList
           console.log(this.resumeList)
@@ -95,7 +98,9 @@ export default {
     },
     handleWatch (index, row) {
       this.watchIndex = index
+      // this.watchItem.emp_id =
       this.watchItem = this.resumeList[index]
+      console.log(row)
       document.documentElement.style.overflow = 'hidden'
     },
     closePop (data) {

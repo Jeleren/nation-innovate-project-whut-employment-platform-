@@ -1,13 +1,12 @@
 <template>
   <div class="employment section-top">
     <sectionHead title="招聘信息" router="employment"/>
-    <empList :empList="emp_list"/>
+    <empList :empList="empList"/>
   </div>
 </template>
 
 <script>
 import sectionHead from '../components/section_head'
-import { fetchEmployment } from '@/api/first_page'
 import empList from '../../../components/employList'
 
 export default {
@@ -16,16 +15,15 @@ export default {
     sectionHead,
     empList
   },
-  data () {
-    return {
-      emp_list: []
+  computed: {
+    empList () {
+      return this.$store.state.pros.empList
     }
   },
   created () {
-    fetchEmployment().then(res => {
-      // console.log('emp_list', res.data)
-      this.emp_list = res.data.empList.slice(0, 4)
-    })
+    if (!this.empList.length) {
+      this.$store.dispatch('getActiveList', {type: 4, num: 4})
+    }
   }
 }
 </script>

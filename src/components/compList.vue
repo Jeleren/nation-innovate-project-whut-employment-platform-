@@ -1,13 +1,14 @@
 <template>
   <div class="content-wrap">
     <div v-for="(item, index) in comList" :key="index" class="com-wrap" @click="showDetail(index)">
-      <img :src="item.user.head"/>
+      <!--<img :src="''+item.user.head"/>-->
+      <div  class="img" :style="`background-image: url(${item.user.head})`"></div>
       <div class="title">{{item.title}}</div>
-      <div class="com-content">{{item.text}}</div>
+      <div class="com-content">{{item.text}}<span>...</span></div>
       <div class="state" :class="{'on-state': item.state, 'off-state': !item.state}">
         <div v-if="item.state"><i></i><span>进行中</span></div>
         <div v-if="!item.state"><i></i><span>已结束</span></div>
-        <span>{{item.startDate}}——{{item.endDate}}</span>
+        <span>{{item.start_time}}——{{item.end_time}}</span>
       </div>
     </div>
     <div class="item-detail" v-if="isShowDetail">
@@ -63,10 +64,12 @@ export default {
       cursor: pointer;
       color: #282828 !important;
       vertical-align: top;
-      img {
+      .img {
         width: 100%;
         height: 6.25rem;
         vertical-align: top;
+        background-size: 100% 100%;
+        background-position: center;
       }
       .title {
         font-size: .5rem;
@@ -99,7 +102,8 @@ export default {
         }
       }
       .on-state {
-        background-color: #6BD9F2;
+        color: #fff;
+        background-color: #409eff;
       }
       .off-state {
         background-color: #CDCBCB;

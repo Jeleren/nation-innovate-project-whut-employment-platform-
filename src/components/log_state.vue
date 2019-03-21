@@ -4,7 +4,7 @@
       <span>登录 / 注册</span>
     </div>
     <div class="log" v-if="$store.state.user.isLogin" @mouseover="showSelect" @mouseleave="hideSelect">
-      <img :src="$store.state.user.userInfo.head">
+      <img :src="''+$store.state.user.userInfo.head">
       <i class="el-icon-caret-bottom"></i>
       <div class="select-list" ref="select">
         <div class="list-item" @click="toPersonal">个人中心</div>
@@ -23,15 +23,16 @@ export default {
     toPersonal () {
       // console.log('to person')
       // if (!/person/.test(this.$router.currentRoute.path)) {
-      this.$router.push(`/personal/${this.$store.state.user.userInfo.id}/`)
+      this.$router.push(`/gc/personal/`)
       // }
     },
     toInfoSet () {
-      this.$router.push('userInfo')
+      this.$router.push('/gc/personal/userInfo')
     },
     logOut () {
       // console.log('log out')
       cookie.remove('id')
+      cookie.remove('token')
       this.$router.push({name: 'login'})
     },
     showSelect () {

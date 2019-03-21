@@ -1,10 +1,11 @@
 import axios from '@/utils/request'
+import {api} from './index'
 
-export function apiChangeUserInfo (id, data) {
-  return axios.post(`/api/users/${id}/`, data)
+export function apiChangeUserInfo (data) {
+  return axios.post(`${api}/users/`, data)
 }
 export function apiGetUserInfoById (id) {
-  return axios.get(`/api/users/${id}/`)
+  return axios.get(`${api}/users/${id}/`)
 }
 
 /**
@@ -13,7 +14,7 @@ export function apiGetUserInfoById (id) {
  * @returns {AxiosPromise<any>} 返回关系id
  */
 export function doFollow (data) {
-  return axios.post(`/doFollow/`, data)
+  return axios.post(`${api}/doFollow/`, data)
 }
 
 /**
@@ -22,5 +23,5 @@ export function doFollow (data) {
  * @returns {AxiosPromise<any>}
  */
 export function cancelFollow (data) {
-  return axios.post(`/cancelFollow/`, data)
+  return axios.post(`${api}/cancelFollow/`, data)
 }

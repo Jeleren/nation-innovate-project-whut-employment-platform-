@@ -22,9 +22,11 @@ export default {
     }
   },
   created () {
-    fetchLaboratory().then(res => {
-      this.lab = res.data.labList.slice(0, 1)
-    })
+    if (!this.lab.length) {
+      fetchLaboratory().then(res => {
+        this.lab = res.data.labList.slice(0, 1)
+      })
+    }
   }
 }
 </script>
@@ -62,7 +64,7 @@ export default {
     font-size: .5rem;
     height: .75rem;
     width: 3rem;
-    background-color: #6BD9F2;
+    background-color: #409eff;
     color: #fff;
     text-align: center;
     /*vertical-align: center;*/

@@ -1,9 +1,9 @@
 <template>
   <div class="per-header boxShadow">
     <div class="content-wrap">
-      <img :src="$store.state.user.showUser.head"/>
+      <img :src="''+$store.state.user.showUser.head"/>
       <span class="username">{{$store.state.user.showUser.username}}</span>
-      <div class="button">
+      <div class="button" v-if="!$store.state.user.isSelf">
         <span>
           <span v-if="isFollow"><i class="el-icon-check"></i>已关注</span>
           <span v-if="!isFollow" @click="doFollow">+ 关注</span>

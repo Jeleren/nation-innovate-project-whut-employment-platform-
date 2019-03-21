@@ -1,5 +1,5 @@
 import { login } from '@/api/log_reg'
-import {apiGetUserInfoById} from '@/api/user'
+import {apiChangeUserInfo, apiGetUserInfoById} from '@/api/user'
 import Cookies from 'js-cookie'
 import jwt from 'jsonwebtoken'
 
@@ -9,7 +9,8 @@ const user = {
     userInfo: {},
     showUser: {},
     isSelf: true,
-    entInfo: {}
+    entInfo: {},
+    api: '/api'
   },
   mutations: {
     SET_LOG_STATE (state, data) {
@@ -36,10 +37,11 @@ const user = {
             let decodeRes = jwt.decode(res.data.token)
             commit('SET_LOG_STATE', true)
             let id = decodeRes.user_id
-            this.dispatch('getSelfInfo', id)
-            Cookies.set('id', decodeRes.user_id)
-            Cookies.set('token', res.data.token)
-            resolve()
+            Cookies.set('id', decodeRes.user_id, 7)
+            Cookies.set('token', res.data.token, 7)
+            this.dispatch('getSelfInfo', id).then((res) => {
+              resolve(res)
+            })
           } else {
             reject(res.error)
           }
@@ -52,8 +54,8 @@ const user = {
           if (res.status === 200) {
             console.log(res.data)
             commit('SET_USER_INFO', res.data)
-            commit('SET_SHOW_USER', res.data)
-            resolve()
+            // commit('SET_SHOW_USER', res.data)
+            resolve(res.data.identity)
           } else { reject(new Error('get user info fail')) }
         })
       })
@@ -63,13 +65,26 @@ const user = {
         apiGetUserInfoById(data.id).then(res => {
           if (res.data) {
             console.log(res.data)
-            commit('SET_ENT_INFO', res.data)
+            // commit('SET_ENT_INFO', res.data)
             commit('SET_SHOW_USER', res.data)
             commit('SET_IS_SELF', false)
             resolve()
           } else {
             reject(new Error())
           }
+        })
+      })
+    },
+    changeUserInfo ({commit}, data) {
+      return new Promise((resolve, reject) => {
+        apiChangeUserInfo(data).then(res => {
+          if (res) {
+            // console.log(res)
+            commit('SET_USER_INFO', res.data)
+            resolve()
+          }
+        }).catch(err => {
+          reject(err)
         })
       })
     }

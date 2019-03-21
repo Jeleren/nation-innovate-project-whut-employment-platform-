@@ -1,14 +1,14 @@
 <template>
   <div class="content-header-mar">
-    <labFilter/>
-    <labList :labList="labList"/>
+    <labFilter>
+      <labList :labList="labList"/>
+    </labFilter>
   </div>
 </template>
 
 <script>
-import labFilter from '../../components/filter'
+import labFilter from '../../components/filter/filter_active_list'
 import labList from '../../components/labList'
-import {fetchLaboratory} from '@/api/first_page'
 
 export default {
   name: 'index',
@@ -19,13 +19,6 @@ export default {
   computed: {
     labList () {
       return this.$store.state.pros.labList
-    }
-  },
-  created () {
-    if (!this.labList.length) {
-      fetchLaboratory().then(res => {
-        this.$store.commit('SET_LAB_LIST', res.data.labList)
-      })
     }
   }
 }

@@ -1,37 +1,61 @@
 <template>
   <div class="rec-wrap boxShadow">
     <div class="title">职业圈推荐</div>
-    <div class="rec-list" v-for="(item, index) in recList" :key="index">
-      <img :src="item.head"/>
-      <div class="word-wrap"><div class="name">{{item.username}}</div><div class="fan">粉丝{{item.follow}}</div></div>
+    <div class="rec-list" v-for="(item, index) in showProsList" :key="index">
+      <!--:src="''+item.head-->
+      <div class="img" :style="`background-image: url(${item.head})`"></div>
+      <div class="word-wrap"><div class="name">{{item.pro}}</div><div class="fan">粉丝{{item.follow}}</div></div>
       <div class="button" @click="changeFollow(item)">
         <span v-if="item.isFollow">已关注</span>
         <span v-if="!item.isFollow">+关注</span>
       </div>
     </div>
-    <div class="more pointer">查看更多职业圈<i class="el-icon-arrow-right"></i></div>
+    <div class="more pointer" @click="changeProsList" v-if="recList.length > 7">查看更多职业圈<i class="el-icon-arrow-right"></i></div>
   </div>
 </template>
 
 <script>
-import { fetchRecPros } from '../api/personal'
-import {relation} from '@/utils/handleRelation'
+import {fetchRecPros, recProsCancelFollow, recProsFollow} from '@/api/personal'
 
 export default {
   name: 'recommend_pros',
   data () {
     return {
-      recList: []
+      recList: [],
+      showProsList: []
     }
   },
   created () {
-    fetchRecPros(this.$store.state.user.userInfo.id).then(res => {
-      this.recList = res.data.recList
-    })
+    if (!this.recList.length) {
+      fetchRecPros().then(res => {
+        this.recList = res.data.recList
+        this.showProsList = this.recList.slice(0, 7)
+      })
+    }
   },
   methods: {
     changeFollow (item) {
-      relation.changeFollow(item)
+      let formData = new FormData()
+      let id = this.$store.state.user.userInfo.id
+      formData.append('id', id)
+      formData.append('pros_id', item.id)
+      if (item.isFollow) {
+        recProsCancelFollow(formData).then(res => {
+          item.isFollow = res.data.isFollow
+          item.follow--
+          this.$store.dispatch('getFollowProsList', id)
+        })
+      } else {
+        recProsFollow(formData).then(res => {
+          item.isFollow = res.data.isFollow
+          item.follow++
+          this.$store.dispatch('getFollowProsList', id)
+        })
+      }
+    },
+    changeProsList () {
+      let start = Math.floor(Math.random() * (this.recList.length - 4) + 4)
+      this.showProsList = this.recList.slice(start, start + 7)
     }
   }
 }
@@ -50,13 +74,14 @@ export default {
     align-items: center;
     /*justify-content: space-around;*/
     margin-bottom: 1rem;
-    img {
+    .img {
       width: 2.3rem;
       height: 2.3rem;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
       border-radius: 5px;
       margin-right: .6rem;
+      background-size: cover;
     }
     .word-wrap {
       height: 100%;

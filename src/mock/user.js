@@ -24,9 +24,17 @@ function changeUserInfo () {
     // password: ''
   })
 }
+function login () {
+  return Mock.mock({
+    id: '@increment',
+    username: '@cname',
+    head: '@image'
+  })
+}
 export default {
   getUserInfo,
   doFollow,
   cancelFollow,
-  changeUserInfo
+  changeUserInfo,
+  login
 }

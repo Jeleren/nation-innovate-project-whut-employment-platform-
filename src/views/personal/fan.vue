@@ -14,6 +14,7 @@
         </div>
       </div>
     </div>
+    <div class="no-fan">暂无粉丝</div>
   </div>
 </template>
 
@@ -80,7 +81,8 @@ export default {
         overflow: hidden;
         padding: .3rem .2rem;
         .name {
-          font: .7rem bold;
+          font-size: .7rem;
+          font-weight: bold;
           margin-bottom: .2rem;
         }
         .desc {
@@ -96,5 +98,11 @@ export default {
         }
       }
     }
+  }
+  .no-fan {
+    height: 2rem;
+    text-align: center;
+    line-height: 2rem;
+    background: #fff;
   }
 </style>

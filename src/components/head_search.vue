@@ -2,7 +2,7 @@
   <div class="head-top">
     <div class="head-top-wrap">
       <label></label>
-      <input type="text" placeholder="请输入关键字" v-model="content"/>
+      <input type="text" placeholder="请输入关键字" v-model="text" v-on:keyup.enter="search"/>
       <span class="pointer" @click="search">搜索</span>
     </div>
   </div>
@@ -13,12 +13,46 @@ export default {
   name: 'head_search',
   data () {
     return {
-      content: ''
+      text: ''
     }
   },
   methods: {
     search () {
-      // this.$store.state
+      if (this.text) {
+        let location = this.$router.currentRoute.name
+        // console.log(location)
+        let type = -1
+        switch (location) {
+          case 'employment': {
+            type = 4
+            break
+          }
+          case 'competition': {
+            type = 1
+            break
+          }
+          case 'lab': {
+            type = 3
+            break
+          }
+          case 'pros': {
+            type = 2
+            break
+          }
+          default: {
+            type = 2
+            this.$router.push('/gc/pros')
+            break
+          }
+        }
+        this.$store.commit('SET_SEARCH_TEXT', this.text)
+        let data = new FormData()
+        data.append('text', this.text)
+        data.append('type', type)
+        data.append('num', 5)
+        this.$store.dispatch('search', data)
+        this.text = ''
+      }
     }
   }
 }

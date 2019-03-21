@@ -1,24 +1,34 @@
 import axios from '../utils/request'
+import {api} from './index'
 
-export function fetchActiveList (id) {
-  return axios.get(`/active_list/${id}`)
+export function fetchActiveList (url) {
+  return axios.get(`${api}/active_list/${url}/`)
 }
-export function fetchResume (id) {
-  return axios.get(`/resume/${id}`)
+export function fetchResume () {
+  return axios.get(`${api}/resume/`)
 }
 // 推荐关注
-export function fetchRecPros (id) {
-  return axios.get(`/recPros/${id}`)
+export function fetchRecPros () {
+  return axios.get(`${api}/recPros/`)
 }
-export function fetchFollowList (id) {
-  return axios.get(`/follow/${id}`)
+export function recProsFollow (data) {
+  return axios.post(`${api}/recProsFollow/`, data)
+}
+export function recProsCancelFollow (data) {
+  return axios.post(`${api}/recProsCancelFollow/`, data)
+}
+export function getFollowPros (url) {
+  return axios.get(`${api}/followPros/${url}`)
+}
+export function fetchFollowList (url) {
+  return axios.get(`${api}/follow/${url}`)
 }
 //  获取用户粉丝
-export function fetchFanList (id) {
-  return axios.get(`/fan/${id}`)
+export function fetchFanList (url) {
+  return axios.get(`${api}/fan/${url}`)
 }
-export function fetchCollectList (id) {
-  return axios.get(`/collect/${id}`)
+export function fetchCollectList (url) {
+  return axios.get(`${api}/collect/${url}`)
 }
 
 /**
@@ -27,7 +37,7 @@ export function fetchCollectList (id) {
  * @returns {AxiosPromise<any>}
  */
 export function changeResume (data) {
-  return axios.post(`/resumeChange/`, data)
+  return axios.post(`${api}/resumeChange/`, data)
 }
 
 /**
@@ -36,7 +46,7 @@ export function changeResume (data) {
  * @returns {AxiosPromise<any>}
  */
 export function changeBaseInfo (data) {
-  return axios.post(`/resumeBase/`, data)
+  return axios.post(`${api}/resumeBase/`, data)
 }
 
 /**
@@ -45,7 +55,7 @@ export function changeBaseInfo (data) {
  * @returns {AxiosPromise<any>}
  */
 export function changeResumeImage (data) {
-  return axios.post('/resumeImage/', data)
+  return axios.post(`${api}/resumeImage/`, data)
 }
 
 /**
@@ -54,7 +64,7 @@ export function changeResumeImage (data) {
  * @returns {AxiosPromise<any>}
  */
 export function addResumeItem (data) {
-  return axios.post(`/resumeAdd/`, data)
+  return axios.post(`${api}/resumeAdd/`, data)
 }
 
 /**
@@ -63,5 +73,5 @@ export function addResumeItem (data) {
  * @returns {AxiosPromise<any>}
  */
 export function deleteResumeItem (data) {
-  return axios.post(`/resumeDelete/`, data)
+  return axios.post(`${api}/resumeDelete/`, data)
 }

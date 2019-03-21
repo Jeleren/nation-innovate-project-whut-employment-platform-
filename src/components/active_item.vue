@@ -1,5 +1,5 @@
 <template>
-  <div class="item-wrap" ref="item">
+  <div class="item-wrap" ref="item" v-if="item">
     <div class="top">
       <div class="item-left-wrap">
         <span class="user-image pointer" :style="{'background-image':`url(${item.userInfo.head}`}" @click="goUserPersonal"></span>
@@ -9,12 +9,12 @@
         </div>
       </div>
       <!--v-if="$store.state.user.userInfo.id === item.userInfo.id"-->
-      <el-dropdown>
+      <el-dropdown v-if="item.userInfo.id === $store.state.user.userInfo.id">
         <span class="el-dropdown-link">
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.stop="editActivity">编辑</el-dropdown-item>
+          <!--<el-dropdown-item @click.stop="editActivity">编辑</el-dropdown-item>-->
           <el-dropdown-item @click.native="deleteActivity">删除</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -30,7 +30,7 @@
       </div>
       <div class="img-display" v-if="!imageGroup">
         <div class="display-wrap" @mousemove="onImg" ref="cursor" @click="changeShow()">
-          <img class="show-item" :src="show_item.url" />
+          <img class="show-item" :src="''+show_item.url" />
         </div>
         <div class="list-wrap">
           <div class="img-list-item" :class="{'active-img': index === show_item.index}" v-for="(img, index) in item.image_group" :key="index" :style="{'background-image': `url(${img.url})`}"
@@ -217,20 +217,19 @@ export default {
       }
     },
     doCollect () {
-      let data = {}
-      data.user_id = this.$store.state.user.userInfo.id
-      data.activity_id = this.item.id
+      let data = new FormData()
+      data.append('id', this.$store.state.user.userInfo.id)
+      data.append('active_id', this.item.id)
       collectActivity(data).then(res => {
-        console.log(res)
         if (res.data) {
           this.item.isCollect = res.data.isCollect
         }
       })
     },
     cancelCollect () {
-      let data = {}
-      data.user_id = this.$store.state.user.userInfo.id
-      data.activity_id = this.item.id
+      let data = new FormData()
+      data.append('id', this.$store.state.user.userInfo.id)
+      data.append('active_id', this.item.id)
       cancelCollectActivity(data).then(res => {
         if (res.data) {
           this.item.isCollect = res.data.isCollect
@@ -238,17 +237,18 @@ export default {
       })
     },
     goUserPersonal () {
-      let href = this.$router.resolve({
-        path: `/personal/${this.item.userInfo.id}`,
-        meta: 'new'
-      })
-      window.open(href.href, '_blank')
+      if (this.item.userInfo.id !== this.$store.state.user.userInfo.id) {
+        let href = this.$router.resolve({
+          path: `/gc/op/${this.item.userInfo.id}`
+        })
+        window.open(href.href, '_blank')
+      }
     },
     editActivity () {},
     deleteActivity () {
       let data = {}
-      data.user_id = this.$store.state.user.userInfo.id
-      data.activity_id = this.item.id
+      data.id = this.$store.state.user.userInfo.id
+      data.active_id = this.item.id
       deleteActivity(data).then(res => {
         if (res.data) {
           this.$store.commit('DELETE_ACTIVE_ITEM', {index: this.index})
@@ -256,33 +256,37 @@ export default {
       })
     },
     submitComment () {
-      let data = {}
-      data.user_id = this.$store.state.user.userInfo.id
-      data.activity_id = this.item.id
-      data.text = this.comment
-      commentActivity(data).then(res => {
+      let a = new FormData()
+      a.append('id', this.$store.state.user.userInfo.id)
+      a.append('active_id', this.item.id)
+      a.append('comment', this.comment)
+      commentActivity(a).then(res => {
         if (res.data) {
-          this.item.commentList.splice(0, 0, res.data.comment)
+          console.log(this)
+          this.item.commentList.splice(0, 0, res.data)
           this.comment = ''
         }
       })
     },
     changeLike () {
       let data = {}
-      data.user_id = this.$store.state.user.userInfo.id
-      data.activity_id = this.item.id
+      data.id = this.$store.state.user.userInfo.id
+      data.active_id = this.item.id
+      let a = new FormData()
+      a.append('id', this.$store.state.user.userInfo.id)
+      a.append('active_id', this.item.id)
       if (this.item.isLike) {
-        cancelLikeActivity(data).then(res => {
+        cancelLikeActivity(a).then(res => {
+          this.item.likeNum--
           if (res.data) {
             this.item.isLike = res.data.isLike
-            this.item.likeNum--
           }
         })
       } else {
-        likeActivity(data).then(res => {
+        likeActivity(a).then(res => {
+          this.item.likeNum++
+          this.item.isLike = 0
           if (res.data) {
-            this.item.isLike = res.data.isLike
-            this.item.likeNum++
           }
         })
       }
@@ -322,6 +326,10 @@ export default {
         font-size: .6rem;
         .user-name {
           margin-bottom: .4rem;
+        }
+        .act-time {
+          font-size: .5rem;
+          color: #9b9b9b;
         }
       }
     }
@@ -453,6 +461,7 @@ export default {
           word-break: break-all;
           .user-name {
             color: #3EAAE9;
+            margin-bottom: .4rem;
           }
         }
       }
