@@ -1,7 +1,7 @@
 <template>
   <div class="small-head">
     <div class="head-img">
-      <img :src="'http://118/24/92.19/'+$store.state.user.userInfo.head"/>
+      <img :src="$store.state.user.userInfo.head"/>
     </div>
   </div>
 </template>

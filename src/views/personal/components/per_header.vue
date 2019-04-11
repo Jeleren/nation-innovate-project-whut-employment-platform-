@@ -1,37 +1,15 @@
 <template>
   <div class="per-header boxShadow">
     <div class="content-wrap">
-      <img :src="''+$store.state.user.showUser.head"/>
-      <span class="username">{{$store.state.user.showUser.username}}</span>
-      <div class="button" v-if="!$store.state.user.isSelf">
-        <span>
-          <span v-if="isFollow"><i class="el-icon-check"></i>已关注</span>
-          <span v-if="!isFollow" @click="doFollow">+ 关注</span>
-        </span>
-      </div>
+      <img :src="$store.state.user.userInfo.head"/>
+      <span class="username">{{$store.state.user.userInfo.username}}</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'per_header',
-  data () {
-    return {
-      isFollow: this.$store.state.user.showUser.isFollow
-      // showUser: {}
-    }
-  },
-  computed: {
-    isSelf () {
-      return this.$store.state.user.isSelf
-    }
-  },
-  created () {
-  },
-  methods: {
-    doFollow () {}
-  }
+  name: 'per_header'
 }
 </script>
 

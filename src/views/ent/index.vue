@@ -8,31 +8,19 @@
             :default-active="$route.path"
             :router = true
             class="el-menu-vertical-demo">
-            <el-menu-item index="/gc/ent/active">
-              <i class="el-icon-edit-outline"></i>
-              <span>动态管理</span>
-            </el-menu-item>
-            <el-submenu index="2">
-              <template slot="title">
-                <i class="el-icon-news"></i>
-                <span>招聘管理</span>
-              </template>
-              <el-menu-item index="/gc/ent/employment/edit" >编辑招聘信息</el-menu-item>
-              <el-menu-item index="/gc/ent/employment/manage">管理招聘信息</el-menu-item>
-              <el-menu-item index="/gc/ent/employment/resume">管理简历</el-menu-item>
-            </el-submenu>
-            <el-submenu index="3">
-              <template slot="title">
-                <i class="el-icon-news"></i>
-                <span>比赛活动</span>
-              </template>
-              <el-menu-item index="/gc/ent/competition/edit" >编辑比赛信息</el-menu-item>
-              <el-menu-item index="/gc/ent/competition/manage">管理比赛信息</el-menu-item>
-            </el-submenu>
-            <el-menu-item index="/gc/ent/info">
-              <i class="el-icon-setting"></i>
-              <span slot="title">信息管理</span>
-            </el-menu-item>
+            <div v-for="(item, index) in routeList" :key="index">
+              <el-submenu :index="index" v-if="item.children">
+                <template slot="title">
+                  <i :class="item.meta.icon"></i>
+                  <span>{{item.meta.title}}</span>
+                </template>
+                <el-menu-item v-for="(child_item, child_index) in item.children" :key="child_index" :index="child_item.path">{{child_item.meta.title}}</el-menu-item>
+              </el-submenu>
+              <el-menu-item :index="item.path" v-if="!item.children">
+                <i :class="item.meta.icon"></i>
+                <span>{{item.meta.title}}</span>
+              </el-menu-item>
+            </div>
           </el-menu>
         </el-col>
       </el-row>
@@ -43,10 +31,17 @@
 
 <script>
 import perHead from '../personal/components/per_header'
+import {entRouter} from '@/router'
+
 export default {
   name: 'index',
   components: {
     perHead
+  },
+  data () {
+    return {
+      routeList: entRouter.children
+    }
   }
 }
 </script>

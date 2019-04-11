@@ -28,6 +28,7 @@
     <div class="page" v-if="Math.floor(pageNum / pageSize)">
       <el-pagination
         background
+        :pager-count="3"
         @size-change="handleSizeChange"
         @current-change="pageChange"
         :current-page="currentPage"
@@ -54,6 +55,7 @@ export default {
       pageSize: 5,
       self: false,
       collect: false,
+      ent: false,
       currentPage: 1,
       userId: cookie.get('id')
     }
@@ -70,13 +72,10 @@ export default {
     }
   },
   created () {
-    console.log('new filter')
     if (!this.prosList.length) {
       this.$store.dispatch('getProsList')
     }
     let route = this.$router.currentRoute
-    console.log(route)
-    console.log(this.prosList)
     let name = route.name
     if (route.params.index1) {
       this.firstIndex = route.params.index1
@@ -85,7 +84,6 @@ export default {
     if (route.params.index2) {
       this.secondIndex = route.params.index2
       this.id = this.prosList[this.firstIndex].child[this.secondIndex].id
-      console.log(this.id, this.prosList[this.firstIndex].child[this.secondIndex].id)
     }
     switch (name) {
       case 'employment': {
@@ -111,14 +109,22 @@ export default {
         this.collect = true
         break
       }
+      case 'active': {
+        this.type = 2
+        this.pageSize = 5
+        this.self = true
+        break
+      }
       case 'ent-employment': {
         this.type = 4
         this.pageSize = 10
+        this.ent = true
         break
       }
       case 'ent-competition': {
         this.type = 1
         this.pageSize = 10
+        this.ent = true
         break
       }
       case 'TA的动态': {
@@ -133,6 +139,9 @@ export default {
       }
     }
     this.request()
+    if (name !== 'pros') {
+      this.cancelSearch()
+    }
     // console.log(name)
   },
   methods: {
@@ -160,9 +169,12 @@ export default {
     },
     request () {
       if (!this.searchText) {
-        let params = {id: this.userId, type: this.type, page: this.currentPage, num: this.pageSize}
+        let params = {type: this.type, page: this.currentPage, num: this.pageSize}
         if (this.id) {
           params.pros_id = this.id
+        }
+        if (this.ent || this.self) {
+          params.id = this.userId
         }
         if (this.self) {
           this.$store.dispatch('getSelfActiveList', params)

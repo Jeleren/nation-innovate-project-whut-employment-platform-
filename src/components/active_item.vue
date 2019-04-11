@@ -85,14 +85,6 @@ export default {
       isShowComment: false
     }
   },
-  computed: {
-    // foldContent () {
-    //   if (this.item.content.length > 100) {
-    //     this.isFold = true
-    //     return this.item.content.substring(0, 100)
-    //   } else return this.item.content
-    // }
-  },
   mounted () {
     if (this.item.text.length > 150) {
       this.content.over = true
@@ -244,11 +236,10 @@ export default {
         window.open(href.href, '_blank')
       }
     },
-    editActivity () {},
     deleteActivity () {
-      let data = {}
-      data.id = this.$store.state.user.userInfo.id
-      data.active_id = this.item.id
+      let data = new FormData()
+      data.append('id', this.$store.state.user.userInfo.id)
+      data.append('active_id', this.item.id)
       deleteActivity(data).then(res => {
         if (res.data) {
           this.$store.commit('DELETE_ACTIVE_ITEM', {index: this.index})
@@ -278,15 +269,13 @@ export default {
       if (this.item.isLike) {
         cancelLikeActivity(a).then(res => {
           this.item.likeNum--
-          if (res.data) {
-            this.item.isLike = res.data.isLike
-          }
+          this.item.isLike = 0
         })
       } else {
         likeActivity(a).then(res => {
           this.item.likeNum++
-          this.item.isLike = 0
           if (res.data) {
+            this.item.isLike = res.data.isLike
           }
         })
       }

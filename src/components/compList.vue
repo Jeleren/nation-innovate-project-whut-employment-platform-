@@ -4,10 +4,10 @@
       <!--<img :src="''+item.user.head"/>-->
       <div  class="img" :style="`background-image: url(${item.user.head})`"></div>
       <div class="title">{{item.title}}</div>
-      <div class="com-content">{{item.text}}<span>...</span></div>
-      <div class="state" :class="{'on-state': item.state, 'off-state': !item.state}">
-        <div v-if="item.state"><i></i><span>进行中</span></div>
-        <div v-if="!item.state"><i></i><span>已结束</span></div>
+      <div class="com-content">{{item.text.slice(0, 30)}}<span v-if="item.text.length > 30">...</span></div>
+      <div class="status" :class="{'on-status': item.state, 'off-status': !item.state}">
+        <div v-if="item.status"><i></i><span>进行中</span></div>
+        <div v-if="!item.status"><i></i><span>已结束</span></div>
         <span>{{item.start_time}}——{{item.end_time}}</span>
       </div>
     </div>
@@ -83,15 +83,20 @@ export default {
         margin-bottom: .25rem;
         font-size: .5rem;
       }
-      .state {
+      .status {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
         height: .875rem;
         font-size: .375rem;
+        overflow: hidden;
         div {
           display: flex;
           align-items: center;
+          white-space: nowrap;
+        }
+        span{
+          white-space: nowrap;
         }
         i {
           width: .5rem;
@@ -101,11 +106,11 @@ export default {
           background-color: #fff;
         }
       }
-      .on-state {
+      .on-status {
         color: #fff;
         background-color: #409eff;
       }
-      .off-state {
+      .off-status {
         background-color: #CDCBCB;
       }
     }

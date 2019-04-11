@@ -12,12 +12,14 @@ export const relation = {
       cancelFollow(formData).then(res => {
         if (res.data) {
           item.isFollow = res.data.isFollow
+          item.fans--
         }
       })
     } else {
       doFollow(formData).then(res => {
         if (res.data) {
           item.isFollow = res.data.isFollow
+          item.fans++
         }
       })
     }

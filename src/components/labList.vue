@@ -5,7 +5,7 @@
       <div class="lab-left-wrap">
         <h1>{{item.username}}</h1>
         <div class="lab-content">{{item.text}}</div>
-        <!--<div class="more" @click="goLabPersonal(item)">了解更多</div>-->
+        <div class="more" @click="goLabPersonal(item)">了解更多</div>
       </div>
     </div>
   </div>
@@ -17,11 +17,13 @@ export default {
   props: ['labList'],
   methods: {
     goLabPersonal (item) {
-      const href = this.$router.resolve({
-        path: '/ent',
-        query: {entId: item.id}
-      })
-      window.open(href.href, '_blank')
+      console.log(item)
+      if (item.id !== this.$store.state.user.userInfo.id) {
+        let href = this.$router.resolve({
+          path: `/gc/op/${item.id}`
+        })
+        window.open(href.href, '_blank')
+      }
     }
   }
 }
@@ -32,7 +34,7 @@ export default {
     height: 12rem;
     padding: 1.1rem 1rem;
     background-color: #fff;
-    margin-bottom: .2rem;
+    border-bottom: .2rem solid #ececec;
     img {
       width: 14.81rem;
       height: 100%;

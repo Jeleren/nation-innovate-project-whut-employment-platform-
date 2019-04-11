@@ -170,11 +170,13 @@ export default {
         addEvent.then(() => {
           autoTextarea(this.$refs.text, 5)
         })
+      } else {
+        this.editIndex = -1
       }
     },
     closePop (param) {
       this[param] = !this[param]
-      this.editIndex = -1
+      // this.editIndex = -1
       document.documentElement.style.overflow = 'auto'
     },
     saveContent (param) {
@@ -182,10 +184,10 @@ export default {
         return
       }
       let formData = new FormData()
-      formData.append('id', this.resumeId)
       formData.append('resumeItem', JSON.stringify({title: this.editItem.title, content: this.editItem.content}))
       //  普通保存
       if (this.editIndex !== -1) {
+        formData.append('id', this.editItem.id)
         changeResume(formData).then(res => {
           if (res.data) {
             this.resume[this.editIndex] = res.data
@@ -193,6 +195,7 @@ export default {
           }
         })
       } else {
+        formData.append('id', this.resumeId)
         addResumeItem(formData).then(res => {
           if (res.data) {
             this.resume.push(res.data)

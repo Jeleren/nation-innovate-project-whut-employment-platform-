@@ -67,7 +67,7 @@ Mock.mock(/\/changeActivities/, 'post', activity.changeActivity())
 Mock.mock(/\/deleteActivities/, 'post', activity.deleteActivity())
 
 Mock.mock(/\/users/, 'get', user.getUserInfo())
-// 用户id：id；userInfo: {username: ,image: file, desc: ''}
+// 用户id：id；userInfo: {username: , desc: ''}
 Mock.mock(/\/users/, 'post', user.changeUserInfo())
 // 用户id：id；对象用户id：target_id；
 Mock.mock(/\/doFollow/, 'post', user.doFollow())

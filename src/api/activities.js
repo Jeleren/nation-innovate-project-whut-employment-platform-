@@ -6,11 +6,7 @@ import {api} from './index'
  * @returns {AxiosPromise<any>}
  */
 export function getActivity (data) {
-  if (data.type && !data.pros_id) {
-    return axios.get(`${api}/activities/${data}`)
-  } else {
-    return axios.get(`${api}/activities/${data}`)
-  }
+  return axios.get(`${api}/activities/${data}`)
 }
 
 /**

@@ -111,28 +111,32 @@ export const entRouter = {
     {
       path: '/gc/ent/active',
       name: 'active',
+      meta: {title: '动态管理', icon: 'el-icon-edit-outline'},
       component: () => import('@/views/ent/active/active')
     },
     {
       path: '/gc/ent/employment',
       name: '',
+      meta: {title: '招聘信息', icon: 'el-icon-news'},
       component: () => import('@/views/ent/employment/index'),
-      redirect: '/gc/ent/employment/edit',
+      redirect: 'edit',
       children: [
         {
           path: '/gc/ent/employment/edit',
           name: '',
+          meta: {title: '编辑招聘信息'},
           component: () => import('@/views/ent/employment/emp_edit')
         },
         {
           path: '/gc/ent/employment/manage',
           name: 'ent-employment',
+          meta: {title: '管理招聘信息'},
           component: () => import('@/views/ent/employment/emp_manage')
         },
         {
           path: '/gc/ent/employment/resume',
           name: '',
-          meta: {model: 'watch'},
+          meta: {model: 'watch', title: '管理简历'},
           component: () => import('@/views/ent/employment/emp_resume')
         }
       ]
@@ -140,16 +144,20 @@ export const entRouter = {
     {
       path: '/gc/ent/competition',
       name: '',
+      meta: {title: '比赛活动', icon: 'el-icon-news'},
       component: () => import('@/views/ent/competition/competition'),
+      redirect: 'edit',
       children: [
         {
           path: '/gc/ent/competition/edit',
           name: '',
+          meta: {title: '编辑比赛信息'},
           component: () => import('@/views/ent/competition/comp_edit')
         },
         {
           path: '/gc/ent/competition/manage',
           name: 'ent-competition',
+          meta: {title: '管理比赛信息'},
           component: () => import('@/views/ent/competition/comp_manage')
         }
       ]
@@ -157,11 +165,16 @@ export const entRouter = {
     {
       path: '/gc/ent/info',
       name: '',
+      meta: {title: '我的信息', icon: 'el-icon-setting'},
       component: () => import('@/views/ent/info/info')
     }
   ]
 }
 export const constantRouterMap = [
+  {
+    path: '/',
+    redirect: '/gc/login'
+  },
   {
     path: '/gc',
     redirect: '/gc/login'

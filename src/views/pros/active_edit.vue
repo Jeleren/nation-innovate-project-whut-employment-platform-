@@ -61,11 +61,11 @@ export default {
   },
   computed: {
     followProsList () {
-      return this.$store.state.pros.followProsList
+      return this.$store.state.relation.followProsList.followProsList
     }
   },
   mounted () {
-    if (!this.followProsList.length) {
+    if (!this.followProsList) {
       this.$store.dispatch('getFollowProsList')
     }
     this.autoTextarea(this.$refs.text)

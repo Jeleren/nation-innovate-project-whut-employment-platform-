@@ -20,12 +20,12 @@ export function recProsCancelFollow (data) {
 export function getFollowPros (url) {
   return axios.get(`${api}/followPros/${url}`)
 }
-export function fetchFollowList (url) {
-  return axios.get(`${api}/follow/${url}`)
+export function fetchFollowList () {
+  return axios.get(`${api}/follow/`)
 }
 //  获取用户粉丝
-export function fetchFanList (url) {
-  return axios.get(`${api}/fan/${url}`)
+export function fetchFanList () {
+  return axios.get(`${api}/fan/`)
 }
 export function fetchCollectList (url) {
   return axios.get(`${api}/collect/${url}`)

@@ -3,7 +3,7 @@
     <el-col>
       <span class="title">个人中心</span>
       <el-menu
-        :default-active="$route.path"
+        :default-active="$route.path.split('/').pop()"
         class="el-menu-vertical-demo"
         :router = true>
         <el-menu-item :index="item.path" :key="index" v-for="(item, index) in routerList">

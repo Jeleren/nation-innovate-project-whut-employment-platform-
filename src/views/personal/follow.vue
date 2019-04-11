@@ -2,25 +2,27 @@
   <div class="left-wrap">
     <div class="title">全部关注</div>
     <el-collapse v-model="activeName" accordion>
-      <el-collapse-item title="关注用户" name="关注用户" style="text-indent: .5rem;">
-        <div class="follow-wrap">
-          <div class="follow-item" v-for="(item, index) in followList" :key="index">
-            <img :src="item.head"/>
-            <div class="item-right-wrap">
-              <div class="name">{{item.username}}</div>
-              <div class="desc">{{item.desc}}</div>
-              <div class="button" @click="changeFollow(item)">
-                <span v-if="item.isFollow" >已关注</span>
-                <span v-if="!item.isFollow">+关注</span>
+      <el-collapse-item :title="`关注用户(${followList.num})`" name="关注用户" style="text-indent: .5rem;">
+        <relationFilter type="follow" :pageNum="followList.num">
+          <div class="follow-wrap">
+            <div class="follow-item" v-for="(item, index) in followList.followList" :key="index">
+              <img :src="item.head"/>
+              <div class="item-right-wrap">
+                <div class="name">{{item.username}}</div>
+                <div class="desc">{{item.desc}}</div>
+                <el-button size="small" @click="changeFollow(item)" style="margin-left: .5rem">
+                  <span v-if="item.isFollow" >已关注</span>
+                  <span v-if="!item.isFollow">+关注</span>
+                </el-button>
               </div>
             </div>
           </div>
-        </div>
+        </relationFilter>
       </el-collapse-item>
-      <el-collapse-item title="关注职业圈" name="关注职业圈" style="text-indent: .5rem;">
-        <relationFilter>
+      <el-collapse-item :title="`关注职业圈(${followProsList.num})`" name="关注职业圈" style="text-indent: .5rem;">
+        <relationFilter type="followPros" :pageNum="followProsList.num">
           <div class="follow-wrap">
-            <div class="follow-item" v-for="(item, index) in followProsList" :key="index">
+            <div class="follow-item" v-for="(item, index) in followProsList.followProsList" :key="index">
               <img :src="item.head"/>
               <div class="item-right-wrap">
                 <div class="name">{{item.pro}}</div>
@@ -38,8 +40,6 @@
 </template>
 
 <script>
-import {fetchFollowList} from '@/api/personal'
-// import {cancelFollow, doFollow} from '@/api/user'
 import {relation} from '@/utils/handleRelation'
 import relationFilter from '../../components/filter/filter_relation'
 
@@ -50,25 +50,16 @@ export default {
   },
   data () {
     return {
-      followList: [],
+      // followList: [],
       activeName: '关注用户'
     }
   },
   computed: {
     followProsList () {
-      return this.$store.state.pros.followProsList
-    }
-  },
-  created () {
-    fetchFollowList(this.$store.state.user.userInfo.id).then(res => {
-      if (res.status) {
-        this.followList = res.data.followList
-      }
-    })
-  },
-  mounted () {
-    if (!this.followProsList.length) {
-      this.$store.dispatch('getFollowProsList')
+      return this.$store.state.relation.followProsList
+    },
+    followList () {
+      return this.$store.state.relation.followList
     }
   },
   methods: {
@@ -89,6 +80,9 @@ export default {
     padding: .2rem .5rem;
     border-bottom: 1px solid #f2f2f5;
   }
+  span {
+    text-align: center;
+  }
   .follow-wrap {
     background-color: #fff;
     display: flex;
@@ -99,7 +93,7 @@ export default {
     .follow-item {
       display: flex;
       align-items: center;
-      width: 10.9rem;
+      width: 12.5rem;
       background: #f2f2f5;
       margin-bottom: .5rem;
       overflow: hidden;
@@ -120,11 +114,21 @@ export default {
         }
         .desc {
           font-size: .5rem;
-          /*white-space: nowrap;*/
+          white-space: nowrap;
+          max-height: 1.8rem;
           overflow: hidden;
           margin-bottom: .2rem;
         }
       }
     }
   }
+  .no-fan {
+    height: 2rem;
+    text-align: center;
+    line-height: 2rem;
+    background: #fff;
+  }
+  /*.el-collapse-item.is-active{*/
+    /*text-indent: 0 !important;*/
+  /*}*/
 </style>

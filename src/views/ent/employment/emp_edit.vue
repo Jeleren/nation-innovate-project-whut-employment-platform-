@@ -70,7 +70,7 @@ export default {
   },
   computed: {
     followProsList () {
-      return this.$store.state.relation.followProsList
+      return this.$store.state.relation.followProsList.followProsList
     }
   },
   mounted () {

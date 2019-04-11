@@ -1,41 +1,36 @@
 <template>
   <div class="left-wrap">
-    <div class="title">全部粉丝</div>
-    <div class="follow-wrap" v-if="fanList.length">
-      <div class="follow-item" v-for="(item, index) in fanList" :key="index">
-        <img :src="item.head"/>
-        <div class="item-right-wrap">
-          <div class="name">{{item.username}}</div>
-          <div class="desc">{{item.desc}}</div>
-          <div class="button" @click="changeFollow(item)">
-            <span v-if="item.isFollow" >已关注</span>
-            <span v-if="!item.isFollow">+关注</span>
+    <div class="title">全部粉丝({{fanList.num}})</div>
+    <filterRelation type="fan" :pageNum="fanList.num">
+      <div class="follow-wrap" >
+        <div class="follow-item" v-for="(item, index) in fanList.fanList" :key="index">
+          <img :src="item.head"/>
+          <div class="item-right-wrap">
+            <div class="name">{{item.username}}</div>
+            <div class="desc">{{item.desc}}</div>
+            <div class="button" @click="changeFollow(item)">
+              <span v-if="item.isFollow" >已关注</span>
+              <span v-if="!item.isFollow">+关注</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="no-fan">暂无粉丝</div>
+    </filterRelation>
   </div>
 </template>
 
 <script>
-import {fetchFanList} from '@/api/personal'
 import {relation} from '@/utils/handleRelation'
+import filterRelation from '@/components/filter/filter_relation'
 
 export default {
   name: 'fan',
-  data () {
-    return {
-      fanList: []
-    }
+  components: {
+    filterRelation
   },
-  created () {
-    if (!this.fanList.length) {
-      fetchFanList(this.$store.state.user.userInfo.id).then(res => {
-        if (res.data) {
-          this.fanList = res.data.fanList
-        }
-      })
+  computed: {
+    fanList () {
+      return this.$store.state.relation.fanList
     }
   },
   methods: {
@@ -63,7 +58,7 @@ export default {
     .follow-item {
       display: flex;
       align-items: center;
-      width: 10.9rem;
+      width: 12.5rem;
       /*height: 4rem;*/
       background: #f2f2f5;
       margin-bottom: .5rem;

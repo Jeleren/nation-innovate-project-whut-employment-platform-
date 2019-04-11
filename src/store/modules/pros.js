@@ -23,8 +23,9 @@ const pros = {
       state.activeList = data
     },
     ADD_ACTIVE_ITEM (state, data) {
+      console.log(data)
       data.time = data.time.split('.')[0]
-      state.activeList.splice(0, 0, data)
+      state.activeList.unshift(data)
     },
     DELETE_ACTIVE_ITEM (state, data) {
       state.activeList.splice(data.index, 1)
@@ -125,6 +126,7 @@ const pros = {
               break
             }
             case 2: {
+              console.log(res.data)
               commit('SET_ACTIVE_LIST', res.data.activeList.map((item) => {
                 item.time = item.time.split('.')[0]
                 return item

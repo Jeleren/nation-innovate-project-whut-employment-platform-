@@ -3,10 +3,10 @@ import cookie from 'js-cookie'
 
 export const relation = {
   state: {
-    followList: [],
-    fanList: [],
+    followList: {},
+    fanList: {},
     followProsList: [],
-    recProsList: [],
+    recProsList: {},
     totalPageNum: 0
   },
   mutations: {
@@ -30,27 +30,23 @@ export const relation = {
     getFollowList ({commit}, params) {
       params.id = cookie.get('id')
       fetchFollowList(setUrl(params)).then(res => {
-        commit('SET_FOLLOW_LIST', res.data.followList)
-        commit('SET_PAGE_NUM', res.data.num)
+        commit('SET_FOLLOW_LIST', res.data)
       })
     },
     getFanList ({commit}, params) {
       params.id = cookie.get('id')
       fetchFanList(setUrl(params)).then(res => {
-        commit('SET_FAN_LIST', res.data.fanList)
-        commit('SET_PAGE_NUM', res.data.num)
+        commit('SET_FAN_LIST', res.data)
       })
     },
     getRecProsList ({commit}, params) {
       fetchRecPros(setUrl(params)).then(res => {
-        commit('SET_REC_PROS_LIST', res.data.recList)
-        commit('SET_PAGE_NUM', res.data.num)
+        commit('SET_REC_PROS_LIST', res.data)
       })
     },
     getFollowProsList ({commit}, params) {
       getFollowPros(`${cookie.get('id')}/` + setUrl(params)).then(res => {
-        commit('SET_FOLLOW_PROS_LIST', res.data.followProsList)
-        commit('SET_PAGE_NUM', res.data.num)
+        commit('SET_FOLLOW_PROS_LIST', res.data)
       })
     }
   }

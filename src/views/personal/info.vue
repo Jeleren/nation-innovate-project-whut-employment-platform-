@@ -29,13 +29,13 @@ export default {
   },
   data () {
     return {
-      form: {
-        username: this.$store.state.user.userInfo.username,
-        text: this.$store.state.user.userInfo.text,
-        head: this.$store.state.user.userInfo.head
-      },
       file: '',
       imagePickerState: false
+    }
+  },
+  computed: {
+    form () {
+      return this.$store.state.user.userInfo
     }
   },
   mounted () {
@@ -49,7 +49,7 @@ export default {
       if (this.file) {
         formData.append('image', this.file)
       }
-      formData.append('userInfo', JSON.stringify({ username: this.form.username, text: this.form.text }))
+      formData.append('userInfo', JSON.stringify({ username: this.form.username, desc: this.form.text }))
       this.$store.dispatch('changeUserInfo', formData).then(res => {
         this.$message({
           message: '保存成功',

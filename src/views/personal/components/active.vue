@@ -1,7 +1,7 @@
 <template>
   <div class="active-list">
     <prosFilter>
-    <div v-for="(item, index) in activeList" :key="index" v-if="activeList.length">
+    <div v-for="(item, index) in activeList" :key="item.id" v-if="activeList.length">
       <activeItem :item="item" :index="index"/>
     </div>
     </prosFilter>
@@ -20,21 +20,9 @@ export default {
   },
   computed: {
     activeList () {
+      // console.log('change')
       return this.$store.state.pros.activeList
     }
-  },
-  created () {
-    // console.log(this.$router)
-    // if (!this.activeList.length && !this.$router.currentRoute.params.index1) {
-    //   if (this.$router.currentRoute.name === 'pros') {
-    //     this.$store.dispatch('getActiveList', {type: 2})
-    //   } else {
-    //     this.$store.dispatch('getSelfActiveList', {})
-    //   }
-    // }
-  },
-  methods: {
-    pageChange () {}
   }
 }
 </script>

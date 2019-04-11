@@ -14,16 +14,12 @@ export default {
   components: {
     headerBg,
     footerBg
-  },
-  created () {
-    console.log(this.$router)
   }
 }
 </script>
 
 <style>
 #app {
-  /*font-family: 'Microsoft YaHei UI', Helvetica, Arial, sans-serif;*/
   font-family: Arial, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Source Han Sans SC', 'Noto Sans CJK SC', 'WenQuanYi Micro Hei', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -34,7 +30,6 @@ export default {
   }
   a {
     cursor: pointer;
-    /*color: #595959;*/
   }
   i {
     display: inline-block;

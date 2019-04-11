@@ -17,10 +17,10 @@
           </el-form-item>
         </el-form>
       </el-collapse-item>
-      <el-collapse-item title="关注职业圈" name="2">
-        <relationFilter type="prosFollow">
+      <el-collapse-item :title="`关注职业圈(${followProsList.num})`" name="2">
+        <relationFilter type="followPros" :pageNum="followProsList.num">
           <div class="follow-wrap">
-            <div class="follow-item" v-for="(item, index) in followProsList" :key="index">
+            <div class="follow-item" v-for="(item, index) in followProsList.followProsList" :key="index">
               <img :src="item.head"/>
               <div class="item-right-wrap">
                 <div class="name">{{item.pro}}</div>
@@ -33,10 +33,10 @@
           </div>
         </relationFilter>
       </el-collapse-item>
-      <el-collapse-item title="推荐职业圈" name="3">
-        <relationFilter type="recPros">
+      <el-collapse-item :title="`推荐职业圈(${recProsList.num})`" name="3">
+        <relationFilter type="recPros" :pageNum="recProsList.num">
           <div class="follow-wrap">
-            <div class="follow-item" v-for="(item, index) in recProsList" :key="index">
+            <div class="follow-item" v-for="(item, index) in recProsList.recList" :key="index">
               <img :src="item.head"/>
               <div class="item-right-wrap">
                 <div class="name">{{item.pro}}</div>
@@ -85,17 +85,15 @@ export default {
   },
   data () {
     return {
-      form: {
-        username: this.$store.state.user.userInfo.username,
-        text: this.$store.state.user.userInfo.text,
-        head: this.$store.state.user.userInfo.head
-      },
       file: '',
       imagePickerState: false,
       activeName: '1'
     }
   },
   computed: {
+    form () {
+      return this.$store.state.user.userInfo
+    },
     followProsList () {
       return this.$store.state.relation.followProsList
     },
@@ -116,7 +114,7 @@ export default {
       if (this.file) {
         formData.append('image', this.file)
       }
-      formData.append('userInfo', JSON.stringify({ username: this.form.username, text: this.form.text }))
+      formData.append('userInfo', JSON.stringify({ username: this.form.username, desc: this.form.text }))
       this.$store.dispatch('changeUserInfo', formData).then(res => {
         this.$message({
           message: '保存成功',

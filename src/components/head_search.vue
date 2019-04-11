@@ -41,7 +41,7 @@ export default {
           }
           default: {
             type = 2
-            this.$router.push('/gc/pros')
+            this.$router.push('/gc/directory_user/pros')
             break
           }
         }

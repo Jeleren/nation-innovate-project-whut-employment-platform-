@@ -1,9 +1,9 @@
 <template>
   <div class="pros-list-wrap">
-    <div class="bottom" v-if="!$store.state.relation.totalPageNum && type === 'fan'" >暂无粉丝</div>
-    <div class="bottom" v-else-if="!$store.state.relation.totalPageNum && type === 'follow'">暂无关注用户</div>
-    <div class="bottom" v-else-if="!$store.state.relation.totalPageNum && type === 'prosFollow'">暂无关注职业圈</div>
-    <div class="bottom" v-else-if="!$store.state.relation.totalPageNum && type === 'recPros'">你已关注全部职业圈</div>
+    <div class="bottom" v-if="!pageNum && type === 'fan'" >暂无粉丝</div>
+    <div class="bottom" v-else-if="!pageNum && type === 'follow'">暂无关注用户</div>
+    <div class="bottom" v-else-if="!pageNum && type === 'prosFollow'">暂无关注职业圈</div>
+    <div class="bottom" v-else-if="!pageNum && type === 'recPros'">你已关注全部职业圈</div>
     <slot></slot>
     <div class="page" v-if="Math.floor(pageNum / pageSize)">
       <el-pagination
@@ -23,7 +23,7 @@
 <script>
 export default {
   name: 'filter_relation',
-  props: ['type'],
+  props: ['type', 'pageNum'],
   data () {
     return {
       pageSize: 10,
@@ -31,13 +31,14 @@ export default {
     }
   },
   computed: {
-    pageNum () {
-      return this.$store.state.relation.totalPageNum
-    }
+    // pageNum () {
+    //   return this.$store.state.relation.totalPageNum
+    // }
   },
-  // created () {
-  //   this.$store.commit('SET_PAGE_NUM', 0)
-  // },
+  created () {
+    // this.$store.commit('SET_PAGE_NUM', 0)
+    this.request()
+  },
   methods: {
     handleSizeChange (val) {
       this.pageSize = val
@@ -57,7 +58,7 @@ export default {
           this.$store.dispatch('getFollowList', {num: this.pageSize, page: this.currentPage})
           break
         }
-        case 'prosFollow': {
+        case 'followPros': {
           this.$store.dispatch('getFollowProsList', {num: this.pageSize, page: this.currentPage})
           break
         }
@@ -72,6 +73,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  * {
+    text-indent: 0;
+  }
   .pros-list-wrap {
     width: 100%;
     display: flex;
@@ -83,6 +87,7 @@ export default {
       height: 1rem;
       text-align: center;
       line-height: 1rem;
+      margin-top: 1rem;
     }
     .follow-wrap {
       background-color: #fff;

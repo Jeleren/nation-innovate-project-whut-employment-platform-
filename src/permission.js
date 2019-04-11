@@ -22,24 +22,24 @@ router.beforeEach((to, from, next) => {
   // }
   if (to.path === '/gc/login') {
     if (cookie.get('id') && cookie.get('token')) {
-      store.dispatch('getSelfInfo', cookie.get('id'))
-      next('/gc/directory_user')
+      store.dispatch('getSelfInfo', cookie.get('id')).then(res => {
+        if (res === 1) {
+          next('/gc/directory_user')
+        } else {
+          next('/gc/ent')
+        }
+      })
     }
   }
-  console.log(to, from)
+  // console.log(to, from)
   if (!store.state.user.userInfo.id && cookie.get('id')) {
     store.dispatch('getSelfInfo', cookie.get('id'))
     if (to.params.id) {
       store.dispatch('getInfo', {id: to.params.id})
-      console.log('query')
     }
-    next()
-    console.log('1')
   }
   if (to.query.entId) {
     store.dispatch('getInfo', {id: to.query.entId})
-    next()
-    console.log('2')
   }
   next()
   // console.log(to, from)

@@ -8,9 +8,7 @@ const user = {
     isLogin: 'true',
     userInfo: {},
     showUser: {},
-    isSelf: true,
-    entInfo: {},
-    api: '/api'
+    isSelf: true
   },
   mutations: {
     SET_LOG_STATE (state, data) {
@@ -24,9 +22,6 @@ const user = {
     },
     SET_IS_SELF (state, data) {
       state.isSelf = data
-    },
-    SET_ENT_INFO (state, data) {
-      state.entInfo = data
     }
   },
   actions: {
@@ -52,9 +47,7 @@ const user = {
       return new Promise((resolve, reject) => {
         apiGetUserInfoById(id).then(res => {
           if (res.status === 200) {
-            console.log(res.data)
             commit('SET_USER_INFO', res.data)
-            // commit('SET_SHOW_USER', res.data)
             resolve(res.data.identity)
           } else { reject(new Error('get user info fail')) }
         })
@@ -65,7 +58,6 @@ const user = {
         apiGetUserInfoById(data.id).then(res => {
           if (res.data) {
             console.log(res.data)
-            // commit('SET_ENT_INFO', res.data)
             commit('SET_SHOW_USER', res.data)
             commit('SET_IS_SELF', false)
             resolve()
@@ -79,7 +71,6 @@ const user = {
       return new Promise((resolve, reject) => {
         apiChangeUserInfo(data).then(res => {
           if (res) {
-            // console.log(res)
             commit('SET_USER_INFO', res.data)
             resolve()
           }
